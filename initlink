@@ -1,0 +1,22 @@
+#!/bin/bash
+
+dir_dest=$HOME
+dir_src=`pwd`
+dir_backup=$dir_src/.backup
+
+rc_vim=.vimrc
+
+function backupcfg() {
+    echo "backup file: $1 ..."
+    cp $dir_dest/$1 $dir_backup/$1
+}
+
+if [ -f $dir_dest/$rc_vim ]; then
+    echo "file $dir_dest/$rc_vim, exist! backup it"
+    backupcfg $rc_vim
+    rm -rf $dir_dest/$rc_vim
+fi
+
+ln -s $dir_src/$rc_vim $dir_dest/$rc_vim
+
+
