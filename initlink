@@ -8,6 +8,9 @@ rc_vim=.vimrc
 
 function backupcfg() {
     echo "backup file: $1 ..."
+    if [ ! -d $dir_backup ]; then
+        mkdir $dir_backup
+    fi
     cp $dir_dest/$1 $dir_backup/$1
 }
 
