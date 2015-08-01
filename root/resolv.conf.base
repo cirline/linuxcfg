@@ -1,0 +1,6 @@
+# file:     /etc/resolvconf/resolv.conf.d/base 
+# update:   sudo resolvconf -u
+
+nameserver 192.168.0.1
+nameserver 192.168.1.1
+nameserver 202.96.134.133

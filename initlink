@@ -4,8 +4,10 @@
 # backup
 
 dir_home=$HOME
-dir_src=`pwd`
+dir_conf=`pwd`
 dir_backup=$dir_src/.backup
+
+dir_src=$dir_conf
 
 rc_vim=.vimrc
 
@@ -34,6 +36,7 @@ ln -s $1 $2
 
 echo "link vim rc .. "
 deal $dir_src/$rc_vim $dir_home/$rc_vim
+
 echo "finish !"
 
 
