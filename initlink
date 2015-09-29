@@ -1,25 +1,52 @@
 #!/bin/bash
 
-dir_dest=$HOME
-dir_src=`pwd`
+# init program, function:
+# backup
+
+dir_home=$HOME
+dir_conf=`pwd`
+
+dir_src=$dir_conf
 dir_backup=$dir_src/.backup
 
 rc_vim=.vimrc
 
+# backup a exist file, to dir_backup/file_yyyymmddhhMMss
 function backupcfg() {
-    echo "backup file: $1 ..."
-    if [ ! -d $dir_backup ]; then
-        mkdir $dir_backup
-    fi
-    cp $dir_dest/$1 $dir_backup/$1
+file=`echo $1 | awk -F '/' '{print $NF}'`
+echo "backup file: $file ..."
+if [ ! -d $dir_backup ]; then
+    mkdir $dir_backup
+fi
+cp $1 $dir_backup/$file"_"`date +%Y%m%d%H%M%S`
 }
 
-if [ -f $dir_dest/$rc_vim ]; then
-    echo "file $dir_dest/$rc_vim, exist! backup it"
-    backupcfg $rc_vim
-    rm -rf $dir_dest/$rc_vim
+# check a file, if exist, backup it and delete it
+function check_file() {
+if [ -f $1 ]; then
+    echo "file $1, exist! backup it"
+    backupcfg $1
+    rm -rf $1
+else
+    echo "file $1 not exist"
 fi
+}
 
-ln -s $dir_src/$rc_vim $dir_dest/$rc_vim
+# deal src_file dest_file
+# delete dest_file if it exist, and create a link to src_file
+function deal() {
+check_file $2
+ln -s $1 $2
+}
+
+echo "run :"
+echo "dir src: $dir_src"
+echo "dir home: $dir_home"
+echo "dir backup: $dir_backup"
+
+echo "link vim rc .. "
+deal $dir_src/$rc_vim $dir_home/$rc_vim
+
+echo "finish !"
 
 
