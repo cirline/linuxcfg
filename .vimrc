@@ -56,6 +56,8 @@ set matchtime=1
 set scrolloff=3
 " 为C程序提供自动缩进
 set smartindent
+" no z a long line
+set nowrap
 
 if has("autocmd")
 	au VimEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
