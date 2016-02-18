@@ -74,3 +74,5 @@ let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_Right_Window=1
 let Tlist_Auto_Open=0
 
+map <F5> :w <CR> :!dot -Tpng % -O <CR> <CR>
+

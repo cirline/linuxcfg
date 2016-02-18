@@ -14,3 +14,4 @@ export PATH=/home/chenqiwei/tools/toolchain-4.3.2/bin:$PATH
 
 # tools
 export PATH=$HOME/tools:$PATH
+export PATH=$HOME/linuxcfg/bin:$PATH
