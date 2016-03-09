@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# custom config
+
+dir_efs_data=
+dir_efs_mnt=

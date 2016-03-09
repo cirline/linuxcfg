@@ -1,9 +1,8 @@
-dir_out			?= set the output directory
+# build 
+install_path		?= $(build_path)/../bin
+out_path			?= $(build_path)/out
 
-
-dir_efs_data	?= set the ecryptfs data directory
-dir_efs_mnt		?= set the ecryptfs mnt directory
-
-
-
+# tools run
+efs_data_path	?= $(out_path)/efsdata
+efs_mnt_path	?= $(out_path)/efsmnt
 

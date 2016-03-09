@@ -23,21 +23,28 @@ config_error:
 	make defconfig
 endif
 
-out_path	?= $(build_path)/bin
+include $(defconfig_file)
 
-tools	:= simple-tools
+tools_install	:= simple-tools
+tools_out		:= $(tools_install).out
 
 objs	:=
 objs	+= simple-tools_defconfig
+objs	+= simple-tools-help
 objs	+= simple-tools-main
 
+dirs	:=
+dirs	+= $(out_path)
+
 # begin build
-$(tools): config
-	$(tools_inf) "build simple-tools, out: $(out_path)"
-	@if [ ! -d $(out_path) ]; then mkdir $(out_path); fi
-	cat $(objs) > $(out_path)/$@
-	chmod +x $(out_path)/$@
+$(tools_out): $(dirs) $(config_file) $(objs)
+	cat $(objs) > $@
+	chmod +x $@
 	$(tools_inf) "all finish"
+
+$(dirs):
+	$(tools_inf) "checking directory: "
+	@if [ ! -d $(out_path) ]; then mkdir $(out_path); fi
 
 config: $(config_file)
 
@@ -51,4 +58,10 @@ defconfig: $(defconfig_file)
 
 distclean:
 	rm *.config
+
+clean:
+	rm *.out
+
+install:
+	cp $(tools_out) $(install_path)/$(tools_install)
 
