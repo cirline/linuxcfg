@@ -103,7 +103,7 @@ case $cmd in
         outdir=$OUT/obj/KERNEL_OBJ
         make O=$outdir ARCH=arm CROSS_COMPILE=arm-eabi-
         ;;
-    "fabo" )
+    "flashboot" )
         if (($# == 1)); then
             adb -s 1a8d47f6 reboot bootloader
             #fastboot flash boot boot.img
@@ -111,7 +111,8 @@ case $cmd in
             fastboot reboot
         else
             adb reboot bootloader
-            fastboot flash boot /home/chqw/workspace1/qcom/loong/out/msm8909/android/msm8909_android_highcha_p1/boot.img
+            #fastboot flash boot /home/chqw/workspace1/qcom/loong/out/msm8909/android/msm8909_android_highcha_p1/boot.img
+            fastboot flash boot boot.img
             fastboot reboot
         fi
         ;;
