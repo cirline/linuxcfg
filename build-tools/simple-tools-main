@@ -126,6 +126,12 @@ case $cmd in
             fi
         fi
         ;;
+    "uec" )
+        umount_ecryptfs
+        ;;
+    "mec" )
+        mount_ecryptfs
+        ;;
     * )
         echo "unknow command!"
         st_help

@@ -27,10 +27,12 @@ include $(defconfig_file)
 
 tools_install	:= simple-tools
 tools_out		:= $(tools_install).out
+tools_config	:= $(tools_install).config
 
 objs	:=
-objs	+= simple-tools_defconfig
+objs	+= $(tools_config)
 objs	+= simple-tools-help
+objs	+= simple-tools-misc
 objs	+= simple-tools-main
 
 dirs	:=
@@ -45,6 +47,12 @@ $(tools_out): $(dirs) $(config_file) $(objs)
 $(dirs):
 	$(tools_inf) "checking directory: "
 	@if [ ! -d $(out_path) ]; then mkdir $(out_path); fi
+
+$(tools_config): $(config_file)
+	$(tools_inf) "create simple-tools config"
+	@echo "#!/bin/bash" > $@
+	@echo "efs_data_path=$(efs_data_path)" >> $@
+	@echo "efs_mnt_path=$(efs_mnt_path)" >> $@
 
 config: $(config_file)
 
@@ -64,4 +72,6 @@ clean:
 
 install:
 	cp $(tools_out) $(install_path)/$(tools_install)
+	ln -s $(install_path)/$(tools_install) $(install_path)/uec
+	ln -s $(install_path)/$(tools_install) $(install_path)/mec
 
