@@ -11,7 +11,7 @@ installpath=$1
 tools=simple-tools
 
 function do_link() {
-dest=$1
+dest=$installpath/$1
 echo "do link: $dest"
 if [ -L $dest ]; then
     rm $dest
@@ -20,9 +20,12 @@ ln -s $installpath/$tools $dest
 }
 
 # sshfs mount
-do_link $installpath/m241
+do_link m241
 
 # efs
-do_link $installpath/uec
-do_link $installpath/mec
+do_link uec
+do_link mec
+
+# fastboot
+do_link flashboot
 
