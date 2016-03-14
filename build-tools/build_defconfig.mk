@@ -1,5 +1,5 @@
 # build 
-install_path		?= $(build_path)/../bin
+install_path		?= $(home_path)/tools
 out_path			?= $(build_path)/out
 
 # tools run

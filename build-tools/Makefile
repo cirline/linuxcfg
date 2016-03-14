@@ -1,5 +1,6 @@
 # 
 build_path	:= $(shell pwd)
+home_path	:= $$HOME
 
 # function
 define tools_inf
