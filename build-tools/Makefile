@@ -28,11 +28,13 @@ include $(defconfig_file)
 tools_install	:= simple-tools
 tools_out		:= $(tools_install).out
 tools_config	:= $(tools_install).config
+tools_link		:= simple-tools.linkcommand
 
 objs	:=
 objs	+= $(tools_config)
 objs	+= simple-tools-help
 objs	+= simple-tools-misc
+objs	+= simple-tools.mount
 objs	+= simple-tools-main
 
 dirs	:=
@@ -72,6 +74,6 @@ clean:
 
 install:
 	cp $(tools_out) $(install_path)/$(tools_install)
-	ln -s $(install_path)/$(tools_install) $(install_path)/uec
-	ln -s $(install_path)/$(tools_install) $(install_path)/mec
+	$(build_path)/$(tools_link) $(install_path)
+
 

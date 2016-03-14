@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# this section link the quick command to simple-tools
+
+if [ "$1" == "" ]; then
+    echo "link command require the install path"
+    exit
+fi
+
+installpath=$1
+tools=simple-tools
+
+function do_link() {
+dest=$1
+echo "do link: $dest"
+if [ -L $dest ]; then
+    rm $dest
+fi
+ln -s $installpath/$tools $dest
+}
+
+# sshfs mount
+do_link $installpath/m241
+
+# efs
+do_link $installpath/uec
+do_link $installpath/mec
+

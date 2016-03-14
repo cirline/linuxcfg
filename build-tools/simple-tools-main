@@ -132,6 +132,9 @@ case $cmd in
     "mec" )
         mount_ecryptfs
         ;;
+    "m241" )
+        sshfs_mount_group $cmd
+        ;;
     * )
         echo "unknow command!"
         st_help
