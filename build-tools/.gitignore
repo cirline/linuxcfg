@@ -1,3 +1,4 @@
 *.config
 *.out
+*.yy.c
 out

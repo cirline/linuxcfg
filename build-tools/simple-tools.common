@@ -1,0 +1,12 @@
+#!/bin/bash
+
+function echo_dbg() {
+if (( $tools_debug == 1)); then
+    echo -e "\033[36m*dbg_info: $1\033[0m"
+fi
+}
+
+function echo_err() {
+    echo -e "\033[31m*err_info: $1\033[0m"
+}
+

@@ -2,30 +2,49 @@
 
 # this section link the quick command to simple-tools
 
-if [ "$1" == "" ]; then
-    echo "link command require the install path"
-    exit
-fi
 
-installpath=$1
 tools=simple-tools
+print_help=0
+installpath=
 
 function do_link() {
-dest=$installpath/$1
-echo "do link: $dest"
-if [ -L $dest ]; then
-    rm $dest
+if (( $print_help == 1 )); then
+    # print help message
+    printf "%12s:\t%s\n" "$1" "$2"
+else
+    # install command link
+    if [ "$ nstallpath" == "" ]; then
+        echo_err "cannot create soft link, missing install path!"
+        exit
+    fi
+    dest=$installpath/$1
+    echo "do link: $dest"
+    if [ -L $dest ]; then
+        rm $dest
+    fi
+    ln -s $installpath/$tools $dest
 fi
-ln -s $installpath/$tools $dest
 }
 
+# create all command soft link
+function do_link_all() {
+
+if [[ $1 == "" || $1 == "help" ]]; then
+    print_help=1
+    echo " -- Usage: --"
+else
+    installpath=$2
+fi
+
 # sshfs mount
-do_link m241
+do_link m241 "mount server 241 workspace2"
 
 # efs
-do_link uec
-do_link mec
+do_link uec "umount efs"
+do_link mec "mount efs"
 
 # fastboot
-do_link flashboot
+do_link flashboot "fastboot flash boot"
+
+}
 
