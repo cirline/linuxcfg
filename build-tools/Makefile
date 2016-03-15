@@ -13,7 +13,7 @@ endef
 
 # make config file
 config_file		:= build.config
-defconfig_file	:= build_defconfig.mk
+defconfig_file	:= user/build_defconfig.mk
 config_exist	:= $(shell if [ -f $(config_file) ]; then echo 1; fi)
 
 ifdef config_exist
