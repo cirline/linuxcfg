@@ -12,3 +12,12 @@ sudo mount -t ecryptfs $efs_data_path $efs_mnt_path -o ecryptfs_cipher=aes -o ec
 
 }
 
+function quick_dot() {
+if [[ ! -f $1 ]]; then
+    echo_err "cannot found: $1"
+else
+    dot -Tpng $1 -O
+    eog $1.png &
+fi
+}
+
