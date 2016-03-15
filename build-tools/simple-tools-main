@@ -118,8 +118,7 @@ case $cmd in
         sshfs_mount_group $cmd
         ;;
     * )
-        echo "unknow command!"
-        st_help
+        echo "unknown command!"
         ;;
 esac
 

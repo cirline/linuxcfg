@@ -1,0 +1,6 @@
+out_path			?= $(build_path)/out
+efs_data_path	?= /opt/.d41d8cd98f00b204e9800998ecf8427e
+efs_mnt_path	?= /opt/e
+install_path		?= $(home_path)/tools
+tools_debug		?= 0
+
