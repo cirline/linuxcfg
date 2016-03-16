@@ -117,6 +117,9 @@ case $cmd in
     "m241" )
         sshfs_mount_group $cmd
         ;;
+    "cee" )
+        cd_ecryptfs_directory
+        ;;
     * )
         echo "unknown command!"
         ;;
