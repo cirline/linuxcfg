@@ -16,7 +16,7 @@ fi
 }
 
 function echo_err() {
-    echo -e "\033[31m*err_info: $1\033[0m"
+    echo -e "\033[31m ** error ** $1\033[0m"
 }
 
 function echo_success() {

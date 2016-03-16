@@ -39,9 +39,10 @@ fi
 # sshfs mount
 do_link m241 "mount server 241 workspace2"
 
-# efs
+# misc
 do_link uec "umount efs"
 do_link mec "mount efs"
+do_link ds  "show dot file image"
 
 # fastboot
 do_link flashboot "fastboot flash boot"

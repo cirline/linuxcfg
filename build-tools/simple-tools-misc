@@ -15,3 +15,12 @@ function cd_ecryptfs_directory() {
 cd $efs_mnt_path
 }
 
+function quick_dot() {
+if [[ ! -f $1 ]]; then
+    echo_err "cannot found: $1"
+else
+    dot -Tpng $1 -O
+    eog $1.png &
+fi
+}
+
