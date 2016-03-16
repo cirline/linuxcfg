@@ -39,11 +39,11 @@ tools_link		:= simple-tools.linkcommand
 objs	:=
 objs	+= $(tools_config)
 objs	+= simple-tools.common
-objs	+= simple-tools-misc
+objs	+= simple-tools.misc
 objs	+= simple-tools.mount
 objs	+= simple-tools.linkcommand
 objs	+= simple-tools.rawmode
-objs	+= simple-tools-main
+objs	+= simple-tools.main
 
 dirs	:=
 dirs	+= $(out_path)
