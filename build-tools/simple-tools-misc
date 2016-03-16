@@ -11,10 +11,6 @@ if [ ! -d $efs_mnt_path ]; then mkdir $efs_mnt_path; fi
 sudo mount -t ecryptfs $efs_data_path $efs_mnt_path -o ecryptfs_cipher=aes -o ecryptfs_key_bytes=16 -o ecryptfs_passthrough=n -o ecryptfs_enable_filename_crypto=y 
 }
 
-function cd_ecryptfs_directory() {
-cd $efs_mnt_path
-}
-
 function quick_dot() {
 if [[ ! -f $1 ]]; then
     echo_err "cannot found: $1"

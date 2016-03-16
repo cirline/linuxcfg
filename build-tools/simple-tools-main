@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # display all command
-# set -x
 
 cmd=`echo $0 | awk -F '/' '{print $NF}'`
 current_path=`pwd`
@@ -53,6 +52,9 @@ ln -s $cmd $run_path/adbsl
 ######################
 # starting simple-tools #
 ######################
+if (( tools_debug > 0 )); then
+set -x
+fi
 echo_dbg "input command: $cmd"
 case $cmd in
     "simple-tools" | "simple-tools.out" )
@@ -109,9 +111,6 @@ case $cmd in
         ;;
     "m241" )
         sshfs_mount_group $cmd
-        ;;
-    "cee" )
-        cd_ecryptfs_directory
         ;;
     * )
         echo "unknown command!"
