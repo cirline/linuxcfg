@@ -1,12 +1,25 @@
 #!/bin/bash
 
+# echo color
+# 31 red
+# 32 green
+# 33 yellow
+# 34 blue
+# 35 purple
+# 36 cyan
+# 37 white
+# 38 gray
 function echo_dbg() {
 if (( $tools_debug == 1)); then
-    echo -e "\033[36m*dbg_info: $1\033[0m"
+    echo -e "\033[38m*dbg_info: $1\033[0m"
 fi
 }
 
 function echo_err() {
     echo -e "\033[31m ** error ** $1\033[0m"
+}
+
+function echo_success() {
+    echo -e "\033[32m success: $1\033[0m"
 }
 

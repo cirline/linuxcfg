@@ -4,12 +4,14 @@ home_path	:= $$HOME
 
 # function
 define tools_inf
-@echo "\033[36minfo: \033[0m$(1)"
+@echo "\033[38minfo: \033[0m$(1)"
 endef
 
 define tools_err
 @echo "\033[31m error:\033[0m $(1)"
 endef
+
+echo_success	= @echo "\033[32m $(1) \033[0m"
 
 # make config file
 config_file		:= build.config
@@ -37,11 +39,11 @@ tools_link		:= simple-tools.linkcommand
 objs	:=
 objs	+= $(tools_config)
 objs	+= simple-tools.common
-objs	+= simple-tools-misc
+objs	+= simple-tools.misc
 objs	+= simple-tools.mount
 objs	+= simple-tools.linkcommand
 objs	+= simple-tools.rawmode
-objs	+= simple-tools-main
+objs	+= simple-tools.main
 
 dirs	:=
 dirs	+= $(out_path)
@@ -50,7 +52,7 @@ dirs	+= $(out_path)
 $(tools_out): $(build) $(dirs) $(config_file) $(objs)
 	$(build_path)/$(build) $@ $(objs)
 	chmod 755 $@
-	$(tools_inf) "all finish"
+	$(call echo_success, "make success")
 
 $(dirs):
 	$(tools_inf) "checking directory: "
