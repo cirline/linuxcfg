@@ -103,10 +103,10 @@ case $cmd in
     "ds" )
         quick_dot $@
         ;;
-    "uec" )
+    "ues" )
         umount_ecryptfs
         ;;
-    "mec" )
+    "mes" )
         mount_ecryptfs
         ;;
     "m241" )
