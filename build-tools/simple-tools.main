@@ -1,6 +1,12 @@
 #!/bin/bash
 
-# display all command
+#include "simple-tools.config"
+#include "simple-tools.common"
+#include "simple-tools.misc"
+#include "simple-tools.mount"
+#include "simple-tools.linkcommand"
+#include "simple-tools.rawmode"
+#include "simple-tools.android"
 
 cmd=`echo $0 | awk -F '/' '{print $NF}'`
 current_path=`pwd`

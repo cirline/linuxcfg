@@ -33,7 +33,7 @@ build_objs		:= build.l
 
 tools_install	:= simple-tools
 tools_out		:= $(tools_install).out
-tools_config	:= $(tools_install).config
+tools_config	:= simple-tools.config
 tools_link		:= simple-tools.linkcommand
 
 objs	:=
@@ -43,14 +43,16 @@ objs	+= simple-tools.misc
 objs	+= simple-tools.mount
 objs	+= simple-tools.linkcommand
 objs	+= simple-tools.rawmode
-objs	+= simple-tools.main
+objs	+= simple-tools.android
+
+mobj	:= simple-tools.main
 
 dirs	:=
 dirs	+= $(out_path)
 
 # begin build
-$(tools_out): $(build) $(dirs) $(config_file) $(objs)
-	$(build_path)/$(build) $@ $(objs)
+$(tools_out): $(build) $(dirs) $(config_file) $(objs) $(mobj)
+	$(build_path)/$(build) $@ $(mobj)
 	chmod 755 $@
 	$(call echo_success, "make success")
 
