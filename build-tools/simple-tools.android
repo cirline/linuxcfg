@@ -1,7 +1,10 @@
 #!/bin/bash
 
 function fastboot_flash_boot() {
-# rc=`adb devices`
-# echo "adb reboot bootloader = $rc"
+rc=`adb devices`
+echo "rc = $rc"
+adb reboot bootloader
+fastboot flash boot boot.img
+fastboot reboot
 }
 

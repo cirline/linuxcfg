@@ -94,17 +94,7 @@ case $cmd in
         make O=$outdir ARCH=arm CROSS_COMPILE=arm-eabi-
         ;;
     "flashboot" )
-        if (($# == 1)); then
-            adb -s 1a8d47f6 reboot bootloader
-            #fastboot flash boot boot.img
-            fastboot flash boot /home/chqw/workspace1/qcom/loong/out/msm8909/android/msm8909_android_highcha_p1/boot.img
-            fastboot reboot
-        else
-            adb reboot bootloader
-            #fastboot flash boot /home/chqw/workspace1/qcom/loong/out/msm8909/android/msm8909_android_highcha_p1/boot.img
-            fastboot flash boot boot.img
-            fastboot reboot
-        fi
+        fastboot_flash_boot
         ;;
     "ds" )
         quick_dot $@
