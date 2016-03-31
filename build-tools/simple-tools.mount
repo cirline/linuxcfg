@@ -4,8 +4,8 @@
 
 # usage: sshfs_mount username host remotepath locatepath
 function sshfs_mount() {
-if [ -d $4 ]; then
-    mkdir $1
+if [ ! -d $4 ]; then
+    mkdir $4
 fi
 
 echo "mount $3 -> $4"
