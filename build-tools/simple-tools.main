@@ -47,22 +47,17 @@ file_fspath=${sinput:_r_out_len}
 echo $file_fspath
 }
 
-#############################
-# create per tool soft link #
-#############################
-function st_link() {
-# echo "run path $run_path"
-ln -s $cmd $run_path/adbsl
-}
-
-######################
+#########################
 # starting simple-tools #
-######################
+#########################
 if (( tools_debug > 0 )); then
 set -x
 fi
 echo_dbg "input command: $cmd"
 case $cmd in
+	"kp" | "mvu" | "mvd" | "mvl" | "mvr" | "tpm")
+		vinp $cmd
+		;;
     "simple-tools" | "simple-tools.out" )
         simple_tools_raw_mode $@
         ;;

@@ -15,6 +15,10 @@ if (( $tools_debug == 1)); then
 fi
 }
 
+function echo_inf() {
+    echo -e "\033[34m $1\033[0m"
+}
+
 function echo_err() {
     echo -e "\033[31m ** error ** $1\033[0m"
 }

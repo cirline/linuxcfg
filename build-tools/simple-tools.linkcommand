@@ -13,7 +13,7 @@ if (( $print_help == 1 )); then
     printf "%12s:\t%s\n" "$1" "$2"
 else
     # install command link
-    if [ "$ nstallpath" == "" ]; then
+    if [ "$installpath" == "" ]; then
         echo_err "cannot create soft link, missing install path!"
         exit
     fi
@@ -46,6 +46,14 @@ do_link ds  "show dot file image"
 
 # fastboot
 do_link flashboot "fastboot flash boot"
+
+# android virtual input
+do_link kp	"input keyevent POWER"
+do_link tpm	"input tap middle"
+do_link mvu	"input swipe up"
+do_link mvd	"input swipe down"
+do_link mvl	"input swipe left"
+do_link mvr	"input swipe right"
 
 }
 

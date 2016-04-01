@@ -8,3 +8,40 @@ fastboot flash boot boot.img
 fastboot reboot
 }
 
+# virtual keyevent
+function vinp_key() {
+echo_inf "send key $1"
+adb shell input keyevent $1
+}
+
+# virtual swipe x_start y_start x_end y_end
+function vinp_swipe() {
+echo_inf "($1, $2) --> ($3, $4)"
+adb shell input swipe $1 $2 $3 $4
+}
+
+# virtual tap x_point y_point
+function vinp_tap() {
+echo_inf "($1, $2)"
+adb shell input tap $1 $2
+}
+
+function vinp() {
+case $1 in
+	"kp" )
+		vinp_key POWER;;
+	"tpm" )
+		vinp_tap 200 400;;
+	"mvu" )
+		vinp_swipe 100 800 100 100;;
+	"mvd" )
+		vinp_swipe 100 100 100 800;;
+	"mvl" )
+		vinp_swipe 400 100 100 100;;
+	"mvr" )
+		vinp_swipe 100 100 400 100;;
+	* )
+		echo_err "unknown vinp $1";;
+esac
+}
+
