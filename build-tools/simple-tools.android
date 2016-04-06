@@ -8,6 +8,19 @@ fastboot flash boot boot.img
 fastboot reboot
 }
 
+# android phone setting
+function android_phone_setting() {
+echo_dbg "aps: $android_phone_setting"
+if [ -f $android_phone_setting ]; then
+	. $android_phone_setting
+	echo_inf "read aps done!"
+else
+	echo_inf "no aps file, use default setting"
+	export ST_ANDROID_SCREEN_X=1080
+	export ST_ANDROID_SCREEN_Y=1920
+fi
+}
+
 # virtual keyevent
 function vinp_key() {
 echo_inf "send key $1"
@@ -16,30 +29,56 @@ adb shell input keyevent $1
 
 # virtual swipe x_start y_start x_end y_end
 function vinp_swipe() {
-echo_inf "($1, $2) --> ($3, $4)"
+echo_inf "swipe ($1, $2) --> ($3, $4)"
 adb shell input swipe $1 $2 $3 $4
 }
 
 # virtual tap x_point y_point
 function vinp_tap() {
-echo_inf "($1, $2)"
+echo_inf "tap ($1, $2)"
 adb shell input tap $1 $2
 }
 
 function vinp() {
+echo_dbg "vinp argument: $#($*)"
+android_phone_setting
 case $1 in
-	"kp" )
-		vinp_key POWER;;
-	"tpm" )
-		vinp_tap 200 400;;
+	"kp" )	vinp_key POWER;;
+	"kb" )	vinp_key BACK;;
+	"ait" )
+		if (( $# == 3 )); then
+			(( x_touch = $2 % $ST_ANDROID_SCREEN_X ))
+			(( y_touch = $3 % $ST_ANDROID_SCREEN_Y ))
+		else
+			(( x_touch = $ST_ANDROID_SCREEN_X / 2 ))
+			(( y_touch = $ST_ANDROID_SCREEN_Y / 2 ))
+		fi
+		vinp_tap $x_touch $y_touch
+		;;
 	"mvu" )
-		vinp_swipe 100 800 100 100;;
+		((line_x = $ST_ANDROID_SCREEN_X / 2))
+		((ys = $ST_ANDROID_SCREEN_Y / 4 * 3))
+		((ye = $ST_ANDROID_SCREEN_Y / 4 * 1))
+		vinp_swipe $line_x $ys $line_x $ye
+		;;
 	"mvd" )
-		vinp_swipe 100 100 100 800;;
+		((line_x = $ST_ANDROID_SCREEN_X / 2))
+		((ye = $ST_ANDROID_SCREEN_Y / 4 * 3))
+		((ys = $ST_ANDROID_SCREEN_Y / 4 * 1))
+		vinp_swipe $line_x $ys $line_x $ye
+		;;
 	"mvl" )
-		vinp_swipe 400 100 100 100;;
+		((line_y = $ST_ANDROID_SCREEN_Y / 2))
+		((xs = $ST_ANDROID_SCREEN_X / 4 * 3))
+		((xe = $ST_ANDROID_SCREEN_X / 4 * 1))
+		vinp_swipe $xs $line_y $xe $line_y
+		;;
 	"mvr" )
-		vinp_swipe 100 100 400 100;;
+		((line_y = $ST_ANDROID_SCREEN_Y / 2))
+		((xe = $ST_ANDROID_SCREEN_X / 4 * 3))
+		((xs = $ST_ANDROID_SCREEN_X / 4 * 1))
+		vinp_swipe $xs $line_y $xe $line_y
+		;;
 	* )
 		echo_err "unknown vinp $1";;
 esac

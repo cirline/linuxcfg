@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# debug level
+# 0: err, 1: inf, 2: dbg, 3: setx
+function debug_init() {
+if (( $tools_debug >= 3 )); then
+	set -x
+fi
+}
+
 # echo color
 # 31 red
 # 32 green
@@ -10,13 +18,15 @@
 # 37 white
 # 38 gray
 function echo_dbg() {
-if (( $tools_debug == 1)); then
-    echo -e "\033[38m*dbg_info: $1\033[0m"
+if (( $tools_debug >= 2)); then
+	echo -e "\033[32m debug~~ \033[0m $1"
 fi
 }
 
 function echo_inf() {
-    echo -e "\033[34m $1\033[0m"
+if (( $tools_debug >= 1)); then
+	echo -e "\033[34m $1\033[0m"
+fi
 }
 
 function echo_err() {

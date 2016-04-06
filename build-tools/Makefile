@@ -66,6 +66,7 @@ $(tools_config): $(config_file)
 	@echo "tools_debug=$(tools_debug)" >> $@
 	@echo "efs_data_path=$(efs_data_path)" >> $@
 	@echo "efs_mnt_path=$(efs_mnt_path)" >> $@
+	@echo "android_phone_setting=$(android_phone_setting)" >> $@
 
 config: $(config_file)
 

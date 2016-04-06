@@ -50,14 +50,10 @@ echo $file_fspath
 #########################
 # starting simple-tools #
 #########################
-if (( tools_debug > 0 )); then
-set -x
-fi
-echo_dbg "input command: $cmd"
+debug_init
+echo_dbg "command $cmd, argument $*"
 case $cmd in
-	"kp" | "mvu" | "mvd" | "mvl" | "mvr" | "tpm")
-		vinp $cmd
-		;;
+	"kb" | "kp" | "mvu" | "mvd" | "mvl" | "mvr" | "ait" ) vinp $cmd $*;;
     "simple-tools" | "simple-tools.out" )
         simple_tools_raw_mode $@
         ;;
