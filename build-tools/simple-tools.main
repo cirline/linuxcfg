@@ -53,7 +53,7 @@ echo $file_fspath
 debug_init
 echo_dbg "command $cmd, argument $*"
 case $cmd in
-	"kb" | "kp" | "mvu" | "mvd" | "mvl" | "mvr" | "ait" ) vinp $cmd $*;;
+	"kh" | "kb" | "kp" | "mvu" | "mvd" | "mvl" | "mvr" | "ait" ) vinp $cmd $*;;
     "simple-tools" | "simple-tools.out" )
         simple_tools_raw_mode $@
         ;;

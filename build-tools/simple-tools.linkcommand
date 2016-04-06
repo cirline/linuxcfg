@@ -50,6 +50,7 @@ do_link flashboot "fastboot flash boot"
 # android virtual input
 do_link kp	"input keyevent POWER"
 do_link kb	"android input keyevent BACK"
+do_link kh	"android input keyevent HOME"
 do_link ait	"android input tap"
 do_link mvu	"input swipe up"
 do_link mvd	"input swipe down"

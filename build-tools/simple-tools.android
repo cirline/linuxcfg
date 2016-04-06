@@ -10,12 +10,11 @@ fastboot reboot
 
 # android phone setting
 function android_phone_setting() {
-echo_dbg "aps: $android_phone_setting"
 if [ -f $android_phone_setting ]; then
 	. $android_phone_setting
-	echo_inf "read aps done!"
+	echo_dbg "read aps($android_phone_setting) done!"
 else
-	echo_inf "no aps file, use default setting"
+	echo_dbg "no aps($android_phone_setting), use default"
 	export ST_ANDROID_SCREEN_X=1080
 	export ST_ANDROID_SCREEN_Y=1920
 fi
@@ -45,10 +44,14 @@ android_phone_setting
 case $1 in
 	"kp" )	vinp_key POWER;;
 	"kb" )	vinp_key BACK;;
+	"kh" )	vinp_key HOME;;
 	"ait" )
 		if (( $# == 3 )); then
 			(( x_touch = $2 % $ST_ANDROID_SCREEN_X ))
 			(( y_touch = $3 % $ST_ANDROID_SCREEN_Y ))
+		elif (( "$#" == 2 )); then
+			vinp_hw_se $2
+			exit
 		else
 			(( x_touch = $ST_ANDROID_SCREEN_X / 2 ))
 			(( y_touch = $ST_ANDROID_SCREEN_Y / 2 ))
@@ -69,18 +72,37 @@ case $1 in
 		;;
 	"mvl" )
 		((line_y = $ST_ANDROID_SCREEN_Y / 2))
-		((xs = $ST_ANDROID_SCREEN_X / 4 * 3))
-		((xe = $ST_ANDROID_SCREEN_X / 4 * 1))
+		((xs = $ST_ANDROID_SCREEN_X / 5 * 4))
+		((xe = $ST_ANDROID_SCREEN_X / 5 * 1))
 		vinp_swipe $xs $line_y $xe $line_y
 		;;
 	"mvr" )
 		((line_y = $ST_ANDROID_SCREEN_Y / 2))
-		((xe = $ST_ANDROID_SCREEN_X / 4 * 3))
-		((xs = $ST_ANDROID_SCREEN_X / 4 * 1))
+		((xe = $ST_ANDROID_SCREEN_X / 5 * 4))
+		((xs = $ST_ANDROID_SCREEN_X / 5 * 1))
 		vinp_swipe $xs $line_y $xe $line_y
 		;;
 	* )
 		echo_err "unknown vinp $1";;
+esac
+}
+
+function vinp_hw_se() {
+echo_dbg "vinp_hw_se command ($1)"
+case $1 in
+	"pwd" )
+		echo_inf "hw password"
+		ait 900 1160
+		ait 900 1540
+		ait 900 1340
+		ait 900 1540
+		;;
+	"n1" )	ait 155 1670;;
+	"n2" )	ait 415 1670;;
+	"n3" )	ait 660 1670;;
+	"n4" )	ait 975 1670;;
+	"help" | *)
+		echo "ait [pwd|n[1234]]";;
 esac
 }
 

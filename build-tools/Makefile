@@ -3,14 +3,8 @@ build_path	:= $(shell pwd)
 home_path	:= $$HOME
 
 # function
-define tools_inf
-@echo "\033[38minfo: \033[0m$(1)"
-endef
-
-define tools_err
-@echo "\033[31m error:\033[0m $(1)"
-endef
-
+echo_info	= @echo "\033[34m $(1) \033[0m"
+echo_err	= @echo "\033[31m $(1) \033[0m"
 echo_success	= @echo "\033[32m $(1) \033[0m"
 
 # make config file
@@ -22,7 +16,7 @@ ifdef config_exist
 include $(config_file)
 else
 config_error:
-	$(tools_err) "cannot find $(config_file)"
+	$(call echo_err, "cannot find $(config_file)")
 	make defconfig
 endif
 
@@ -57,11 +51,11 @@ $(tools_out): $(build) $(dirs) $(config_file) $(objs) $(mobj)
 	$(call echo_success, "make success")
 
 $(dirs):
-	$(tools_inf) "checking directory: "
+	$(call echo_info, "checking directory")
 	@if [ ! -d $(out_path) ]; then mkdir $(out_path); fi
 
 $(tools_config): $(config_file)
-	$(tools_inf) "create simple-tools config"
+	$(call echo_info, "create simple-tools config")
 	@echo "#!/bin/bash" > $@
 	@echo "tools_debug=$(tools_debug)" >> $@
 	@echo "efs_data_path=$(efs_data_path)" >> $@
@@ -71,11 +65,11 @@ $(tools_config): $(config_file)
 config: $(config_file)
 
 $(config_file): $(defconfig_file)
-	$(tools_inf) "$(defconfig_file) is changed ~ "
+	$(call echo_info, "$(defconfig_file) is changed ~ ")
 	cat $(defconfig_file) >> $(config_file)
 
 defconfig: $(defconfig_file)
-	$(tools_inf) "copy default config file: "
+	$(call echo_info, "copy default config file")
 	cp $(defconfig_file) $(config_file)
 
 $(build): build.l
