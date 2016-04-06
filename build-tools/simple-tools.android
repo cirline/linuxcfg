@@ -102,7 +102,7 @@ case $1 in
 	"n3" )	ait 660 1670;;
 	"n4" )	ait 975 1670;;
 	"help" | *)
-		echo "ait [pwd|n[1234]]";;
+		echo "pwd|n[1234]";;
 esac
 }
 
