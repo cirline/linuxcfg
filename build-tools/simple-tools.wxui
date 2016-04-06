@@ -1,0 +1,51 @@
+#!/usr/bin/env python
+
+import wx
+
+class main_window(wx.Frame):
+    """ overide __init___ """
+    def __init__(self, parent, title):
+        wx.Frame.__init__(self, parent, title = title, size = (400, 200))
+
+        """ top sizer """
+        self.sizer_top = wx.BoxSizer(wx.VERTICAL)
+        self.SetSizer(self.sizer_top)
+
+        """ line: text """
+        self.sizer_text = wx.BoxSizer(wx.HORIZONTAL)
+        self.sizer_top.Add(self.sizer_text, 1, wx.EXPAND)
+
+        self.show_text = wx.TextCtrl(self, pos = (0, 0), size = (400, 100), style = wx.TE_MULTILINE | wx.TE_READONLY)
+        self.sizer_text.Add(self.show_text, 1, wx.EXPAND)
+
+        """ line1: button """
+        self.sizer_l1 = wx.BoxSizer(wx.HORIZONTAL)
+        self.sizer_top.Add(self.sizer_l1, 1, wx.EXPAND)
+        btn_power = wx.Button(self, -1, "power")
+        self.sizer_l1.Add(btn_power, 1, wx.EXPAND)
+        btn_home = wx.Button(self, -1, "home")
+        self.sizer_l1.Add(btn_home, 1, wx.EXPAND)
+        btn_back = wx.Button(self, -1, "back")
+        self.sizer_l1.Add(btn_back, 1, wx.EXPAND)
+
+        """ action """
+        self.Bind(wx.EVT_BUTTON, self.evt_power, btn_power)
+        self.Bind(wx.EVT_BUTTON, self.evt_home, btn_home)
+        self.Bind(wx.EVT_BUTTON, self.evt_back, btn_back)
+
+    def evt_power(self, event):
+        self.show_text.SetValue("power event")
+
+    def evt_home(self, event):
+        self.show_text.SetValue("home event")
+
+    def evt_back(self, event):
+        self.show_text.SetValue("back event")
+
+""" main """
+app = wx.App(False)
+frame = main_window(None, "simple tools")
+frame.Show()
+
+app.MainLoop()
+
