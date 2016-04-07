@@ -4,6 +4,10 @@
 %x IFILE
 %x COMMENT
 
+%x PYTHON_SCRIPT
+%x PS_LCOMMENT
+%x PS_MCOMMENT
+
 %{
 struct ifile_desc {
     struct ifile_desc *prev;
@@ -15,7 +19,17 @@ struct ifile_desc *cur;
 %}
 
 %%
-^"#!/bin/bash"[ \t]*\n	{ BEGIN SHELL_SCRIPT; /* parse bash shell script */ }
+^"#!/bin/bash"[ \t]*\n	{
+	/* parse bash shell script */
+	fprintf(yyout, "#!/bin/bash\n");
+	BEGIN SHELL_SCRIPT;
+}
+
+^"#!/usr/bin/env python"[ \t]*\n	{
+	/* parse python script */
+	fprintf(yyout, "#!/usr/bin/env python\n");
+	BEGIN PYTHON_SCRIPT;
+}
 
 <SHELL_SCRIPT>^"#include"[ \t]*\"	{ BEGIN IFILE; /* do include */}
 
@@ -40,6 +54,25 @@ struct ifile_desc *cur;
 <COMMENT>.      {}
 
 <COMMENT>\n     { BEGIN SHELL_SCRIPT; }
+
+<PYTHON_SCRIPT>^[ \t]*"#"	{ BEGIN PS_LCOMMENT; }
+
+<PYTHON_SCRIPT>^[ \t]*\"\"\"	{ BEGIN PS_MCOMMENT; }
+
+<PYTHON_SCRIPT><<EOF>>		{ if(popfile() != 0) yyterminate(); /* file eof */ }
+
+<PYTHON_SCRIPT>^[ \t]*\n	{ /* nothing */ }
+
+<PYTHON_SCRIPT>.|\n	{ fprintf(yyout, "%s", yytext); /* copy */ }
+
+<PS_LCOMMENT>.		{ /* nothing */ }
+
+<PS_LCOMMENT>\n		{ BEGIN PYTHON_SCRIPT; }
+
+<PS_MCOMMENT>\"\"\"[ \t]*\n	{ BEGIN PYTHON_SCRIPT; }
+
+<PS_MCOMMENT>.		{ /* nothing */ }
+
 %%
 
 yyerror(char *msg)
@@ -121,8 +154,6 @@ int main(int argc, char *argv[])
         perror("fopen out error: ");
         return -1;
     }
-
-    fprintf(yyout, "#!/bin/bash\n");
 
     for(i = 2; i < argc; i++) {
         if(newfile(argv[i]) < 0)

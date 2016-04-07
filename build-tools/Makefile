@@ -59,7 +59,8 @@ $(tools_out): $(build) $(dirs) $(config_file) $(objs) $(mobj)
 	$(call echo_success, "make $(tools_out) success")
 
 $(ui_out): $(ui_objs)
-	cp $(ui_objs) $(ui_out)
+	$(build_path)/$(build) $@ $(ui_objs)
+	chmod 755 $@
 	$(call echo_success, "make $(ui_out) success")
 
 $(dirs):
