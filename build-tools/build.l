@@ -1,5 +1,6 @@
 %option noyywrap
 
+%x SHELL_SCRIPT
 %x IFILE
 %x COMMENT
 
@@ -11,31 +12,34 @@ struct ifile_desc {
 };
 
 struct ifile_desc *cur;
-
 %}
 
 %%
-^"#include"[ \t]*\"   { BEGIN IFILE; }
+^"#!/bin/bash"[ \t]*\n	{ BEGIN SHELL_SCRIPT; /* parse bash shell script */ }
 
-^[ \t]*"#"   { BEGIN COMMENT; }
+<SHELL_SCRIPT>^"#include"[ \t]*\"	{ BEGIN IFILE; /* do include */}
+
+<SHELL_SCRIPT>^[ \t]*"#"		{ BEGIN COMMENT; /* do comment */ }
+
+<SHELL_SCRIPT><<EOF>>	{ if(popfile() != 0) yyterminate(); /* file eof */ }
+
+<SHELL_SCRIPT>^[ \t]*	{ /* nothing */ }
+
+<SHELL_SCRIPT>^[ \t]*\n	{ /* nothing */ }
+
+<SHELL_SCRIPT>.|\n	{ fprintf(yyout, "%s", yytext); /* copy */ }
 
 <IFILE>[^ \t\"]*        {
     { int c; while((c = input()) && c != '\n'); }   // clear tail
     if(newfile(yytext) < 0) yyterminate();
-    BEGIN INITIAL;
+    BEGIN SHELL_SCRIPT;
 }
 
 <IFILE>.|\n     { yyerror("include file name error!"); }
 
 <COMMENT>.      {}
 
-<COMMENT>\n     { BEGIN INITIAL; }
-
-<<EOF>>     { if(popfile() != 0) yyterminate(); }
-
-^[ \t]*         {}
-^[ \t]*\n       {}
-.|\n            { fprintf(yyout, "%s", yytext); }
+<COMMENT>\n     { BEGIN SHELL_SCRIPT; }
 %%
 
 yyerror(char *msg)
