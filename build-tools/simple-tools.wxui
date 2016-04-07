@@ -37,18 +37,18 @@ class main_window(wx.Frame):
         self.sizer_top.Add(self.sizer_swipe, 0, wx.EXPAND)
         tip = wx.StaticText(self, label = "swp:")
         self.sizer_swipe.Add(tip, 1, wx.EXPAND)
-        self.btn_swipe_up = wx.Button(self, -1, "mvu")
-        self.btn_swipe_down = wx.Button(self, -1, "mvd")
-        self.btn_swipe_left = wx.Button(self, -1, "mvl")
-        self.btn_swipe_right = wx.Button(self, -1, "mvr")
+        self.btn_swipe_up = wx.Button(self, wx.ID_UP, "mvu")
+        self.btn_swipe_down = wx.Button(self, wx.ID_DOWN, "mvd")
+        self.btn_swipe_left = wx.Button(self, wx.ID_FORWARD, "mvl")
+        self.btn_swipe_right = wx.Button(self, wx.ID_BACKWARD, "mvr")
         self.sizer_swipe.Add(self.btn_swipe_up, 1, wx.EXPAND)
         self.sizer_swipe.Add(self.btn_swipe_down, 1, wx.EXPAND)
         self.sizer_swipe.Add(self.btn_swipe_left, 1, wx.EXPAND)
         self.sizer_swipe.Add(self.btn_swipe_right, 1, wx.EXPAND)
-        self.Bind(wx.EVT_BUTTON, self.evt_swipe, self.btn_swipe_up)
-        self.Bind(wx.EVT_BUTTON, self.evt_swipe, self.btn_swipe_down)
-        self.Bind(wx.EVT_BUTTON, self.evt_swipe, self.btn_swipe_left)
-        self.Bind(wx.EVT_BUTTON, self.evt_swipe, self.btn_swipe_right)
+        self.Bind(wx.EVT_BUTTON, self.evt.swipe, self.btn_swipe_up)
+        self.Bind(wx.EVT_BUTTON, self.evt.swipe, self.btn_swipe_down)
+        self.Bind(wx.EVT_BUTTON, self.evt.swipe, self.btn_swipe_left)
+        self.Bind(wx.EVT_BUTTON, self.evt.swipe, self.btn_swipe_right)
 
         """ action """
         self.Bind(wx.EVT_BUTTON, self.evt_power, btn_power)
@@ -105,28 +105,18 @@ class main_window(wx.Frame):
         self.insert_menu_item(key_menu, wx.NewId(), "Power\tP", "power key", self.evt_power)
         self.insert_menu_item(key_menu, wx.NewId(), "Home\tH", "home key", self.evt.home)
 
+        swipe_menu = wx.Menu()
+        self.insert_menu_item(swipe_menu, wx.ID_UP, "Up\tCtrl+J", "swipe up", self.evt.swipe)
+        self.insert_menu_item(swipe_menu, wx.ID_DOWN, "Down\tCtrl+K", "swipe down", self.evt.swipe)
+        self.insert_menu_item(swipe_menu, wx.ID_FORWARD, "Forward/Left\tCtrl+H", "swipe left", self.evt.swipe)
+        self.insert_menu_item(swipe_menu, wx.ID_BACKWARD, "Backward/Right\tCtrl+L", "swipe right", self.evt.swipe)
+
         menubar = wx.MenuBar()
         menubar.Append(tool_menu, "tool")
         menubar.Append(key_menu, "Key")
+        menubar.Append(swipe_menu, "Swipe")
 
         return menubar
-
-    def evt_swipe(self, event):
-        if event.GetId() == self.btn_swipe_up.GetId():
-            self.show_tip("swipe up")
-            self.show_tip("swipe up")
-            os.system("mvu")
-        elif event.GetId() == self.btn_swipe_down.GetId():
-            self.show_tip("swipe down")
-            os.system("mvd")
-        elif event.GetId() == self.btn_swipe_left.GetId():
-            self.show_tip("swipe left")
-            os.system("mvl")
-        elif event.GetId() == self.btn_swipe_right.GetId():
-            self.show_tip("swipe right")
-            os.system("mvr")
-        else:
-            self.show_tip("unknown swipe")
 
     def evt_hwother(self, event):
         if event.GetId() == self.btn_ohr_pwd.GetId():
@@ -173,6 +163,23 @@ class evt_cls:
     def close(self, event):
         print "bye."
         self.parent.Close()
+
+    """ swipe event """
+    def swipe(self, event):
+        if event.GetId() == wx.ID_UP:
+            os.system("mvu")
+            self.show_tip("up")
+        elif event.GetId() == wx.ID_DOWN:
+            os.system("mvd")
+            self.show_tip("down")
+        elif event.GetId() == wx.ID_FORWARD:
+            os.system("mvl")
+            self.show_tip("left")
+        elif event.GetId() == wx.ID_BACKWARD:
+            os.system("mvr")
+            self.show_tip("right")
+        else:
+            self.show_tip("unknown swipe")
 
     def test(self, event):
         print self
