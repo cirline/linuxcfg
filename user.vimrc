@@ -76,3 +76,5 @@ let Tlist_Auto_Open=0
 
 map  :w <CR> :!dot -Tpng % -O <CR> :!eog %.png & <CR>
 
+map <F5> :!./% <CR>
+
