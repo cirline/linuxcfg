@@ -21,6 +21,14 @@ class main_window(wx.Frame):
         btn_restart_adb = wx.Button(self, -1, "restart adb")
         self.sizer_system.Add(btn_restart_adb, 1, wx.EXPAND)
         self.Bind(wx.EVT_BUTTON, self.evt_restart_adb, btn_restart_adb)
+        # adb net
+        btn = wx.Button(self, -1, "adbnet")
+        self.sizer_system.Add(btn, 1, wx.EXPAND)
+        self.Bind(wx.EVT_BUTTON, self.evt.adb_net, btn)
+        # adb net connect
+        btn = wx.Button(self, -1, "adbconn")
+        self.sizer_system.Add(btn, 1, wx.EXPAND)
+        self.Bind(wx.EVT_BUTTON, self.evt.adb_net_connect, btn)
 
         """ line1: android key """
         self.sizer_l1 = wx.BoxSizer(wx.HORIZONTAL)
@@ -99,17 +107,18 @@ class main_window(wx.Frame):
 
     def init_menubar(self):
         tool_menu = wx.Menu()
+        self.insert_menu_item(tool_menu, wx.ID_HELP, "Help\tCtrl+H", "help", self.evt.help)
         self.insert_menu_item(tool_menu, wx.ID_CLOSE, "Close\tCtrl+X", "close", self.evt.close)
 
         key_menu = wx.Menu()
         self.insert_menu_item(key_menu, wx.NewId(), "Power\tP", "power key", self.evt_power)
-        self.insert_menu_item(key_menu, wx.NewId(), "Home\tH", "home key", self.evt.home)
+        self.insert_menu_item(key_menu, wx.NewId(), "Home\tM", "home key", self.evt.home)
 
         swipe_menu = wx.Menu()
-        self.insert_menu_item(swipe_menu, wx.ID_UP, "Up\tCtrl+J", "swipe up", self.evt.swipe)
-        self.insert_menu_item(swipe_menu, wx.ID_DOWN, "Down\tCtrl+K", "swipe down", self.evt.swipe)
-        self.insert_menu_item(swipe_menu, wx.ID_FORWARD, "Forward/Left\tCtrl+H", "swipe left", self.evt.swipe)
-        self.insert_menu_item(swipe_menu, wx.ID_BACKWARD, "Backward/Right\tCtrl+L", "swipe right", self.evt.swipe)
+        self.insert_menu_item(swipe_menu, wx.ID_UP, "Up\tJ", "swipe up", self.evt.swipe)
+        self.insert_menu_item(swipe_menu, wx.ID_DOWN, "Down\tK", "swipe down", self.evt.swipe)
+        self.insert_menu_item(swipe_menu, wx.ID_FORWARD, "Forward/Left\tH", "swipe left", self.evt.swipe)
+        self.insert_menu_item(swipe_menu, wx.ID_BACKWARD, "Backward/Right\tL", "swipe right", self.evt.swipe)
 
         menubar = wx.MenuBar()
         menubar.Append(tool_menu, "tool")
@@ -160,6 +169,20 @@ class evt_cls:
         os.system("kh")
         self.show_tip("home")
 
+    def help(self, event):
+        help_msg = \
+                "P\t\tPower\n"\
+                "M\t\tHome\n"\
+                "K\t\tUp\n"\
+                "J\t\tDown\n"\
+                "H\t\tBackward\Left\n"\
+                "L\t\tForward\Right\n"\
+                "C-X\t\tExit\n"\
+                "C-H\t\tHelp\n"
+        dlg = wx.MessageDialog(self.parent, help_msg, "Shortcut", wx.OK)
+        dlg.ShowModal()
+        dlg.Destroy()
+
     def close(self, event):
         print "bye."
         self.parent.Close()
@@ -180,6 +203,21 @@ class evt_cls:
             self.show_tip("right")
         else:
             self.show_tip("unknown swipe")
+
+    """ adb """
+    def adb_net(self, event):
+        rc = os.popen("adb shell ip addr | awk -F ' ' '/wlan/' | awk -F ' ' '/inet/{print $2}' | awk -F '/' '{print $1}'")
+        ip = rc.read()
+        ip = ip.replace("\n", "")
+        os.system("adb tcpip 8680")
+        self.parent.adb_ip = ip
+        print "ip:", self.parent.adb_ip
+
+    def adb_net_connect(self, event):
+        command = "adb connect " + self.parent.adb_ip + ":8680"
+        print "command:", command
+        os.system(command)
+        os.system("adb devices")
 
     def test(self, event):
         print self
