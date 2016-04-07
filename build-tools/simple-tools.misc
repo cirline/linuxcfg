@@ -20,3 +20,8 @@ else
 fi
 }
 
+# start simple-tools ui
+function tools_ui() {
+python $run_path/simple-tools.ui
+}
+

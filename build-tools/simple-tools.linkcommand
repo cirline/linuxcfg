@@ -43,6 +43,7 @@ do_link m241 "mount 241 server workspace2"
 do_link ues "umount efs"
 do_link mes "mount efs"
 do_link ds  "show dot file image"
+do_link sui	"start tools ui"
 
 # fastboot
 do_link flashboot "fastboot flash boot"

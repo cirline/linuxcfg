@@ -94,16 +94,16 @@ case $1 in
 		ait 900 1340
 		ait 900 1540
 		;;
-	"n1" )
+	"n0" )
 		ait 155 1670;;
-	"n2" )
+	"n1" )
 		ait 415 1670;;
-	"n3" )
+	"n2" )
 		ait 660 1670;;
-	"n4" )
+	"n3" )
 		ait 975 1670;;
 	"help_tail" )
-		echo "help|pwd|n[1234]";;
+		echo "help|pwd|n[0123]";;
 	"help" | *)
 		echo "usage: hw `hw help_tail`";;
 esac

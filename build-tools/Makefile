@@ -26,9 +26,11 @@ build			:= build.out
 build_objs		:= build.l
 
 tools_install	:= simple-tools
-tools_out		:= $(tools_install).out
+tools_out	:= $(tools_install).out
+ui_install	:= $(tools_install).ui
+ui_out		:= $(ui_install).out
 tools_config	:= simple-tools.config
-tools_link		:= simple-tools.linkcommand
+tools_link	:= simple-tools.linkcommand
 
 objs	:=
 objs	+= $(tools_config)
@@ -41,14 +43,24 @@ objs	+= simple-tools.android
 
 mobj	:= simple-tools.main
 
+ui_objs	:=
+ui_objs += simple-tools.wxui
+
 dirs	:=
 dirs	+= $(out_path)
+
+all: $(tools_out) $(ui_out)
+	$(call echo_success, "all finish")
 
 # begin build
 $(tools_out): $(build) $(dirs) $(config_file) $(objs) $(mobj)
 	$(build_path)/$(build) $@ $(mobj)
 	chmod 755 $@
-	$(call echo_success, "make success")
+	$(call echo_success, "make $(tools_out) success")
+
+$(ui_out): $(ui_objs)
+	cp $(ui_objs) $(ui_out)
+	$(call echo_success, "make $(ui_out) success")
 
 $(dirs):
 	$(call echo_info, "checking directory")
@@ -86,5 +98,5 @@ clean:
 install:
 	cp $(tools_out) $(install_path)/$(tools_install)
 	$(install_path)/$(tools_install) clink $(install_path)
-
+	cp $(ui_out) $(install_path)/$(ui_install)
 

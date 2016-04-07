@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import wx
+import os
 
 class main_window(wx.Frame):
     """ overide __init___ """
@@ -13,14 +14,22 @@ class main_window(wx.Frame):
 
         """ line: text """
         self.sizer_text = wx.BoxSizer(wx.HORIZONTAL)
-        self.sizer_top.Add(self.sizer_text, 1, wx.EXPAND)
+        self.sizer_top.Add(self.sizer_text, 0, wx.EXPAND)
 
-        self.show_text = wx.TextCtrl(self, pos = (0, 0), size = (400, 100), style = wx.TE_MULTILINE | wx.TE_READONLY)
-        self.sizer_text.Add(self.show_text, 1, wx.EXPAND)
+        self.show_text = wx.TextCtrl(self, pos = (0, 0), size = (400, 40), style = wx.TE_MULTILINE | wx.TE_READONLY)
+        self.sizer_text.Add(self.show_text, 0, wx.EXPAND)
 
-        """ line1: button """
+        """ line: system """
+        self.sizer_system = wx.BoxSizer(wx.HORIZONTAL)
+        self.sizer_top.Add(self.sizer_system, 0, wx.EXPAND)
+        # restart adb
+        btn_restart_adb = wx.Button(self, -1, "restart adb")
+        self.sizer_system.Add(btn_restart_adb, 1, wx.EXPAND)
+        self.Bind(wx.EVT_BUTTON, self.evt_restart_adb, btn_restart_adb)
+
+        """ line1: android key """
         self.sizer_l1 = wx.BoxSizer(wx.HORIZONTAL)
-        self.sizer_top.Add(self.sizer_l1, 1, wx.EXPAND)
+        self.sizer_top.Add(self.sizer_l1, 0, wx.EXPAND)
         btn_power = wx.Button(self, -1, "power")
         self.sizer_l1.Add(btn_power, 1, wx.EXPAND)
         btn_home = wx.Button(self, -1, "home")
@@ -28,19 +37,97 @@ class main_window(wx.Frame):
         btn_back = wx.Button(self, -1, "back")
         self.sizer_l1.Add(btn_back, 1, wx.EXPAND)
 
+        """ line: android swipe """
+        self.sizer_swipe = wx.BoxSizer(wx.HORIZONTAL)
+        self.sizer_top.Add(self.sizer_swipe, 0, wx.EXPAND)
+        tip = wx.StaticText(self, label = "swp:")
+        self.sizer_swipe.Add(tip, 1, wx.EXPAND)
+        self.btn_swipe_up = wx.Button(self, -1, "mvu")
+        self.btn_swipe_down = wx.Button(self, -1, "mvd")
+        self.btn_swipe_left = wx.Button(self, -1, "mvl")
+        self.btn_swipe_right = wx.Button(self, -1, "mvr")
+        self.sizer_swipe.Add(self.btn_swipe_up, 1, wx.EXPAND)
+        self.sizer_swipe.Add(self.btn_swipe_down, 1, wx.EXPAND)
+        self.sizer_swipe.Add(self.btn_swipe_left, 1, wx.EXPAND)
+        self.sizer_swipe.Add(self.btn_swipe_right, 1, wx.EXPAND)
+        self.Bind(wx.EVT_BUTTON, self.evt_swipe, self.btn_swipe_up)
+        self.Bind(wx.EVT_BUTTON, self.evt_swipe, self.btn_swipe_down)
+        self.Bind(wx.EVT_BUTTON, self.evt_swipe, self.btn_swipe_left)
+        self.Bind(wx.EVT_BUTTON, self.evt_swipe, self.btn_swipe_right)
+
         """ action """
         self.Bind(wx.EVT_BUTTON, self.evt_power, btn_power)
         self.Bind(wx.EVT_BUTTON, self.evt_home, btn_home)
         self.Bind(wx.EVT_BUTTON, self.evt_back, btn_back)
 
+        """ line: hw command """
+        # navigation ico
+        self.sizer_hwc = wx.BoxSizer(wx.HORIZONTAL)
+        self.sizer_top.Add(self.sizer_hwc, 0, wx.EXPAND)
+        tip = wx.StaticText(self, label = "nav:")
+        self.sizer_hwc.Add(tip, 1, wx.EXPAND)
+
+        self.btn_nav = []
+        for i in range(0, 4):
+            btn = wx.Button(self, -1, "n" + str(i))
+            self.sizer_hwc.Add(btn, 1, wx.EXPAND)
+            self.Bind(wx.EVT_BUTTON, self.evt_nav, btn)
+            self.btn_nav.append(btn)
+        # other
+        self.sizer_hwother = wx.BoxSizer(wx.HORIZONTAL)
+        self.sizer_top.Add(self.sizer_hwother, 0, wx.EXPAND)
+        tip = wx.StaticText(self, label = "ohr:")
+        self.sizer_hwother.Add(tip, 1, wx.EXPAND)
+        self.btn_ohr_pwd = wx.Button(self, -1, "pwd")
+        self.sizer_hwother.Add(self.btn_ohr_pwd, 1, wx.EXPAND)
+        self.Bind(wx.EVT_BUTTON, self.evt_hwother, self.btn_ohr_pwd)
+
+    def evt_swipe(self, event):
+        if event.GetId() == self.btn_swipe_up.GetId():
+            self.show_text.SetValue("swipe up")
+            os.system("mvu")
+        elif event.GetId() == self.btn_swipe_down.GetId():
+            self.show_text.SetValue("swipe down")
+            os.system("mvd")
+        elif event.GetId() == self.btn_swipe_left.GetId():
+            self.show_text.SetValue("swipe left")
+            os.system("mvl")
+        elif event.GetId() == self.btn_swipe_right.GetId():
+            self.show_text.SetValue("swipe right")
+            os.system("mvr")
+        else:
+            self.show_text.SetValue("unknown swipe")
+
+    def evt_hwother(self, event):
+        if event.GetId() == self.btn_ohr_pwd.GetId():
+            self.show_text.SetValue("input password")
+            os.system("hw pwd")
+
+    def evt_nav(self, event):
+        for i in range(0, 4):
+            if event.GetId() == self.btn_nav[i].GetId():
+                btn = self.btn_nav[i]
+                command = "hw " + btn.GetLabel()
+                self.show_text.SetValue(command)
+                os.system(command)
+                break
+
+    def evt_restart_adb(self, event):
+        os.system("adb kill-server")
+        os.system("sudo adb start-server")
+        self.show_text.SetValue("restart adb finish.")
+
     def evt_power(self, event):
-        self.show_text.SetValue("power event")
+        rc = os.popen("kp")
+        self.show_text.SetValue(rc.read())
 
     def evt_home(self, event):
-        self.show_text.SetValue("home event")
+        rc = os.popen("kh")
+        self.show_text.SetValue(rc.read())
 
     def evt_back(self, event):
-        self.show_text.SetValue("back event")
+        rc = os.popen("kb")
+        self.show_text.SetValue(rc.read())
 
 """ main """
 app = wx.App(False)
