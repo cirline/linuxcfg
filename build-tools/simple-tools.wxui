@@ -6,18 +6,13 @@ import os
 class main_window(wx.Frame):
     """ overide __init___ """
     def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title = title, size = (400, 200))
+        wx.Frame.__init__(self, parent, title = title)
+
+        self.evt = evt_cls(self)
 
         """ top sizer """
         self.sizer_top = wx.BoxSizer(wx.VERTICAL)
         self.SetSizer(self.sizer_top)
-
-        """ line: text """
-        self.sizer_text = wx.BoxSizer(wx.HORIZONTAL)
-        self.sizer_top.Add(self.sizer_text, 0, wx.EXPAND)
-
-        self.show_text = wx.TextCtrl(self, pos = (0, 0), size = (400, 40), style = wx.TE_MULTILINE | wx.TE_READONLY)
-        self.sizer_text.Add(self.show_text, 0, wx.EXPAND)
 
         """ line: system """
         self.sizer_system = wx.BoxSizer(wx.HORIZONTAL)
@@ -82,25 +77,60 @@ class main_window(wx.Frame):
         self.sizer_hwother.Add(self.btn_ohr_pwd, 1, wx.EXPAND)
         self.Bind(wx.EVT_BUTTON, self.evt_hwother, self.btn_ohr_pwd)
 
+        """ menu bar """
+        mbar = self.init_menubar()
+        self.SetMenuBar(mbar)
+
+        """ status bar """
+        self.statusbar = self.init_statusbar()
+
+    def show_tip(self, tip):
+        self.statusbar.SetStatusText(tip)
+
+    def init_statusbar(self):
+        bar = self.CreateStatusBar()
+
+        return bar
+
+    def insert_menu_item(self, menu, itemid, text, desc, func):
+        item = menu.Append(itemid, text, desc)
+        if func != None:
+            self.Bind(wx.EVT_MENU, func, item)
+
+    def init_menubar(self):
+        tool_menu = wx.Menu()
+        self.insert_menu_item(tool_menu, wx.ID_CLOSE, "Close\tCtrl+X", "close", self.evt.close)
+
+        key_menu = wx.Menu()
+        self.insert_menu_item(key_menu, wx.NewId(), "Power\tP", "power key", self.evt_power)
+        self.insert_menu_item(key_menu, wx.NewId(), "Home\tH", "home key", self.evt.home)
+
+        menubar = wx.MenuBar()
+        menubar.Append(tool_menu, "tool")
+        menubar.Append(key_menu, "Key")
+
+        return menubar
+
     def evt_swipe(self, event):
         if event.GetId() == self.btn_swipe_up.GetId():
-            self.show_text.SetValue("swipe up")
+            self.show_tip("swipe up")
+            self.show_tip("swipe up")
             os.system("mvu")
         elif event.GetId() == self.btn_swipe_down.GetId():
-            self.show_text.SetValue("swipe down")
+            self.show_tip("swipe down")
             os.system("mvd")
         elif event.GetId() == self.btn_swipe_left.GetId():
-            self.show_text.SetValue("swipe left")
+            self.show_tip("swipe left")
             os.system("mvl")
         elif event.GetId() == self.btn_swipe_right.GetId():
-            self.show_text.SetValue("swipe right")
+            self.show_tip("swipe right")
             os.system("mvr")
         else:
-            self.show_text.SetValue("unknown swipe")
+            self.show_tip("unknown swipe")
 
     def evt_hwother(self, event):
         if event.GetId() == self.btn_ohr_pwd.GetId():
-            self.show_text.SetValue("input password")
+            self.show_tip("input password")
             os.system("hw pwd")
 
     def evt_nav(self, event):
@@ -108,30 +138,51 @@ class main_window(wx.Frame):
             if event.GetId() == self.btn_nav[i].GetId():
                 btn = self.btn_nav[i]
                 command = "hw " + btn.GetLabel()
-                self.show_text.SetValue(command)
+                self.show_tip(command)
                 os.system(command)
                 break
 
     def evt_restart_adb(self, event):
         os.system("adb kill-server")
         os.system("sudo adb start-server")
-        self.show_text.SetValue("restart adb finish.")
+        self.show_tip("restart adb finish.")
 
     def evt_power(self, event):
-        rc = os.popen("kp")
-        self.show_text.SetValue(rc.read())
+        os.system("kp")
+        self.show_tip("power")
 
     def evt_home(self, event):
-        rc = os.popen("kh")
-        self.show_text.SetValue(rc.read())
+        os.system("kh")
+        self.show_tip("home")
 
     def evt_back(self, event):
-        rc = os.popen("kb")
-        self.show_text.SetValue(rc.read())
+        os.system("kb")
+        self.show_tip("back")
+
+class evt_cls:
+    def __init__(self, parent):
+        self.parent = parent
+
+    def show_tip(self, tip):
+        self.parent.show_tip(tip)
+
+    def home(self, event):
+        os.system("kh")
+        self.show_tip("home")
+
+    def close(self, event):
+        print "bye."
+        self.parent.Close()
+
+    def test(self, event):
+        print self
+        print self.parent
+        print event
 
 """ main """
 app = wx.App(False)
 frame = main_window(None, "simple tools")
+frame.Centre()
 frame.Show()
 
 app.MainLoop()
