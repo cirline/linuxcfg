@@ -6,6 +6,9 @@ alias ll='ls -lh'
 alias lll='ls -alh'
 alias grep='grep --exclude=tags --color=auto'
 
+TOOLS_PATH=$HOME/tools
+LINUXCFG_PATH=$HOME/linuxcfg
+
 # auto completion
 . $HOME/linuxcfg/git-completion.bash
 
@@ -15,8 +18,11 @@ alias grep='grep --exclude=tags --color=auto'
 #export PATH=$JAVA_HOME/bin:$PATH
 
 # arm linux gcc
-export PATH=/home/chenqiwei/tools/toolchain-4.3.2/bin:$PATH
+# export PATH=/home/chenqiwei/tools/toolchain-4.3.2/bin:$PATH
 
 # tools
-export PATH=$HOME/tools:$PATH
-export PATH=$HOME/linuxcfg/bin:$PATH
+export PATH=$TOOLS_PATH:$PATH
+
+# android
+NDK_HOME=$TOOLS_PATH/ndk
+export PATH=$NDK_HOME:$PATH
