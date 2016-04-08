@@ -52,6 +52,11 @@ dirs	+= $(out_path)
 all: $(tools_out) $(ui_out)
 	$(call echo_success, "all finish")
 
+onekey:
+	make
+	make install
+	$(call echo_success, "onekey make finish")
+
 # begin build
 $(tools_out): $(build) $(dirs) $(config_file) $(objs) $(mobj)
 	$(build_path)/$(build) $@ $(mobj)

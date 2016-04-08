@@ -109,3 +109,15 @@ case $1 in
 esac
 }
 
+# create jni header file
+function create_jni_header_file() {
+echo_inf "class file: $1"
+if [ ! -f $current_path/$1 ]; then
+	echo_err "$1 nothing found!"
+fi
+class=${1/\.class/}
+class=${class//\//\.}
+echo_inf "class: $class"
+javah -classpath $current_path -jni $class
+}
+

@@ -58,6 +58,9 @@ do_link mvd	"input swipe down"
 do_link mvl	"input swipe left"
 do_link mvr	"input swipe right"
 
+# android
+do_link	jnih	"create jni header file: jnih com/xxx/xxx"
+
 # special command
 do_link hw	"huawei phone command (usage: hw `hw help_tail`)"
 
