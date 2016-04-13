@@ -53,6 +53,8 @@ echo $file_fspath
 debug_init
 echo_dbg "command $cmd, argument $*"
 case $cmd in
+	"tvar" )
+		tools_var $*;;
 	"jnih" )
 		create_jni_header_file $*;;
 	"sui" )

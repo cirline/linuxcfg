@@ -25,3 +25,9 @@ function tools_ui() {
 python $run_path/simple-tools.ui
 }
 
+function tools_var() {
+if [ "$1" == "efs_mnt_path" ]; then
+	echo $efs_mnt_path
+fi
+}
+

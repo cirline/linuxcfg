@@ -44,6 +44,7 @@ do_link ues "umount efs"
 do_link mes "mount efs"
 do_link ds  "show dot file image"
 do_link sui	"start tools ui"
+do_link tvar	"echo the variable"
 
 # fastboot
 do_link flashboot "fastboot flash boot"

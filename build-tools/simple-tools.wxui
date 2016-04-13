@@ -20,8 +20,8 @@ class main_window(wx.Frame):
         """ adb """
         sbs = self.init_static_box_sizer("adb", wx.HORIZONTAL, self.sizer_top)
         self.init_button(-1, "restart", self.evt.adb_restart, sbs)
-        self.init_button(-1, "tcpip", self.evt.adb_tcpip, sbs)
-        self.init_button(-1, "connect", self.evt.adb_connect, sbs)
+        self.init_button(-1, "net start", self.evt.adb_tcpip, sbs)
+        self.init_button(-1, "net connect", self.evt.adb_connect, sbs)
 
         """ android key """
         sbs = self.init_static_box_sizer("key", wx.HORIZONTAL, self.sizer_top)

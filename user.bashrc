@@ -26,3 +26,5 @@ export PATH=$TOOLS_PATH:$PATH
 # android
 NDK_HOME=$TOOLS_PATH/ndk
 export PATH=$NDK_HOME:$PATH
+
+. $LINUXCFG_PATH/user.bashfc
