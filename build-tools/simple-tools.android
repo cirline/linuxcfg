@@ -109,6 +109,16 @@ case $1 in
 esac
 }
 
+# adb screencap
+function android_screencap() {
+image=$1
+if [ "$image" == "" ]; then
+	image="screen.png"
+fi
+adb shell screencap -p /sdcard/$image
+adb pull /sdcard/$image .
+}
+
 # create jni header file
 function create_jni_header_file() {
 echo_inf "class file: $1"

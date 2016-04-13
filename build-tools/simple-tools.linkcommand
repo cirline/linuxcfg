@@ -59,6 +59,8 @@ do_link mvd	"input swipe down"
 do_link mvl	"input swipe left"
 do_link mvr	"input swipe right"
 
+do_link scap	"android screencap (scap filename)"
+
 # android
 do_link	jnih	"create jni header file: jnih com/xxx/xxx"
 
