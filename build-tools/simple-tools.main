@@ -65,6 +65,8 @@ case $cmd in
 		vinp $cmd $*;;
 	"hw" )
 		huawei_phone_command $*;;
+	"amstart" )
+		adb_am_start $*;;
     "simple-tools" | "simple-tools.out" )
         simple_tools_raw_mode $@
         ;;

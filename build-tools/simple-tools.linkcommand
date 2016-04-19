@@ -8,7 +8,9 @@ print_help=0
 installpath=
 
 function do_link() {
-if (( $print_help == 1 )); then
+if [ "$1" == "comment_line" ]; then
+	echo ""
+elif (( $print_help == 1 )); then
     # print help message
     printf "%12s:\t%s\n" "$1" "$2"
 else
@@ -46,6 +48,8 @@ do_link ds  "show dot file image"
 do_link sui	"start tools ui"
 do_link tvar	"echo the variable"
 
+do_link comment_line
+
 # fastboot
 do_link flashboot "fastboot flash boot"
 
@@ -59,7 +63,9 @@ do_link mvd	"input swipe down"
 do_link mvl	"input swipe left"
 do_link mvr	"input swipe right"
 
+# adb function
 do_link scap	"android screencap (scap filename)"
+do_link amstart	"adb start app, amstart package name"
 
 # android
 do_link	jnih	"create jni header file: jnih com/xxx/xxx"

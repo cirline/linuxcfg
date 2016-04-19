@@ -119,6 +119,21 @@ adb shell screencap -p /sdcard/$image
 adb pull /sdcard/$image .
 }
 
+# adb start app
+function adb_am_start() {
+if [ "$1" == "" ]; then
+	echo_err "miss package name"
+	return
+fi
+cstring=$1/$1
+if [ "$2" != "" ]; then
+	cstring=$cstring.$2
+else
+	cstring=$cstring".MainActivity"
+fi
+adb shell am start -n $cstring
+}
+
 # create jni header file
 function create_jni_header_file() {
 echo_inf "class file: $1"
