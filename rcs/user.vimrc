@@ -64,9 +64,6 @@ if has("autocmd")
 endif
 
 syntax on
-autocmd FileType c set ts=4
-autocmd FileType c set sts=4
-autocmd FileType c set sw=4
 
 " Taglist
 let Tlist_Show_One_File=1
