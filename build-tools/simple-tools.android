@@ -14,9 +14,20 @@ if [ -f $android_phone_setting ]; then
 	. $android_phone_setting
 	echo_dbg "read aps($android_phone_setting) done!"
 else
-	echo_dbg "no aps($android_phone_setting), use default"
-	export ST_ANDROID_SCREEN_X=1080
-	export ST_ANDROID_SCREEN_Y=1920
+	echo_inf "no aps($android_phone_setting), input screen width(default 1920):"
+	read sx
+	if [ "$sx" == "" ]; then
+		sx=1920
+	fi
+	echo_inf "screen height(default 1080):"
+	read sy
+	if [ "$sy" == "" ]; then
+		sy=1080
+	fi
+	echo "#!/bin/bash" > $android_phone_setting
+	echo "export ST_ANDROID_SCREEN_X=$sx" >> $android_phone_setting
+	echo "export ST_ANDROID_SCREEN_Y=$sy" >> $android_phone_setting
+	. $android_phone_setting
 fi
 }
 
