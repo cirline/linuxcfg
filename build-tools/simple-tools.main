@@ -53,6 +53,8 @@ echo $file_fspath
 debug_init
 echo_dbg "command $cmd, argument $*"
 case $cmd in
+	"dobeforeleaving" )
+		doing_before_leaving ;;
 	"msmgpio" )
 		msm_gpio_control $* ;;
 	"scap" )

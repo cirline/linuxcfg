@@ -41,15 +41,6 @@ fi
 # sshfs mount
 do_link m241 "mount 241 server workspace2"
 
-# misc
-do_link ues "umount efs"
-do_link mes "mount efs"
-do_link ds  "show dot file image"
-do_link sui	"start tools ui"
-do_link tvar	"echo the variable"
-
-do_link comment_line
-
 # fastboot
 do_link flashboot "fastboot flash boot"
 
@@ -76,6 +67,19 @@ do_link hw	"huawei phone command (usage: hw `hw help_tail`)"
 # msm command
 do_link	comment_line	"msm command:"
 do_link msmgpio	"msm gpio control: msmgpio gpio_n reg_n [value]"
+
+# misc
+do_link ues "umount efs"
+do_link mes "mount efs"
+do_link ds  "show dot file image"
+do_link sui	"start tools ui"
+do_link tvar	"echo the variable"
+
+do_link comment_line
+
+do_link dobeforeleaving	"serious operation !"
+
+
 
 }
 

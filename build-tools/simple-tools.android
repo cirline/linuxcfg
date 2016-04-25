@@ -3,8 +3,10 @@
 function fastboot_flash_boot() {
 rc=`adb devices`
 echo "rc = $rc"
+file=boot.img
+echo_inf "flash $file"
 adb reboot bootloader
-fastboot flash boot boot.img
+fastboot flash boot $file
 fastboot reboot
 }
 
@@ -151,7 +153,9 @@ echo_inf "class file: $1"
 if [ ! -f $current_path/$1 ]; then
 	echo_err "$1 nothing found!"
 fi
+# replace .class to null
 class=${1/\.class/}
+# replace '/' to '.'
 class=${class//\//\.}
 echo_inf "class: $class"
 javah -classpath $current_path -jni $class
