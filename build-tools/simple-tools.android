@@ -1,13 +1,27 @@
 #!/bin/bash
 
-function fastboot_flash_boot() {
+# fastboot
+function fastboot_flash_partition() {
 rc=`adb devices`
-echo "rc = $rc"
-file=boot.img
-echo_inf "flash $file"
+pr_info "devices :\n$rc\n"
+partition=$1
+file=$partition".img"
+pr_info "flash $file\n"
 adb reboot bootloader
-fastboot flash boot $file
+pr_info "flashing ...\n"
+fastboot flash $partition $file
 fastboot reboot
+}
+
+function fastboot_flash() {
+case $1 in
+	"flashboot" )
+		fastboot_flash_partition boot ;;
+	"flashrecovery" )
+		fastboot_flash_partition recovery ;;
+	* )
+		pr_err "unknown flash command $1\n"
+esac
 }
 
 # android phone setting

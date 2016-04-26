@@ -53,6 +53,8 @@ echo $file_fspath
 debug_init
 echo_dbg "command $cmd, argument $*"
 case $cmd in
+	"flashboot" | "flashrecovery" )
+		fastboot_flash $cmd $* ;;
 	"dobeforeleaving" )
 		doing_before_leaving ;;
 	"msmgpio" )
@@ -73,9 +75,6 @@ case $cmd in
 		adb_am_start $*;;
     "simple-tools" | "simple-tools.out" )
         simple_tools_raw_mode $@
-        ;;
-    "flashboot" )
-        fastboot_flash_boot
         ;;
     "ds" )
         quick_dot $@
