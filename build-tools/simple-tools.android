@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# count android phone number
+function android_phone_count() {
+rc=`adb devices`
+subs="List of devices attached"
+idx=`expr index "$rc" "$subs"`
+printf "si: $idx\n"
+mains=${rc:idx}
+printf "ms: $mains\n"
+ts="12345"
+lfs="\n"
+lfn=`expr index "$ts" `
+printf "lfn: $lfn\n"
+}
+
 # fastboot
 function fastboot_flash_partition() {
 rc=`adb devices`
@@ -26,6 +40,7 @@ esac
 
 # android phone setting
 function android_phone_setting() {
+# android_phone_count
 if [ -f $android_phone_setting ]; then
 	. $android_phone_setting
 	echo_dbg "read aps($android_phone_setting) done!"
@@ -178,6 +193,11 @@ javah -classpath $current_path -jni $class
 # msm8909 control
 # set gpio register, msmgpio gpio_n reg_n value
 function msm_gpio_control() {
+pr_info "num = $#"
+if (( $# < 3 )); then
+	pr_err "request argument\n"
+	return
+fi
 if (( $1 < 0 || $1 > 112)); then
 	echo_err "invalid gpio number: $1"
 	return
