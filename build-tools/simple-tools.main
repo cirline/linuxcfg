@@ -67,7 +67,7 @@ case $cmd in
 		create_jni_header_file $*;;
 	"sui" )
 		tools_ui;;
-	"kh" | "kb" | "kp" | "mvu" | "mvd" | "mvl" | "mvr" | "ait" )
+	"kh" | "kb" | "kp" | "ku" | "kd" | "mvu" | "mvd" | "mvl" | "mvr" | "ait" )
 		vinp $cmd $*;;
 	"hw" )
 		huawei_phone_command $*;;

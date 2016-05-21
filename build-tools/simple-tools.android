@@ -21,6 +21,10 @@ pr_info "devices :\n$rc\n"
 partition=$1
 file=$partition".img"
 pr_info "flash $file\n"
+if [ ! -f $file ]; then
+	pr_err "$file no exist\n"
+	return
+fi
 adb reboot bootloader
 pr_info "flashing ...\n"
 fastboot flash $partition $file
@@ -84,9 +88,16 @@ function vinp() {
 echo_dbg "vinp argument: $#($*)"
 android_phone_setting
 case $1 in
-	"kp" )	vinp_key POWER;;
-	"kb" )	vinp_key BACK;;
-	"kh" )	vinp_key HOME;;
+	"kp" )
+		vinp_key POWER;;
+	"kb" )
+		vinp_key BACK;;
+	"kh" )
+		vinp_key HOME;;
+	"ku" )
+		vinp_key VOLUME_UP;;
+	"kd" )
+		vinp_key VOLUME_DOWN;;
 	"ait" )
 		if (( $# == 3 )); then
 			(( x_touch = $2 % $ST_ANDROID_SCREEN_X ))
@@ -193,8 +204,7 @@ javah -classpath $current_path -jni $class
 # msm8909 control
 # set gpio register, msmgpio gpio_n reg_n value
 function msm_gpio_control() {
-pr_info "num = $#"
-if (( $# < 3 )); then
+if (( $# < 2 )); then
 	pr_err "request argument\n"
 	return
 fi
