@@ -53,6 +53,8 @@ echo $file_fspath
 debug_init
 echo_dbg "command $cmd, argument $*"
 case $cmd in
+	"bfiles" )
+		backup_files ;;
 	"flashboot" | "flashrecovery" )
 		fastboot_flash $cmd $* ;;
 	"dobeforeleaving" )
@@ -92,7 +94,4 @@ case $cmd in
         echo "unknown command!"
         ;;
 esac
-
-
-
 

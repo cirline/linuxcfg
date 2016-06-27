@@ -79,3 +79,11 @@ function echo_success() {
     echo -e "\033[32m success: $1\033[0m"
 }
 
+# split filename from path
+function split_filename() {
+	path=$1
+	path_lenght=`expr "$path" : '.*'`
+	i=`expr index $path "/"`
+	pr_debug "i = $i"
+}
+

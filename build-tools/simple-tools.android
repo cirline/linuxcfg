@@ -12,8 +12,7 @@ fi
 
 # fastboot
 function fastboot_flash_partition() {
-rc=`adb devices`
-pr_info "devices :\n$rc\n"
+android_phone_count
 partition=$1
 file=$partition".img"
 pr_info "flash $file\n"

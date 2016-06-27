@@ -75,3 +75,7 @@ else
 fi
 }
 
+function backup_files() {
+pr_info "$0\n"
+}
+

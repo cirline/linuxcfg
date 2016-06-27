@@ -81,6 +81,7 @@ do_link tvar	"echo the variable"
 
 do_link comment_line
 
+do_link bfiles		"backup files by file list"
 do_link dobeforeleaving	"serious operation !"
 
 
