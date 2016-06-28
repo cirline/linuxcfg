@@ -76,6 +76,33 @@ fi
 }
 
 function backup_files() {
-pr_info "$0\n"
+	local file=backup_list
+
+	if [ ! -f $file ]; then
+		pr_err "not found backup_list\n"
+		return
+	fi
+
+	((i = 0))
+	while read line
+	do
+		if [ -e "$line" ]; then
+			pr_debug "$line\n"
+			filename=$(split_filename $line)
+			if [ ! -e "$filename" ]; then
+				pr_info "new copying $filename\n"
+				((i++))
+				cp $line $filename
+			elif [ "$filename" -ot "$line" ]; then
+				pr_info "update $filename\n"
+				((i++))
+				cp $line $filename
+			fi
+		else
+			pr_warn "not found $line\n"
+		fi
+	done < $file
+
+	pr_info "new or update: $i\n"
 }
 

@@ -107,3 +107,5 @@ install:
 	$(install_path)/$(tools_install) clink $(install_path)
 	cp $(ui_out) $(install_path)/$(ui_install)
 
+.PHONY: all onekey config defconfig distclean clean install
+

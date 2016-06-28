@@ -82,8 +82,7 @@ function echo_success() {
 # split filename from path
 function split_filename() {
 	path=$1
-	path_lenght=`expr "$path" : '.*'`
-	i=`expr index $path "/"`
-	pr_debug "i = $i"
+	filename=`echo $path | awk -F '/' '{print $NF}'`
+	echo $filename
 }
 
