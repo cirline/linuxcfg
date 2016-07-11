@@ -59,14 +59,7 @@ set smartindent
 " no z a long line
 set nowrap
 
-if has("autocmd")
-	au VimEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
-endif
-
 syntax on
-autocmd FileType c set ts=4
-autocmd FileType c set sts=4
-autocmd FileType c set sw=4
 
 " Taglist
 let Tlist_Show_One_File=1
