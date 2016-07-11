@@ -1,0 +1,207 @@
+#!/usr/bin/env python
+
+import wx
+import os
+
+class main_window(wx.Frame):
+    """ overide __init___ """
+    def __init__(self, parent, title):
+        wx.Frame.__init__(self, parent, title = title)
+
+        self.evt = evt_cls(self)
+
+        self.init_ui()
+
+    def init_ui(self):
+        """ top sizer """
+        self.sizer_top = wx.BoxSizer(wx.VERTICAL)
+        self.SetSizer(self.sizer_top)
+
+        """ adb """
+        sbs = self.init_static_box_sizer("adb", wx.HORIZONTAL, self.sizer_top)
+        self.init_button(-1, "restart", self.evt.adb_restart, sbs)
+        self.init_button(-1, "net start", self.evt.adb_tcpip, sbs)
+        self.init_button(-1, "net connect", self.evt.adb_connect, sbs)
+
+        """ android key """
+        sbs = self.init_static_box_sizer("key", wx.HORIZONTAL, self.sizer_top)
+        self.init_button(-1, "power", self.evt.power, sbs)
+        self.init_button(-1, "home", self.evt.home, sbs)
+        self.init_button(-1, "back", self.evt.back, sbs)
+
+        """ android swipe """
+        sb = wx.StaticBox(self, label = "swipe")
+        sbs = wx.StaticBoxSizer(sb, wx.HORIZONTAL)
+        self.sizer_top.Add(sbs, 0, wx.EXPAND)
+        self.btn_swipe_up = self.init_button(wx.ID_UP, "mvu", self.evt.swipe, sbs)
+        self.btn_swipe_down = self.init_button(wx.ID_DOWN, "mvd", self.evt.swipe, sbs)
+        self.btn_swipe_left = self.init_button(wx.ID_FORWARD, "mvl", self.evt.swipe, sbs)
+        self.btn_swipe_right = self.init_button(wx.ID_BACKWARD, "mvr", self.evt.swipe, sbs)
+
+        sbs = self.init_static_box_sizer("navigation", wx.HORIZONTAL, self.sizer_top)
+        self.btn_nav = []
+        for i in range(0, 4):
+            btn = self.init_button(-1, "n" + str(i), self.evt.navigation, sbs)
+            self.btn_nav.append(btn)
+
+        sbs = self.init_static_box_sizer("other", wx.HORIZONTAL, self.sizer_top)
+        self.init_button(-1, "pwd", self.evt.ohr_pwd, sbs)
+
+        """ menu bar """
+        mbar = self.init_menubar()
+        self.SetMenuBar(mbar)
+
+        """ status bar """
+        self.statusbar = self.init_statusbar()
+
+        self.Fit()
+
+    def init_static_box_sizer(self, label, ori, layout):
+        sb = wx.StaticBox(self, label = label)
+        sbs = wx.StaticBoxSizer(sb, ori)
+        layout.Add(sbs, 0, wx.EXPAND)
+        return sbs
+
+    def init_button(self, id, label, func, layout):
+        btn = wx.Button(self, id, label)
+        self.Bind(wx.EVT_BUTTON, func, btn)
+        layout.Add(btn, 1, wx.EXPAND)
+        return btn
+
+    def show_tip(self, tip):
+        self.statusbar.SetStatusText(tip)
+
+    def init_statusbar(self):
+        bar = self.CreateStatusBar()
+
+        return bar
+
+    def insert_menu_item(self, menu, itemid, text, desc, func):
+        item = menu.Append(itemid, text, desc)
+        if func != None:
+            self.Bind(wx.EVT_MENU, func, item)
+
+    def init_menubar(self):
+        tool_menu = wx.Menu()
+        self.insert_menu_item(tool_menu, wx.ID_HELP, "Help\tCtrl+H", "help", self.evt.help)
+        self.insert_menu_item(tool_menu, wx.ID_CLOSE, "Close\tCtrl+X", "close", self.evt.close)
+
+        key_menu = wx.Menu()
+        self.insert_menu_item(key_menu, wx.NewId(), "Power\tP", "power key", self.evt.power)
+        self.insert_menu_item(key_menu, wx.NewId(), "Home\tM", "home key", self.evt.home)
+
+        swipe_menu = wx.Menu()
+        self.insert_menu_item(swipe_menu, wx.ID_UP, "Up\tJ", "swipe up", self.evt.swipe)
+        self.insert_menu_item(swipe_menu, wx.ID_DOWN, "Down\tK", "swipe down", self.evt.swipe)
+        self.insert_menu_item(swipe_menu, wx.ID_FORWARD, "Forward/Left\tH", "swipe left", self.evt.swipe)
+        self.insert_menu_item(swipe_menu, wx.ID_BACKWARD, "Backward/Right\tL", "swipe right", self.evt.swipe)
+
+        menubar = wx.MenuBar()
+        menubar.Append(tool_menu, "tool")
+        menubar.Append(key_menu, "Key")
+        menubar.Append(swipe_menu, "Swipe")
+
+        return menubar
+
+class evt_cls:
+    def __init__(self, parent):
+        self.parent = parent
+
+    def show_tip(self, tip):
+        self.parent.show_tip(tip)
+
+    """ key """
+    def power(self, event):
+        os.system("kp")
+        self.show_tip("power")
+
+    def home(self, event):
+        os.system("kh")
+        self.show_tip("home")
+
+    def back(self, event):
+        os.system("kb")
+        self.show_tip("back")
+
+    def help(self, event):
+        help_msg = \
+                "P\t\tPower\n"\
+                "M\t\tHome\n"\
+                "K\t\tUp\n"\
+                "J\t\tDown\n"\
+                "H\t\tBackward\Left\n"\
+                "L\t\tForward\Right\n"\
+                "C-X\t\tExit\n"\
+                "C-H\t\tHelp\n"
+        dlg = wx.MessageDialog(self.parent, help_msg, "Shortcut", wx.OK)
+        dlg.ShowModal()
+        dlg.Destroy()
+
+    def close(self, event):
+        print "bye."
+        self.parent.Close()
+
+    """ swipe event """
+    def swipe(self, event):
+        if event.GetId() == wx.ID_UP:
+            os.system("mvu")
+            self.show_tip("up")
+        elif event.GetId() == wx.ID_DOWN:
+            os.system("mvd")
+            self.show_tip("down")
+        elif event.GetId() == wx.ID_FORWARD:
+            os.system("mvl")
+            self.show_tip("left")
+        elif event.GetId() == wx.ID_BACKWARD:
+            os.system("mvr")
+            self.show_tip("right")
+        else:
+            self.show_tip("unknown swipe")
+
+    """ adb """
+    def adb_tcpip(self, event):
+        rc = os.popen("adb shell ip addr | awk -F ' ' '/wlan/' | awk -F ' ' '/inet/{print $2}' | awk -F '/' '{print $1}'")
+        ip = rc.read()
+        ip = ip.replace("\n", "")
+        os.system("adb tcpip 8680")
+        self.parent.adb_ip = ip
+        print "ip:", self.parent.adb_ip
+
+    def adb_connect(self, event):
+        command = "adb connect " + self.parent.adb_ip + ":8680"
+        print "command:", command
+        os.system(command)
+        os.system("adb devices")
+
+    def adb_restart(self, event):
+        os.system("adb kill-server")
+        os.system("sudo adb start-server")
+        self.show_tip("restart adb finish.")
+
+    """ hw command """
+    def navigation(self, event):
+        for i in range(0, 4):
+            if event.GetId() == self.parent.btn_nav[i].GetId():
+                btn = self.parent.btn_nav[i]
+                command = "hw " + btn.GetLabel()
+                self.show_tip(command)
+                os.system(command)
+                break
+
+    def ohr_pwd(self, event):
+        os.system("hw pwd")
+
+    def test(self, event):
+        print self
+        print self.parent
+        print event
+
+""" main """
+print "--- app start ---"
+app = wx.App(False)
+frame = main_window(None, "simple tools")
+frame.Centre()
+frame.Show()
+
+app.MainLoop()
+

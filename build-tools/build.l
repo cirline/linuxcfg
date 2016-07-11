@@ -1,7 +1,12 @@
 %option noyywrap
 
+%x SHELL_SCRIPT
 %x IFILE
 %x COMMENT
+
+%x PYTHON_SCRIPT
+%x PS_LCOMMENT
+%x PS_MCOMMENT
 
 %{
 struct ifile_desc {
@@ -11,31 +16,63 @@ struct ifile_desc {
 };
 
 struct ifile_desc *cur;
-
 %}
 
 %%
-^"#include"[ \t]*\"   { BEGIN IFILE; }
+^"#!/bin/bash"[ \t]*\n	{
+	/* parse bash shell script */
+	fprintf(yyout, "#!/bin/bash\n");
+	BEGIN SHELL_SCRIPT;
+}
 
-^[ \t]*"#"   { BEGIN COMMENT; }
+^"#!/usr/bin/env python"[ \t]*\n	{
+	/* parse python script */
+	fprintf(yyout, "#!/usr/bin/env python\n");
+	BEGIN PYTHON_SCRIPT;
+}
+
+<SHELL_SCRIPT>^"#include"[ \t]*\"	{ BEGIN IFILE; /* do include */}
+
+<SHELL_SCRIPT>^[ \t]*"#"		{ BEGIN COMMENT; /* do comment */ }
+
+<SHELL_SCRIPT><<EOF>>	{ if(popfile() != 0) yyterminate(); /* file eof */ }
+
+<SHELL_SCRIPT>^[ \t]*	{ /* nothing */ }
+
+<SHELL_SCRIPT>^[ \t]*\n	{ /* nothing */ }
+
+<SHELL_SCRIPT>.|\n	{ fprintf(yyout, "%s", yytext); /* copy */ }
 
 <IFILE>[^ \t\"]*        {
     { int c; while((c = input()) && c != '\n'); }   // clear tail
     if(newfile(yytext) < 0) yyterminate();
-    BEGIN INITIAL;
+    BEGIN SHELL_SCRIPT;
 }
 
 <IFILE>.|\n     { yyerror("include file name error!"); }
 
 <COMMENT>.      {}
 
-<COMMENT>\n     { BEGIN INITIAL; }
+<COMMENT>\n     { BEGIN SHELL_SCRIPT; }
 
-<<EOF>>     { if(popfile() != 0) yyterminate(); }
+<PYTHON_SCRIPT>^[ \t]*"#"	{ BEGIN PS_LCOMMENT; }
 
-^[ \t]*         {}
-^[ \t]*\n       {}
-.|\n            { fprintf(yyout, "%s", yytext); }
+<PYTHON_SCRIPT>^[ \t]*\"\"\"	{ BEGIN PS_MCOMMENT; }
+
+<PYTHON_SCRIPT><<EOF>>		{ if(popfile() != 0) yyterminate(); /* file eof */ }
+
+<PYTHON_SCRIPT>^[ \t]*\n	{ /* nothing */ }
+
+<PYTHON_SCRIPT>.|\n	{ fprintf(yyout, "%s", yytext); /* copy */ }
+
+<PS_LCOMMENT>.		{ /* nothing */ }
+
+<PS_LCOMMENT>\n		{ BEGIN PYTHON_SCRIPT; }
+
+<PS_MCOMMENT>\"\"\"[ \t]*\n	{ BEGIN PYTHON_SCRIPT; }
+
+<PS_MCOMMENT>.		{ /* nothing */ }
+
 %%
 
 yyerror(char *msg)
@@ -117,8 +154,6 @@ int main(int argc, char *argv[])
         perror("fopen out error: ");
         return -1;
     }
-
-    fprintf(yyout, "#!/bin/bash\n");
 
     for(i = 2; i < argc; i++) {
         if(newfile(argv[i]) < 0)

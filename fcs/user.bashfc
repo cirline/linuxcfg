@@ -1,0 +1,6 @@
+#!/bin/bash
+
+function cdcd() {
+cd `tvar efs_mnt_path`
+}
+

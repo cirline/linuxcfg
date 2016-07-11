@@ -1,10 +1,222 @@
 #!/bin/bash
 
-function fastboot_flash_boot() {
-rc=`adb devices`
-echo "rc = $rc"
+# count android phone number
+function android_phone_count() {
+count=`adb devices | awk 'BEGIN{i=0} {i++} END{print i}'`
+if (( count != 3 )); then
+	((count -= 2))
+	pr_err "android count is $count\n"
+	exit
+fi
+}
+
+# fastboot
+function fastboot_flash_partition() {
+android_phone_count
+partition=$1
+file=$partition".img"
+pr_info "flash $file\n"
+if [ ! -f $file ]; then
+	pr_err "$file no exist\n"
+	return
+fi
 adb reboot bootloader
-fastboot flash boot boot.img
+pr_info "flashing ...\n"
+fastboot flash $partition $file
 fastboot reboot
+}
+
+function fastboot_flash() {
+case $1 in
+	"flashboot" )
+		fastboot_flash_partition boot ;;
+	"flashrecovery" )
+		fastboot_flash_partition recovery ;;
+	* )
+		pr_err "unknown flash command $1\n"
+esac
+}
+
+# android phone setting
+function android_phone_setting() {
+android_phone_count
+if [ -f $android_phone_setting ]; then
+	. $android_phone_setting
+	echo_dbg "read aps($android_phone_setting) done!"
+else
+	echo_inf "no aps($android_phone_setting), input screen width(default 1920):"
+	read sx
+	if [ "$sx" == "" ]; then
+		sx=1920
+	fi
+	echo_inf "screen height(default 1080):"
+	read sy
+	if [ "$sy" == "" ]; then
+		sy=1080
+	fi
+	echo "#!/bin/bash" > $android_phone_setting
+	echo "export ST_ANDROID_SCREEN_X=$sx" >> $android_phone_setting
+	echo "export ST_ANDROID_SCREEN_Y=$sy" >> $android_phone_setting
+	. $android_phone_setting
+fi
+}
+
+# virtual keyevent
+function vinp_key() {
+echo_inf "send key $1"
+adb shell input keyevent $1
+}
+
+# virtual swipe x_start y_start x_end y_end
+function vinp_swipe() {
+echo_inf "swipe ($1, $2) --> ($3, $4)"
+adb shell input swipe $1 $2 $3 $4
+}
+
+# virtual tap x_point y_point
+function vinp_tap() {
+echo_inf "tap ($1, $2)"
+adb shell input tap $1 $2
+}
+
+function vinp() {
+echo_dbg "vinp argument: $#($*)"
+android_phone_setting
+case $1 in
+	"kp" )
+		vinp_key POWER;;
+	"kb" )
+		vinp_key BACK;;
+	"kh" )
+		vinp_key HOME;;
+	"ku" )
+		vinp_key VOLUME_UP;;
+	"kd" )
+		vinp_key VOLUME_DOWN;;
+	"ait" )
+		if (( $# == 3 )); then
+			(( x_touch = $2 % $ST_ANDROID_SCREEN_X ))
+			(( y_touch = $3 % $ST_ANDROID_SCREEN_Y ))
+		else
+			(( x_touch = $ST_ANDROID_SCREEN_X / 2 ))
+			(( y_touch = $ST_ANDROID_SCREEN_Y / 2 ))
+		fi
+		vinp_tap $x_touch $y_touch
+		;;
+	"mvu" )
+		((line_x = $ST_ANDROID_SCREEN_X / 2))
+		((ys = $ST_ANDROID_SCREEN_Y / 4 * 3))
+		((ye = $ST_ANDROID_SCREEN_Y / 4 * 1))
+		vinp_swipe $line_x $ys $line_x $ye
+		;;
+	"mvd" )
+		((line_x = $ST_ANDROID_SCREEN_X / 2))
+		((ye = $ST_ANDROID_SCREEN_Y / 4 * 3))
+		((ys = $ST_ANDROID_SCREEN_Y / 4 * 1))
+		vinp_swipe $line_x $ys $line_x $ye
+		;;
+	"mvl" )
+		((line_y = $ST_ANDROID_SCREEN_Y / 2))
+		((xs = $ST_ANDROID_SCREEN_X / 5 * 4))
+		((xe = $ST_ANDROID_SCREEN_X / 5 * 1))
+		vinp_swipe $xs $line_y $xe $line_y
+		;;
+	"mvr" )
+		((line_y = $ST_ANDROID_SCREEN_Y / 2))
+		((xe = $ST_ANDROID_SCREEN_X / 5 * 4))
+		((xs = $ST_ANDROID_SCREEN_X / 5 * 1))
+		vinp_swipe $xs $line_y $xe $line_y
+		;;
+	* )
+		echo_err "unknown vinp $1";;
+esac
+}
+
+function huawei_phone_command() {
+echo_dbg "huawei phone command ($1)"
+case $1 in
+	"pwd" )
+		echo_inf "hw password"
+		ait 900 1160
+		ait 900 1540
+		ait 900 1340
+		ait 900 1540
+		;;
+	"n0" )
+		ait 155 1670;;
+	"n1" )
+		ait 415 1670;;
+	"n2" )
+		ait 660 1670;;
+	"n3" )
+		ait 975 1670;;
+	"help_tail" )
+		echo "help|pwd|n[0123]";;
+	"help" | *)
+		echo "usage: hw `hw help_tail`";;
+esac
+}
+
+# adb screencap
+function android_screencap() {
+image=$1
+if [ "$image" == "" ]; then
+	image="screen.png"
+fi
+adb shell screencap -p /sdcard/$image
+adb pull /sdcard/$image .
+}
+
+# adb start app
+function adb_am_start() {
+if [ "$1" == "" ]; then
+	echo_err "miss package name"
+	return
+fi
+cstring=$1/$1
+if [ "$2" != "" ]; then
+	cstring=$cstring.$2
+else
+	cstring=$cstring".MainActivity"
+fi
+adb shell am start -n $cstring
+}
+
+# create jni header file
+function create_jni_header_file() {
+echo_inf "class file: $1"
+if [ ! -f $current_path/$1 ]; then
+	echo_err "$1 nothing found!"
+fi
+# replace .class to null
+class=${1/\.class/}
+# replace '/' to '.'
+class=${class//\//\.}
+echo_inf "class: $class"
+javah -classpath $current_path -jni $class
+}
+
+# msm8909 control
+# set gpio register, msmgpio gpio_n reg_n value
+function msm_gpio_control() {
+if (( $# < 2 )); then
+	pr_err "request argument\n"
+	return
+fi
+if (( $1 < 0 || $1 > 112)); then
+	echo_err "invalid gpio number: $1"
+	return
+fi
+if (( $2 != 0 && $2 != 4)); then
+	echo_err "invalid register: %2"
+fi
+(( register = 0x01000000 + 0x1000 * $1 + $2 ))
+if [ "$3" == "" ]; then
+	printf "show 0x%x = " $register 
+	adb shell busybox devmem $register 32
+else
+	printf "set 0x%x = 0x%x\n" $register $3
+	adb shell busybox devmem $register 32 $3
+fi
 }
 

@@ -20,3 +20,62 @@ else
 fi
 }
 
+# start simple-tools ui
+function tools_ui() {
+python $run_path/simple-tools.ui
+}
+
+function tools_var() {
+if [ "$1" == "efs_mnt_path" ]; then
+	echo $efs_mnt_path
+fi
+}
+
+# delete file, input a list file
+function doing_before_leaving() {
+pr_err " Serious Wanring: This Action Will Remove Your File !!! Sure ? (yes/no) "
+read sure
+if [ "$sure" != "yes" -a "$sure" != "no" ]; then
+	pr_info "$sure invalid, input yes or no!"
+	return
+elif [ "$sure" == "no" ]; then
+	pr_info "exit."
+	return
+else
+	pr_warn "\n\t\t$sure\n\n"
+	if [ ! -f $do_before_leaving_config ]; then
+		echo_err "$do_before_leaving_config no exist."
+		return
+	fi
+
+	local file=$do_before_leaving_config
+	((i = 0))
+	while read line
+	do
+		file_array[i]=$line
+		((i++))
+	done < $file
+
+	for (( i = 0; i < ${#file_array[*]}; i++)); do
+		file=${file_array[i]}
+		if [ ! -f $file ]; then
+			pr_err "$file no exist\n"
+		else
+			pr_warn "$file, delete ? (y/n) "
+			read confirm
+			if [ "$confirm" == "y" ]; then
+				pr_info "delete\n\n"
+				rm -rf $file
+			else
+				pr_info "skip\n\n"
+			fi
+		fi
+	done
+
+fi
+}
+
+function backup_files() {
+pr_info "$0\n"
+}
+

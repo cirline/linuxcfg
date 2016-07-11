@@ -47,54 +47,36 @@ file_fspath=${sinput:_r_out_len}
 echo $file_fspath
 }
 
-#############################
-# create per tool soft link #
-#############################
-function st_link() {
-# echo "run path $run_path"
-ln -s $cmd $run_path/adbsl
-}
-
-######################
+#########################
 # starting simple-tools #
-######################
-if (( tools_debug > 0 )); then
-set -x
-fi
-echo_dbg "input command: $cmd"
+#########################
+debug_init
+echo_dbg "command $cmd, argument $*"
 case $cmd in
+	"bfiles" )
+		backup_files ;;
+	"flashboot" | "flashrecovery" )
+		fastboot_flash $cmd $* ;;
+	"dobeforeleaving" )
+		doing_before_leaving ;;
+	"msmgpio" )
+		msm_gpio_control $* ;;
+	"scap" )
+		android_screencap $*;;
+	"tvar" )
+		tools_var $*;;
+	"jnih" )
+		create_jni_header_file $*;;
+	"sui" )
+		tools_ui;;
+	"kh" | "kb" | "kp" | "ku" | "kd" | "mvu" | "mvd" | "mvl" | "mvr" | "ait" )
+		vinp $cmd $*;;
+	"hw" )
+		huawei_phone_command $*;;
+	"amstart" )
+		adb_am_start $*;;
     "simple-tools" | "simple-tools.out" )
         simple_tools_raw_mode $@
-        ;;
-    "adbsl" )
-        if [ "$OUT" ==  "" ]; then
-            echo "OUT is empty"
-            exit -1
-        fi
-        android_top=$(st_get_android_top)
-        file_fspath=$(st_get_file_fspath $1)
-        echo "android_top: $android_top"
-        echo "file_fspath: $file_fspath"
-        adb remount
-        echo "push $android_top/$1 -> $file_fspath"
-        adb push $android_top/$1 $file_fspath
-        adb shell chmod 644 $file_fspath
-        adb shell sync
-        ;;
-    "adbi" )
-        if (($# != 1)); then
-            echo "adb install miss package"
-            exit -1
-        fi
-        #echo "adb install $1"
-        adb install $1
-        ;;
-    "bkernel-qc" )
-        outdir=$OUT/obj/KERNEL_OBJ
-        make O=$outdir ARCH=arm CROSS_COMPILE=arm-eabi-
-        ;;
-    "flashboot" )
-        fastboot_flash_boot
         ;;
     "ds" )
         quick_dot $@
@@ -112,7 +94,4 @@ case $cmd in
         echo "unknown command!"
         ;;
 esac
-
-
-
 

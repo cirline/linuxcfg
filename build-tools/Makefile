@@ -3,14 +3,8 @@ build_path	:= $(shell pwd)
 home_path	:= $$HOME
 
 # function
-define tools_inf
-@echo "\033[38minfo: \033[0m$(1)"
-endef
-
-define tools_err
-@echo "\033[31m error:\033[0m $(1)"
-endef
-
+echo_info	= @echo "\033[34m $(1) \033[0m"
+echo_err	= @echo "\033[31m $(1) \033[0m"
 echo_success	= @echo "\033[32m $(1) \033[0m"
 
 # make config file
@@ -22,7 +16,7 @@ ifdef config_exist
 include $(config_file)
 else
 config_error:
-	$(tools_err) "cannot find $(config_file)"
+	$(call echo_err, "cannot find $(config_file)")
 	make defconfig
 endif
 
@@ -32,9 +26,11 @@ build			:= build.out
 build_objs		:= build.l
 
 tools_install	:= simple-tools
-tools_out		:= $(tools_install).out
+tools_out	:= $(tools_install).out
+ui_install	:= $(tools_install).ui
+ui_out		:= $(ui_install).out
 tools_config	:= simple-tools.config
-tools_link		:= simple-tools.linkcommand
+tools_link	:= simple-tools.linkcommand
 
 objs	:=
 objs	+= $(tools_config)
@@ -47,34 +43,52 @@ objs	+= simple-tools.android
 
 mobj	:= simple-tools.main
 
+ui_objs	:=
+ui_objs += simple-tools.wxui
+
 dirs	:=
 dirs	+= $(out_path)
+
+all: $(tools_out) $(ui_out)
+	$(call echo_success, "all finish")
+
+onekey:
+	make
+	make install
+	$(call echo_success, "onekey make finish")
 
 # begin build
 $(tools_out): $(build) $(dirs) $(config_file) $(objs) $(mobj)
 	$(build_path)/$(build) $@ $(mobj)
 	chmod 755 $@
-	$(call echo_success, "make success")
+	$(call echo_success, "make $(tools_out) success")
+
+$(ui_out): $(ui_objs)
+	$(build_path)/$(build) $@ $(ui_objs)
+	chmod 755 $@
+	$(call echo_success, "make $(ui_out) success")
 
 $(dirs):
-	$(tools_inf) "checking directory: "
+	$(call echo_info, "checking directory")
 	@if [ ! -d $(out_path) ]; then mkdir $(out_path); fi
 
 $(tools_config): $(config_file)
-	$(tools_inf) "create simple-tools config"
+	$(call echo_info, "create simple-tools config")
 	@echo "#!/bin/bash" > $@
 	@echo "tools_debug=$(tools_debug)" >> $@
 	@echo "efs_data_path=$(efs_data_path)" >> $@
 	@echo "efs_mnt_path=$(efs_mnt_path)" >> $@
+	@echo "android_phone_setting=$(android_phone_setting)" >> $@
+	@echo "do_before_leaving_config=$(do_before_leaving_config)" >> $@
 
 config: $(config_file)
 
 $(config_file): $(defconfig_file)
-	$(tools_inf) "$(defconfig_file) is changed ~ "
+	$(call echo_info, "$(defconfig_file) is changed ~ ")
 	cat $(defconfig_file) >> $(config_file)
 
 defconfig: $(defconfig_file)
-	$(tools_inf) "copy default config file: "
+	$(call echo_info, "copy default config file")
 	cp $(defconfig_file) $(config_file)
 
 $(build): build.l
@@ -91,5 +105,5 @@ clean:
 install:
 	cp $(tools_out) $(install_path)/$(tools_install)
 	$(install_path)/$(tools_install) clink $(install_path)
-
+	cp $(ui_out) $(install_path)/$(ui_install)
 

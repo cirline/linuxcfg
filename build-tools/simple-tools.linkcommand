@@ -8,12 +8,14 @@ print_help=0
 installpath=
 
 function do_link() {
-if (( $print_help == 1 )); then
-    # print help message
-    printf "%12s:\t%s\n" "$1" "$2"
+if [ "$1" == "comment_line" ]; then
+	printf "$2"
+elif (( $print_help == 1 )); then
+	# print help message
+	printf "%20s:\t%s\n" "$1" "$2"
 else
     # install command link
-    if [ "$ nstallpath" == "" ]; then
+    if [ "$installpath" == "" ]; then
         echo_err "cannot create soft link, missing install path!"
         exit
     fi
@@ -39,13 +41,50 @@ fi
 # sshfs mount
 do_link m241 "mount 241 server workspace2"
 
+# fastboot
+do_link comment_line	"\nfastboot:\n"
+do_link flashboot	"fastboot flash boot"
+do_link flashrecovery	"fastboot flash recovery"
+
+# android virtual input
+do_link kp	"input keyevent POWER"
+do_link kb	"android input keyevent BACK"
+do_link kh	"android input keyevent HOME"
+do_link ku	"android input keyevent VOL+"
+do_link kd	"android input keyevent VOL-"
+do_link ait	"android input tap (ait [x y])"
+do_link mvu	"input swipe up"
+do_link mvd	"input swipe down"
+do_link mvl	"input swipe left"
+do_link mvr	"input swipe right"
+
+# adb function
+do_link scap	"android screencap (scap filename)"
+do_link amstart	"adb start app, amstart package name"
+
+# android
+do_link	jnih	"create jni header file: jnih com/xxx/xxx"
+
+# special command
+do_link hw	"huawei phone command (usage: hw `hw help_tail`)"
+
+# msm command
+do_link	comment_line	"\nmsm command:\n"
+do_link msmgpio		"msm gpio control: msmgpio gpio_n reg_n [value]"
+
 # misc
 do_link ues "umount efs"
 do_link mes "mount efs"
 do_link ds  "show dot file image"
+do_link sui	"start tools ui"
+do_link tvar	"echo the variable"
 
-# fastboot
-do_link flashboot "fastboot flash boot"
+do_link comment_line
+
+do_link bfiles		"backup files by file list"
+do_link dobeforeleaving	"serious operation !"
+
+
 
 }
 
