@@ -53,6 +53,10 @@ echo $file_fspath
 debug_init
 echo_dbg "command $cmd, argument $*"
 case $cmd in
+	"mes" )
+		mount_ecryptfs ;;
+	"ues" )
+		umount_ecryptfs ;;
 	"bfiles" )
 		backup_files ;;
 	"flashboot" | "flashrecovery" )
@@ -80,12 +84,6 @@ case $cmd in
         ;;
     "ds" )
         quick_dot $@
-        ;;
-    "ues" )
-        umount_ecryptfs
-        ;;
-    "mes" )
-        mount_ecryptfs
         ;;
     "m241" )
         sshfs_mount_group $cmd

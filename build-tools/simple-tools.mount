@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# this section deal the sshfs mount
+# this section deal the mount action
 
 # usage: sshfs_mount username host remotepath locatepath
 function sshfs_mount() {
@@ -23,4 +23,24 @@ case $1 in
 esac
 }
 
+# umount_ecryptfs - umount ecryptfs dir
+# @efs_mnt_path: umount path
+function umount_ecryptfs() {
+sudo umount -t ecryptfs $efs_mnt_path
+}
+
+# mount_ecryptfs - mount ecryptfs
+# @efs_data_path: ecrypt data path
+# @efs_mnt_path: mount path
+function mount_ecryptfs() {
+if [ ! -d $efs_data_path ]; then mkdir $efs_data_path; fi
+if [ ! -d $efs_mnt_path ]; then mkdir $efs_mnt_path; fi
+
+dir_content=`ls $efs_mnt_path`
+if [ -z "$dir_content" ]; then
+	sudo mount -t ecryptfs $efs_data_path $efs_mnt_path -o ecryptfs_cipher=aes -o ecryptfs_key_bytes=16 -o ecryptfs_passthrough=n -o ecryptfs_enable_filename_crypto=y
+else
+	pr_err "$efs_mnt_path not empty\n"
+fi
+}
 
