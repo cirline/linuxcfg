@@ -36,10 +36,11 @@ objs	:=
 objs	+= $(tools_config)
 objs	+= simple-tools.common
 objs	+= simple-tools.misc
-objs	+= simple-tools.mount
+objs	+= mount.sh
 objs	+= simple-tools.linkcommand
 objs	+= simple-tools.rawmode
 objs	+= simple-tools.android
+objs	+= customization.sh
 
 mobj	:= simple-tools.main
 

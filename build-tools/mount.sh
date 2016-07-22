@@ -2,6 +2,26 @@
 
 # this section deal the mount action
 
+# mount_samba - monut a samba directory
+# @1: samba server
+# @2: remote directory
+# @3: local directory
+# @4: server username
+# @5: server password
+function mount_samba() {
+if [ ! -d $4 ]; then
+	mkdir $4
+fi
+
+if [ -z "$5" ]; then
+	auth="username=$4"
+else
+	auth="username=$4,password=$5"
+fi
+
+sudo mount -t cifs -o $auth //$1/$2 $3
+}
+
 # usage: sshfs_mount username host remotepath locatepath
 function sshfs_mount() {
 if [ ! -d $4 ]; then

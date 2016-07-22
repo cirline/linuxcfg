@@ -38,7 +38,8 @@ else
     installpath=$2
 fi
 
-# sshfs mount
+# mount
+do_link	comment_line	"\nmount\n"
 do_link m241 "mount 241 server workspace2"
 
 # fastboot
@@ -66,6 +67,8 @@ do_link amstart	"adb start app, amstart package name"
 do_link	jnih	"create jni header file: jnih com/xxx/xxx"
 
 # special command
+do_link	comment_line	"\nCustomization\n"
+do_link hk	"szhklt custom cases (`hk help`)"
 do_link hw	"huawei phone command (usage: hw `hw help_tail`)"
 
 # msm command
@@ -83,8 +86,5 @@ do_link comment_line
 
 do_link bfiles		"backup files by file list"
 do_link dobeforeleaving	"serious operation !"
-
-
-
 }
 
