@@ -60,6 +60,7 @@ set smartindent
 set nowrap
 
 syntax on
+:highlight Identifier ctermfg=6
 
 " Taglist
 let Tlist_Show_One_File=1
