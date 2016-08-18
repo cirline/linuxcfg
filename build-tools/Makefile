@@ -36,10 +36,11 @@ objs	:=
 objs	+= $(tools_config)
 objs	+= simple-tools.common
 objs	+= simple-tools.misc
-objs	+= simple-tools.mount
+objs	+= mount.sh
 objs	+= simple-tools.linkcommand
 objs	+= simple-tools.rawmode
 objs	+= simple-tools.android
+objs	+= customization.sh
 
 mobj	:= simple-tools.main
 
@@ -106,4 +107,6 @@ install:
 	cp $(tools_out) $(install_path)/$(tools_install)
 	$(install_path)/$(tools_install) clink $(install_path)
 	cp $(ui_out) $(install_path)/$(ui_install)
+
+.PHONY: all onekey config defconfig distclean clean install
 

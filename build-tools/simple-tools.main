@@ -3,10 +3,11 @@
 #include "simple-tools.config"
 #include "simple-tools.common"
 #include "simple-tools.misc"
-#include "simple-tools.mount"
+#include "mount.sh"
 #include "simple-tools.linkcommand"
 #include "simple-tools.rawmode"
 #include "simple-tools.android"
+#include "customization.sh"
 
 cmd=`echo $0 | awk -F '/' '{print $NF}'`
 current_path=`pwd`
@@ -53,6 +54,14 @@ echo $file_fspath
 debug_init
 echo_dbg "command $cmd, argument $*"
 case $cmd in
+	"hk" )
+		szhklt_custom_cases $* ;;
+	"mes" )
+		mount_ecryptfs ;;
+	"ues" )
+		umount_ecryptfs ;;
+	"bfiles" )
+		backup_files ;;
 	"flashboot" | "flashrecovery" )
 		fastboot_flash $cmd $* ;;
 	"dobeforeleaving" )
@@ -79,12 +88,6 @@ case $cmd in
     "ds" )
         quick_dot $@
         ;;
-    "ues" )
-        umount_ecryptfs
-        ;;
-    "mes" )
-        mount_ecryptfs
-        ;;
     "m241" )
         sshfs_mount_group $cmd
         ;;
@@ -92,7 +95,4 @@ case $cmd in
         echo "unknown command!"
         ;;
 esac
-
-
-
 

@@ -2,22 +2,17 @@
 
 # count android phone number
 function android_phone_count() {
-rc=`adb devices`
-subs="List of devices attached"
-idx=`expr index "$rc" "$subs"`
-printf "si: $idx\n"
-mains=${rc:idx}
-printf "ms: $mains\n"
-ts="12345"
-lfs="\n"
-lfn=`expr index "$ts" `
-printf "lfn: $lfn\n"
+count=`adb devices | awk 'BEGIN{i=0} {i++} END{print i}'`
+if (( count != 3 )); then
+	((count -= 2))
+	pr_err "android count is $count\n"
+	exit
+fi
 }
 
 # fastboot
 function fastboot_flash_partition() {
-rc=`adb devices`
-pr_info "devices :\n$rc\n"
+android_phone_count
 partition=$1
 file=$partition".img"
 pr_info "flash $file\n"
@@ -44,7 +39,7 @@ esac
 
 # android phone setting
 function android_phone_setting() {
-# android_phone_count
+android_phone_count
 if [ -f $android_phone_setting ]; then
 	. $android_phone_setting
 	echo_dbg "read aps($android_phone_setting) done!"
