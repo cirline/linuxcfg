@@ -54,6 +54,8 @@ echo $file_fspath
 debug_init
 echo_dbg "command $cmd, argument $*"
 case $cmd in
+	"tsm" )
+		tushare_monitor ;;
 	"hk" )
 		szhklt_custom_cases $* ;;
 	"mes" )
