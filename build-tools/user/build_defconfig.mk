@@ -1,3 +1,5 @@
+# default configure file
+#
 # build 
 install_path		?= $(home_path)/tools
 out_path			?= $(build_path)/out
@@ -15,4 +17,7 @@ android_phone_setting	?= $(home_path)/.android_phone_setting
 
 # file delete
 do_before_leaving_config	?= $(home_path)/.file.list
+
+# ct path
+ct_path		?= /opt/e/code-test
 

@@ -99,3 +99,12 @@ function backup_files() {
 	pr_info "sync: $i\n"
 }
 
+# tushare_monitor - tushare minotor
+function tushare_monitor() {
+if [ ! -d $ct_path ]; then
+	pr_err "$ct_path not exsit"
+	return
+fi
+python $ct_path/lab/tushare/main.py &
+}
+
