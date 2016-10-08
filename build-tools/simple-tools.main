@@ -54,6 +54,8 @@ echo $file_fspath
 debug_init
 echo_dbg "command $cmd, argument $*"
 case $cmd in
+	"mktags" )
+		make_tags ;;	# misc class
 	"tsm" )
 		tushare_monitor ;;
 	"hk" )

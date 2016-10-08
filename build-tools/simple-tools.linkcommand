@@ -82,6 +82,7 @@ do_link ds  "show dot file image"
 do_link sui	"start tools ui"
 do_link tvar	"echo the variable"
 do_link tsm	"tushare monitor"
+do_link mktags	"make tags"
 
 do_link comment_line
 
