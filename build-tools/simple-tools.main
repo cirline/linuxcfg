@@ -54,6 +54,10 @@ echo $file_fspath
 debug_init
 echo_dbg "command $cmd, argument $*"
 case $cmd in
+	"apm" )
+		adb_push_module $*;;
+	"apb" )
+		adb_push_bin $*;;
 	"mktags" )
 		make_tags ;;	# misc class
 	"tsm" )
