@@ -215,9 +215,15 @@ fi
 
 # create jni header file
 function create_jni_header_file() {
+if [ "$1" = "" ] || [ "$1" = "-h" ]; then
+	pr_info "help message:\n"
+	pr_info "you should stay bin/classes to run jnih!\n"
+	return
+fi
 echo_inf "class file: $1"
 if [ ! -f $current_path/$1 ]; then
 	echo_err "$1 nothing found!"
+	return;
 fi
 # replace .class to null
 class=${1/\.class/}
