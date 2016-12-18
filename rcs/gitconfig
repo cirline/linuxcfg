@@ -1,0 +1,11 @@
+[user]
+	name = chenqiwei
+	email = chenqiwei@szhklt.com
+[color]
+	ui = auto
+[merge]
+	tool = vimdiff
+[core]
+	quotepath = false
+	editor = vim
+

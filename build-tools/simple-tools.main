@@ -1,0 +1,106 @@
+#!/bin/bash
+
+#include "simple-tools.config"
+#include "simple-tools.common"
+#include "simple-tools.misc"
+#include "mount.sh"
+#include "simple-tools.linkcommand"
+#include "simple-tools.rawmode"
+#include "simple-tools.android"
+#include "customization.sh"
+
+cmd=`echo $0 | awk -F '/' '{print $NF}'`
+current_path=`pwd`
+cmd_path=`which $cmd`
+run_path=`expr "$cmd_path" : '\(.*/\)'`
+
+##################################
+# get android sdk root directory #
+##################################
+function st_get_android_top() {
+build_file=build/envsetup.sh
+while [ `pwd` != "/" ]; do
+here=`pwd`
+if [ -f $here/$build_file ]; then
+    echo $here
+    break
+fi
+cd ..
+done
+}
+
+#############################################
+# get android sdk target file relative path #
+#############################################
+function st_get_file_fspath() {
+_top=$(st_get_android_top)
+_out=$OUT
+_top_len=`expr "$_top" : '.*'`
+#_out_len=`expr "$_out" : '.*'`
+((_top_len++))
+relative_out=${_out:_top_len}
+# _out_sub=`expr substr $_out $_top_len $_out_len`
+# echo "_out_sub: $_out_sub"
+_r_out_len=`expr "$relative_out" : '.*'`
+sinput=$1
+file_fspath=${sinput:_r_out_len}
+#echo "file_fspath: $file_fspath"
+echo $file_fspath
+}
+
+#########################
+# starting simple-tools #
+#########################
+debug_init
+echo_dbg "command $cmd, argument $*"
+case $cmd in
+	"apm" )
+		adb_push_module $*;;
+	"apb" )
+		adb_push_bin $*;;
+	"mktags" )
+		make_tags ;;	# misc class
+	"tsm" )
+		tushare_monitor ;;
+	"hk" )
+		szhklt_custom_cases $* ;;
+	"mes" )
+		mount_ecryptfs ;;
+	"ues" )
+		umount_ecryptfs ;;
+	"bfiles" )
+		backup_files ;;
+	"flashboot" | "flashrecovery" )
+		fastboot_flash $cmd $* ;;
+	"dobeforeleaving" )
+		doing_before_leaving ;;
+	"msmgpio" )
+		msm_gpio_control $* ;;
+	"scap" )
+		android_screencap $*;;
+	"tvar" )
+		tools_var $*;;
+	"jnih" )
+		create_jni_header_file $*;;
+	"sui" )
+		tools_ui;;
+	"kh" | "kb" | "kp" | "ku" | "kd" | "mvu" | "mvd" | "mvl" | "mvr" | "ait" )
+		vinp $cmd $*;;
+	"hw" )
+		huawei_phone_command $*;;
+	"amstart" )
+		adb_am_start $*;;
+    "simple-tools" | "simple-tools.out" )
+        simple_tools_raw_mode $@
+        ;;
+    "ds" )
+        quick_dot $@
+        ;;
+    "m241" )
+        sshfs_mount_group $cmd
+        ;;
+    * )
+        echo "unknown command!"
+        ;;
+esac
+

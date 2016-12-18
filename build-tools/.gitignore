@@ -1,0 +1,5 @@
+*.config
+*.out
+*.yy.c
+out
+tags

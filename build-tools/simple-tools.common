@@ -1,0 +1,90 @@
+#!/bin/bash
+
+# debug level
+# 9: set x
+# 8: dbg
+# 7: inf
+# 6: wrn
+# 0: err
+
+pr_level_verbose=9
+pr_level_debug=8
+pr_level_info=7
+pr_level_warn=6
+pr_level_err=0
+
+function debug_init() {
+if (( $tools_debug >= 9 )); then
+	set -x
+fi
+}
+
+# echo color
+# 31 red
+# 32 green
+# 33 yellow
+# 34 blue
+# 35 purple
+# 36 cyan
+# 37 white
+# 38 gray
+
+function pr_debug() {
+if (( $tools_debug >= $pr_level_debug )); then
+	printf "\033[32m debug~~ \033[0m $1"
+fi
+}
+
+function pr_info() {
+if (( $tools_debug >= $pr_level_info )); then
+	printf "\033[37m $1\033[0m"
+fi
+}
+
+function pr_warn() {
+if (( $tools_debug >= $pr_level_warn )); then
+	printf "\033[33m $1\033[0m"
+fi
+}
+
+# pr_err - print error
+# @1: error string
+function pr_err() {
+if (( $tools_debug >= $pr_level_err )); then
+	printf "\033[31m $1\033[0m"
+fi
+}
+
+function echo_dbg() {
+if (( $tools_debug >= 8)); then
+	echo -e "\033[32m debug~~ \033[0m $1"
+fi
+}
+
+function echo_inf() {
+if (( $tools_debug >= 7)); then
+	echo -e "\033[34m $1\033[0m"
+fi
+}
+
+function echo_wrn() {
+if (( $tools_debug >= 6)); then
+	echo -e "\033[33m $1\033[0m"
+fi
+}
+
+function echo_err() {
+    echo -e "\033[31m ** error ** $1\033[0m"
+}
+
+function echo_success() {
+    echo -e "\033[32m success: $1\033[0m"
+}
+
+# split filename from path
+function split_filename() {
+	path=$1
+	filename=`echo $path | awk -F '/' '{print $NF}'`
+	echo $filename
+}
+

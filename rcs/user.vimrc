@@ -3,12 +3,12 @@ set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本�
 set autoindent
 set cindent
 " Tab键的宽度
-set tabstop=4
+set tabstop=8
 " 统一缩进为4
-set softtabstop=4
-set shiftwidth=4
+set softtabstop=8
+set shiftwidth=8
 " use blank instead tab
-set expandtab
+" set expandtab
 " 在行和段开始处使用制表符
 set smarttab
 " 显示行号
@@ -59,18 +59,16 @@ set smartindent
 " no z a long line
 set nowrap
 
-if has("autocmd")
-	au VimEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
-endif
-
 syntax on
-autocmd FileType c set ts=4
-autocmd FileType c set sts=4
-autocmd FileType c set sw=4
+:highlight Identifier ctermfg=6
 
 " Taglist
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_Right_Window=1
 let Tlist_Auto_Open=0
+
+map  :w <CR> :!dot -Tpng % -O <CR> :!eog %.png & <CR>
+
+map <F5> :!./% <CR>
 
