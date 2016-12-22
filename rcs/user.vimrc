@@ -59,6 +59,9 @@ set smartindent
 " no z a long line
 set nowrap
 
+" chinese code
+set fencs=utf-8,gb2312
+
 syntax on
 :highlight Identifier ctermfg=6
 
