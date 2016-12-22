@@ -9,6 +9,11 @@
 %x PS_MCOMMENT
 
 %{
+#include <stdio.h>
+#include <stdarg.h>
+#include <string.h>
+#include <errno.h>
+
 struct ifile_desc {
     struct ifile_desc *prev;
     YY_BUFFER_STATE bs;
@@ -16,6 +21,7 @@ struct ifile_desc {
 };
 
 struct ifile_desc *cur;
+void yyerror(char *msg, ...);
 %}
 
 %%
@@ -49,7 +55,7 @@ struct ifile_desc *cur;
     BEGIN SHELL_SCRIPT;
 }
 
-<IFILE>.|\n     { yyerror("include file name error!"); }
+<IFILE>.|\n     { yyerror("include file name error\n"); }
 
 <COMMENT>.      {}
 
@@ -75,9 +81,12 @@ struct ifile_desc *cur;
 
 %%
 
-yyerror(char *msg)
+void yyerror(char *msg, ...)
 {
-    printf("yyerror: %s", msg);
+	va_list vl;
+	va_start(vl, msg);
+	vprintf(msg, vl);
+	va_end(vl);
 }
 
 int newfile(char *fn)
@@ -92,7 +101,7 @@ int newfile(char *fn)
 
     p->fp = fopen(fn, "r");
     if(!p->fp) {
-        yyerror("newfile fopen failed.\n");
+        yyerror("%s fopen %s failed: %s\n", __func__, fn, strerror(errno));
         return -1;
     }
 

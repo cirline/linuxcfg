@@ -47,6 +47,8 @@ if (( $tools_debug >= $pr_level_warn )); then
 fi
 }
 
+# pr_err - print error
+# @1: error string
 function pr_err() {
 if (( $tools_debug >= $pr_level_err )); then
 	printf "\033[31m $1\033[0m"
@@ -82,8 +84,7 @@ function echo_success() {
 # split filename from path
 function split_filename() {
 	path=$1
-	path_lenght=`expr "$path" : '.*'`
-	i=`expr index $path "/"`
-	pr_debug "i = $i"
+	filename=`echo $path | awk -F '/' '{print $NF}'`
+	echo $filename
 }
 

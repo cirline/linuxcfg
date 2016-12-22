@@ -182,11 +182,48 @@ fi
 adb shell am start -n $cstring
 }
 
+# adb push $1 -> $2, and chmod $2 to $3
+function adb_push() {
+pr_info "test $1\n"
+if [ ! -e "$1" ]; then
+	pr_err "$1 not found\n"
+	return
+fi
+
+rc=`adb push $1 $2 2>&1 | awk -F ' ' '{print $1}'`
+if [ "$rc" = "failed" ]; then
+	pr_info "get root adb\n"
+	adb root
+	sleep 2
+	adb remount
+	adb push $1 $2
+fi
+adb shell chmod $3 $2
+}
+
+function adb_push_module() {
+adb_push $1 $1 0644
+}
+
+function adb_push_bin() {
+if [ "$2" = "x" ]; then
+	adb_push $1 $1 0755
+else
+	adb push $1 /system/bin/$1 0755
+fi
+}
+
 # create jni header file
 function create_jni_header_file() {
+if [ "$1" = "" ] || [ "$1" = "-h" ]; then
+	pr_info "help message:\n"
+	pr_info "you should stay bin/classes to run jnih!\n"
+	return
+fi
 echo_inf "class file: $1"
 if [ ! -f $current_path/$1 ]; then
 	echo_err "$1 nothing found!"
+	return;
 fi
 # replace .class to null
 class=${1/\.class/}

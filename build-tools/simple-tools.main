@@ -3,10 +3,11 @@
 #include "simple-tools.config"
 #include "simple-tools.common"
 #include "simple-tools.misc"
-#include "simple-tools.mount"
+#include "mount.sh"
 #include "simple-tools.linkcommand"
 #include "simple-tools.rawmode"
 #include "simple-tools.android"
+#include "customization.sh"
 
 cmd=`echo $0 | awk -F '/' '{print $NF}'`
 current_path=`pwd`
@@ -52,7 +53,22 @@ echo $file_fspath
 #########################
 debug_init
 echo_dbg "command $cmd, argument $*"
+not_process=0;
 case $cmd in
+	"apm" )
+		adb_push_module $*;;
+	"apb" )
+		adb_push_bin $*;;
+	"mktags" )
+		make_tags ;;	# misc class
+	"tsm" )
+		tushare_monitor ;;
+	"hk" )
+		szhklt_custom_cases $* ;;
+	"mes" )
+		mount_ecryptfs ;;
+	"ues" )
+		umount_ecryptfs ;;
 	"bfiles" )
 		backup_files ;;
 	"flashboot" | "flashrecovery" )
@@ -75,23 +91,17 @@ case $cmd in
 		huawei_phone_command $*;;
 	"amstart" )
 		adb_am_start $*;;
-    "simple-tools" | "simple-tools.out" )
-        simple_tools_raw_mode $@
-        ;;
     "ds" )
         quick_dot $@
-        ;;
-    "ues" )
-        umount_ecryptfs
-        ;;
-    "mes" )
-        mount_ecryptfs
         ;;
     "m241" )
         sshfs_mount_group $cmd
         ;;
-    * )
-        echo "unknown command!"
-        ;;
+	* )
+		not_process=1 ;;
 esac
+
+if (( not_process == 1 )); then
+#include "sh/main.sh"
+fi
 
