@@ -28,3 +28,8 @@ NDK_HOME=$TOOLS_PATH/ndk
 export PATH=$NDK_HOME:$PATH
 
 . $LINUXCFG_PATH/fcs/user.bashfc
+
+# cd real directory
+function cdre() {
+cd `pwd -P`
+}
