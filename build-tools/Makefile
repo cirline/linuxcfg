@@ -1,6 +1,7 @@
 # 
 build_path	:= $(shell pwd)
 home_path	:= $$HOME
+install_path	:= $(home_path)/linuxcfg/home/tools
 
 # function
 echo_info	= @echo "\033[34m $(1) \033[0m"
