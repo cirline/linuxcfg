@@ -44,6 +44,7 @@ objs	+= sh/main.sh
 objs	+= sh/misc.sh
 objs	+= sh/link.sh
 objs	+= sh/rawmode.sh
+objs	+= sh/mount.sh
 
 mobj	:= simple-tools.main
 
@@ -89,6 +90,8 @@ $(tools_config): $(config_file)
 	@echo "do_before_leaving_config=$(do_before_leaving_config)" >> $@
 	@echo "ct_path=$(ct_path)" >> $@
 	@echo "jcloud_path=$(jcloud_path)" >> $@
+	@echo "ecrypt_sync_dir_mount=$(ecrypt_sync_dir_mount)" >> $@
+	@echo "ecrypt_sync_dir_data=$(ecrypt_sync_dir_data)" >> $@
 
 config: $(config_file)
 

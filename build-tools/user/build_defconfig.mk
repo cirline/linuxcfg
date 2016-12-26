@@ -24,3 +24,7 @@ ct_path		?= /opt/e/code-test
 # jianguoyun sync path
 jcloud_path	?= $(home_path)/jcloud
 
+# ecryptfs sync dir
+ecrypt_sync_dir_mount	?= /opt/e/jedata
+ecrypt_sync_dir_data	?= /opt/e/jlocal/edata
+
