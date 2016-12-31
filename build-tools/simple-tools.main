@@ -53,7 +53,14 @@ echo $file_fspath
 #########################
 debug_init
 echo_dbg "command $cmd, argument $*"
+not_process=0;
 case $cmd in
+	"apm" )
+		adb_push_module $*;;
+	"apb" )
+		adb_push_bin $*;;
+	"mktags" )
+		make_tags ;;	# misc class
 	"tsm" )
 		tushare_monitor ;;
 	"hk" )
@@ -84,17 +91,17 @@ case $cmd in
 		huawei_phone_command $*;;
 	"amstart" )
 		adb_am_start $*;;
-    "simple-tools" | "simple-tools.out" )
-        simple_tools_raw_mode $@
-        ;;
     "ds" )
         quick_dot $@
         ;;
     "m241" )
         sshfs_mount_group $cmd
         ;;
-    * )
-        echo "unknown command!"
-        ;;
+	* )
+		not_process=1 ;;
 esac
+
+if (( not_process == 1 )); then
+#include "sh/main.sh"
+fi
 
