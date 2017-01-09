@@ -3,6 +3,7 @@
 #include "sh/link.sh"
 #include "sh/rawmode.sh"
 #include "sh/mount.sh"
+#include "sh/common.sh"
 
 case $cmd in
 "simple-tools" | "simple-tools.out" )
@@ -11,6 +12,8 @@ case $cmd in
 	mount_ecrypt_sync_dir $* ;;
 "uesd" )
 	umount_ecrypt_sync_dir $* ;;
+"lff" )
+	misc_linkfiles $* ;;
 	"stvar" )
 		misc_simpletools_var $* ;;
 	"jc_start" )

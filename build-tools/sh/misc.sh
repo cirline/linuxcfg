@@ -27,3 +27,26 @@ pr_info "start nutstore daemon...\n"
 python $HOME/.nutstore/dist/bin/nutstore-pydaemon.py
 }
 
+function misc_linkfiles() {
+if (( $# < 1 )); then
+	pr_err "missing argument\n"
+	return;
+fi
+path=$1
+dir=$(split_directory $path)
+dir="./fsave/$dir"
+if [ ! -e $dir ]; then
+	pr_warn "$dir not exist, make it\n"
+	mkdir -p $dir
+fi
+deep=$(dir_deep $path)
+prefix=""
+for((i = 0; i <= $deep; i++)); do
+	prefix="../$prefix"
+done
+pr_info "deep = $deep, prefix=$prefix\n"
+cd $dir
+ln -s $prefix/$path .
+cd -
+}
+
