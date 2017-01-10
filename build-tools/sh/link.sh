@@ -9,6 +9,7 @@ function create_symbolic_link_all() {
 do_link comment_line	" -- MISC Commands --\n"
 do_link stvar		"echo simple-tools variable"
 do_link jc_start	"start nutstore daemon"
+do_link lff		"link file to fsave directory"
 do_link comment_line	"\n"
 
 # mount Commands

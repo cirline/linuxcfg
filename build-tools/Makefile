@@ -45,6 +45,7 @@ objs	+= sh/misc.sh
 objs	+= sh/link.sh
 objs	+= sh/rawmode.sh
 objs	+= sh/mount.sh
+objs	+= sh/common.sh
 
 mobj	:= simple-tools.main
 
