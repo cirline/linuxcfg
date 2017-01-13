@@ -44,9 +44,11 @@ prefix=""
 for((i = 0; i <= $deep; i++)); do
 	prefix="../$prefix"
 done
-pr_info "deep = $deep, prefix=$prefix\n"
+#pr_info "deep = $deep, prefix=$prefix\n"
 cd $dir
+set -x
 ln -s $prefix/$path .
-cd -
+set +x
+#cd -
 }
 
