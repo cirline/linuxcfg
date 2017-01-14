@@ -157,16 +157,6 @@ case $1 in
 esac
 }
 
-# adb screencap
-function android_screencap() {
-image=$1
-if [ "$image" == "" ]; then
-	image="screen.png"
-fi
-adb shell screencap -p /sdcard/$image
-adb pull /sdcard/$image .
-}
-
 # adb start app
 function adb_am_start() {
 if [ "$1" == "" ]; then

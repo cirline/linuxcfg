@@ -77,8 +77,6 @@ case $cmd in
 		doing_before_leaving ;;
 	"msmgpio" )
 		msm_gpio_control $* ;;
-	"scap" )
-		android_screencap $*;;
 	"tvar" )
 		tools_var $*;;
 	"jnih" )

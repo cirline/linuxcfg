@@ -4,6 +4,7 @@
 #include "sh/rawmode.sh"
 #include "sh/mount.sh"
 #include "sh/common.sh"
+#include "sh/android.sh"
 
 case $cmd in
 "simple-tools" | "simple-tools.out" )
@@ -14,6 +15,8 @@ case $cmd in
 	umount_ecrypt_sync_dir $* ;;
 "lff" )
 	misc_linkfiles $* ;;
+"scap" )
+	android_screencap $* ;;
 	"stvar" )
 		misc_simpletools_var $* ;;
 	"jc_start" )
