@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rm klog
+adb root
+sleep 2
+adb shell rm /sdcard/klog
+adb shell sync
+adb shell dd if=/dev/block/bootdevice/by-name/klog of=/sdcard/klog count=2222
+adb pull /sdcard/klog

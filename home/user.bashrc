@@ -8,6 +8,7 @@ alias grep='grep --exclude=tags --color=auto'
 
 TOOLS_PATH=$HOME/tools
 LINUXCFG_PATH=$HOME/linuxcfg
+LINUXCFG_TOOLS=$LINUXCFG_PATH/home/tools
 
 # auto completion
 . $HOME/linuxcfg/git-completion.bash
@@ -18,13 +19,18 @@ LINUXCFG_PATH=$HOME/linuxcfg
 #export PATH=$JAVA_HOME/bin:$PATH
 
 # arm linux gcc
-# export PATH=/home/chenqiwei/tools/toolchain-4.3.2/bin:$PATH
+export PATH=$TOOLS_PATH/arm_tc/bin:$PATH
 
 # tools
-export PATH=$TOOLS_PATH:$PATH
+export PATH=$TOOLS_PATH:$LINUXCFG_TOOLS:$PATH
 
 # android
 NDK_HOME=$TOOLS_PATH/ndk
 export PATH=$NDK_HOME:$PATH
 
 . $LINUXCFG_PATH/fcs/user.bashfc
+
+# cd real directory
+function cdre() {
+cd `pwd -P`
+}

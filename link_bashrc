@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo ". `pwd`/home/user.bashrc" >> $HOME/.bashrc
