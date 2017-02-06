@@ -1,7 +1,7 @@
 # 
 build_path	:= $(shell pwd)
 home_path	:= $$HOME
-install_path	:= $(home_path)/linuxcfg/home/tools
+install_path	:= $(home_path)/linuxcfg/home/tools/bin
 
 # function
 echo_info	= @echo "\033[34m $(1) \033[0m"
@@ -120,5 +120,11 @@ install:
 	$(install_path)/$(tools_install) clink $(install_path)
 	cp $(ui_out) $(install_path)/$(ui_install)
 
-.PHONY: all onekey config defconfig distclean clean install
+uninstall:
+	$(install_path)/$(tools_install) remove_link $(install_path)
+	rm $(install_path)/$(ui_install)
+	rm $(install_path)/$(tools_install)
+
+.PHONY: all onekey config defconfig distclean clean install \
+	uninstall
 
