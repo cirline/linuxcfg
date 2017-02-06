@@ -21,12 +21,11 @@ LINUXCFG_TOOLS_PATH=$LINUXCFG_PATH/home/tools
 # arm linux gcc
 export PATH=$TOOLS_PATH/arm_tc/bin:$PATH
 
-# tools
-export PATH=$TOOLS_PATH:$LINUXCFG_TOOLS:$PATH
-
-###############
-##  Android  ##
-###############
+## PATH env: linuxcfg tools
+export PATH=$LINUXCFG_TOOLS_PATH/bin:$PATH
+## PATH env: home tools
+export PATH=$TOOLS_PATH:$PATH
+## PATH env: ndk-build
 NDK_PATH=$LINUXCFG_TOOLS_PATH/ndk/bin
 export PATH=$NDK_PATH:$PATH
 
