@@ -26,6 +26,10 @@ include $(defconfig_file)
 build			:= build.out
 build_objs		:= build.l
 
+# build config tool
+build_config_tool	:= bconfig.out
+bctool-objs	:= btools/bconfig.l
+
 tools_install	:= simple-tools
 tools_out	:= $(tools_install).out
 ui_install	:= $(tools_install).ui
@@ -105,15 +109,19 @@ defconfig: $(defconfig_file)
 	cp $(defconfig_file) $(config_file)
 
 $(build): build.l
-	flex -o lex.yy.c $^
-	gcc -o $@ lex.yy.c -lfl
+	flex -o $@_lex.yy.c $^
+	gcc -o $@ $@_lex.yy.c -lfl
+
+$(build_config_tool): $(bctool-objs)
+	flex -o $@_lex.yy.c $^
+	gcc -o $@ $@_lex.yy.c -lfl
 
 distclean:
 	make clean
 	rm *.config
 
 clean:
-	rm *.out lex.yy.c
+	rm *.out *lex.yy.c
 
 install:
 	cp $(tools_out) $(install_path)/$(tools_install)
