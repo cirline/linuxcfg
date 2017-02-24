@@ -61,7 +61,6 @@ void read_varible_string(enum evar e, char *text);
 %%
 ^"# makefile"[ \t]*\n	{
 	/* filetype is makefile */
-	fprintf(yyout, "# makefile\n");
 	BEGIN MAKEFILE;
 }
 
@@ -74,6 +73,7 @@ void read_varible_string(enum evar e, char *text);
 }
 
 <MAKEFILE>^[ \t]*\n	{ /* space line, do nothing */ }
+<MAKEFILE>^export.*\n	{ /* export line, do nothing */}
 
 <MAKEFILE><<EOF>>	{
 	end_of_file(); /* end of file */
@@ -240,7 +240,7 @@ int create_makeconfig(char *outfile)
 	struct var_desc *p;
 	int rc;
 
-	fd = open(outfile, O_RDWR | O_CREAT, 0666);
+	fd = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0666);
 	if(fd < 0) {
 		printf("%s open %s fail, %s\n", __func__, buf, strerror(errno));
 		return fd;
@@ -253,6 +253,11 @@ int create_makeconfig(char *outfile)
 		rc = sprintf(buf, "%s %s %s\n\n", p->name, p->op, p->value);
 		if(rc > 0)
 			rc = write(fd, buf, rc);
+#if 0
+		rc = sprintf(buf, "export %s\n\n", p->name);
+		if(rc > 0)
+			rc = write(fd, buf, rc);
+#endif
 	}
 
 	close(fd);
@@ -261,16 +266,16 @@ int create_makeconfig(char *outfile)
 int create_shconfig_makefile(char *outfile)
 {
 	const char *header = ""
+		"$(dest_out):$(src_in)\n"
+		"\t@echo 'out = $(dest_out), in = $(src_in)'\n"
 		"\t@echo '#!/bin/bash' > $@\n"
-		"\t@echo '# do not edit this auto created file' >> $@\n"
-		"\t@echo '# $(config_file): local config file' >> $@\n"
-		"\t@echo '# $(defconfig_file): default config file' >> $@\n";
+		"\t@echo '# do not edit this auto created file' >> $@\n";
 	char buf[1024];
 	int fd;
 	struct var_desc *p;
 	int rc;
 
-	fd = open(outfile, O_RDWR | O_CREAT, 0666);
+	fd = open(outfile, O_RDWR | O_CREAT | O_TRUNC, 0666);
 	if(fd < 0) {
 		printf("%s open %s fail, %s\n", __func__, buf, strerror(errno));
 		return fd;
