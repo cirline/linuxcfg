@@ -232,20 +232,21 @@ int load_file(char *filename)
 	fclose(inpfile.fp);
 }
 
-int save_file(char *filename)
+int create_makeconfig(char *outfile)
 {
-	char buf[1024] = "# makefile\n\n";
+	const char *header = "# makefile\n\n";
+	char buf[1024];
 	int fd;
 	struct var_desc *p;
 	int rc;
 
-	fd = open(filename, O_RDWR | O_CREAT, 0666);
+	fd = open(outfile, O_RDWR | O_CREAT, 0666);
 	if(fd < 0) {
-		printf("%s open %s fail, %s\n", __func__, filename, strerror(errno));
+		printf("%s open %s fail, %s\n", __func__, buf, strerror(errno));
 		return fd;
 	}
 
-	rc = write(fd, buf, strlen(buf));
+	rc = write(fd, header, strlen(header));
 
 	for(p = g_queue.qhead.cqh_first; p != (void *)&g_queue.qhead;
 			p = p->list.cqe_next) {
@@ -257,22 +258,61 @@ int save_file(char *filename)
 	close(fd);
 }
 
+int create_shconfig_makefile(char *outfile)
+{
+	const char *header = ""
+		"\t@echo '#!/bin/bash' > $@\n"
+		"\t@echo '# do not edit this auto created file' >> $@\n"
+		"\t@echo '# $(config_file): local config file' >> $@\n"
+		"\t@echo '# $(defconfig_file): default config file' >> $@\n";
+	char buf[1024];
+	int fd;
+	struct var_desc *p;
+	int rc;
+
+	fd = open(outfile, O_RDWR | O_CREAT, 0666);
+	if(fd < 0) {
+		printf("%s open %s fail, %s\n", __func__, buf, strerror(errno));
+		return fd;
+	}
+
+	rc = write(fd, header, strlen(header));
+
+	for(p = g_queue.qhead.cqh_first; p != (void *)&g_queue.qhead;
+			p = p->list.cqe_next) {
+		rc = sprintf(buf, "\t@echo '%s=$(%s)' >> $@\n", p->name, p->name);
+		if(rc > 0)
+			rc = write(fd, buf, rc);
+	}
+
+	close(fd);
+
+}
+
 int main(int argc, char *argv[])
 {
 	int i;
+	char *build_option;
+	char *outfile;
 
-	if(argc < 3) {
-		printf("usage: %s dest_file src_file ..\n", argv[0]);
+	if(argc < 4) {
+		printf("usage: %s [mkconfig(default)|shconfigmk] outfile src_file ..\n", argv[0]);
 		return -1;
 	}
 
 	g_queue.cur = NULL;
 	CIRCLEQ_INIT(&g_queue.qhead);
 
-	for(i = 2; i < argc; i++)
+	for(i = 3; i < argc; i++)
 		load_file(argv[i]);
 
-	save_file(argv[1]);
+	build_option = argv[1];
+	outfile = argv[2];
+
+	if(strcmp(build_option, "shconfigmk") == 0)
+		create_shconfig_makefile(outfile);
+	else
+		create_makeconfig(outfile);
 
 	circleq_free();
 
