@@ -55,3 +55,9 @@ set +x
 #cd -
 }
 
+# start firefox
+function misc_start_firfox() {
+pr_info "start firefox -p $firefox_profile\n"
+firefox -p $firefox_profile
+}
+

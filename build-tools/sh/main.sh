@@ -17,6 +17,8 @@ case $cmd in
 	misc_linkfiles $* ;;
 "scap" )
 	android_screencap $* ;;
+"ff" )
+	misc_start_firfox $* ;;
 	"stvar" )
 		misc_simpletools_var $* ;;
 	"jc_start" )

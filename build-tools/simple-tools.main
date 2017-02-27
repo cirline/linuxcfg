@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#include "config/stools_local_config.sh"
+#include "config/stools_local_config_autocreate.sh"
 #include "simple-tools.common"
 #include "simple-tools.misc"
 #include "mount.sh"

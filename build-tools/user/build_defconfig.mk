@@ -29,3 +29,6 @@ jcloud_path	?= $(home_path)/jcloud
 ecrypt_sync_dir_mount	?= /opt/e/jedata
 ecrypt_sync_dir_data	?= /opt/e/jlocal/edata
 
+# firefox profile
+firefox_profile		?= def
+
