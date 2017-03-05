@@ -1,7 +1,7 @@
 set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  
 " 自动缩进
 set autoindent
-"set cindent
+set cindent
 " Tab键的宽度
 set tabstop=8
 " 统一缩进为4
@@ -74,4 +74,6 @@ let Tlist_Auto_Open=0
 map  :w <CR> :!dot -Tpng % -O <CR> :!eog %.png & <CR>
 
 map <F5> :!./% <CR>
+
+source ~/linuxcfg/home/dotvim/local.vimrc
 
