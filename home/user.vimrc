@@ -2,6 +2,9 @@ set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本�
 " 自动缩进
 set autoindent
 set cindent
+
+set smartindent		" for c to auto indent
+
 " Tab键的宽度
 set tabstop=8
 " 统一缩进为4
@@ -54,8 +57,6 @@ set showmatch
 set matchtime=1
 " 光标移动到buffer的顶部和底部时保持3行距离
 set scrolloff=3
-" 为C程序提供自动缩进
-"set smartindent
 " no z a long line
 set nowrap
 

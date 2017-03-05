@@ -27,9 +27,12 @@ pr_info "start nutstore daemon...\n"
 python $HOME/.nutstore/dist/bin/nutstore-pydaemon.py
 }
 
+# symlink: lff
 function misc_linkfiles() {
 if (( $# < 1 )); then
+	pr_err "link source file to ./fsave/ directory - \n"
 	pr_err "missing argument\n"
+	pr_err "arg1: source file\n"
 	return;
 fi
 path=$1
@@ -50,5 +53,11 @@ set -x
 ln -s $prefix/$path .
 set +x
 #cd -
+}
+
+# start firefox
+function misc_start_firfox() {
+pr_info "start firefox -p $firefox_profile\n"
+firefox -p $firefox_profile
 }
 

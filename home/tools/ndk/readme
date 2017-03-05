@@ -1,0 +1,11 @@
+install ndk
+
+1. ndk install:
+  ~ download ndk by android studio sdk manager
+  ~ install ndk to sdk/ndk-bundle in android studio
+  ~ waiting for finish
+
+2. create a symlink ./bin to sdk/ndk-bundle
+
+3. ndk path will be add to PATH by user.bashrc
+

@@ -8,7 +8,7 @@ alias grep='grep --exclude=tags --color=auto'
 
 TOOLS_PATH=$HOME/tools
 LINUXCFG_PATH=$HOME/linuxcfg
-LINUXCFG_TOOLS=$LINUXCFG_PATH/home/tools
+LINUXCFG_TOOLS_PATH=$LINUXCFG_PATH/home/tools
 
 # auto completion
 . $HOME/linuxcfg/git-completion.bash
@@ -21,12 +21,13 @@ LINUXCFG_TOOLS=$LINUXCFG_PATH/home/tools
 # arm linux gcc
 export PATH=$TOOLS_PATH/arm_tc/bin:$PATH
 
-# tools
-export PATH=$TOOLS_PATH:$LINUXCFG_TOOLS:$PATH
-
-# android
-NDK_HOME=$TOOLS_PATH/ndk
-export PATH=$NDK_HOME:$PATH
+## PATH env: linuxcfg tools
+export PATH=$LINUXCFG_TOOLS_PATH/bin:$PATH
+## PATH env: home tools
+export PATH=$TOOLS_PATH:$PATH
+## PATH env: ndk-build
+NDK_PATH=$LINUXCFG_TOOLS_PATH/ndk/bin
+export PATH=$NDK_PATH:$PATH
 
 . $LINUXCFG_PATH/fcs/user.bashfc
 
