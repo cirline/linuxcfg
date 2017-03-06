@@ -75,8 +75,6 @@ case $cmd in
 		fastboot_flash $cmd $* ;;
 	"dobeforeleaving" )
 		doing_before_leaving ;;
-	"msmgpio" )
-		msm_gpio_control $* ;;
 	"tvar" )
 		tools_var $*;;
 	"jnih" )

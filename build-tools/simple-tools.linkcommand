@@ -71,10 +71,6 @@ do_link	comment_line	"\nCustomization\n"
 do_link hk	"szhklt custom cases (`hk help`)"
 do_link hw	"huawei phone command (usage: hw `hw help_tail`)"
 
-# msm command
-do_link	comment_line	"\nmsm command:\n"
-do_link msmgpio		"msm gpio control: msmgpio gpio_n reg_n [value]"
-
 # misc
 do_link ues "umount efs"
 do_link mes "mount efs"

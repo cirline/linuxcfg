@@ -9,6 +9,8 @@
 case $cmd in
 "simple-tools" | "simple-tools.out" )
 	simple_tools_raw_mode $* ;;
+"msmgpio" )
+	android_msm_gpio_control $* ;;
 "mesd" )
 	mount_ecrypt_sync_dir $* ;;
 "uesd" )

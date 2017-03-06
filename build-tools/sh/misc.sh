@@ -20,7 +20,7 @@ esac
 
 function misc_jinguoyun_start() {
 if [ ! -e $jcloud_path ]; then
-	pr_err "jcloud dir not found\n"
+	pr_err "jcloud dir $jcloud_path not found\n"
 	return
 fi
 pr_info "start nutstore daemon...\n"

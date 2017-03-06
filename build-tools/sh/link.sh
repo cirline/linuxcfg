@@ -36,6 +36,10 @@ do_link comment_line	"\n"
 do_link comment_line	" -- MOUNT Commands --\n"
 do_link mesd		"mount jcould ecrypt sync dir"
 do_link uesd		"umount jcould ecrypt sync dir"
+
+# android
+do_link	comment_line	" -- A N D R O I D --\n"
+do_link msmgpio		"msm gpio control"
 }
 
 # remove all the symlink to simple-tools
