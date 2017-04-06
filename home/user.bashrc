@@ -35,3 +35,18 @@ export PATH=$NDK_PATH:$PATH
 function cdre() {
 cd `pwd -P`
 }
+
+# cd .. until find .repo
+# if not found .repo, stay current
+function croot() {
+cur_path=`pwd`
+while [ ! -d .repo ]; do
+	now_path=`pwd`
+	if [ "$now_path" = "/" ]; then
+		echo "not found .repo"
+		cd $cur_path
+		return
+	fi
+	cd ..
+done
+}

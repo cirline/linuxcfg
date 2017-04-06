@@ -78,3 +78,8 @@ map <F5> :!./% <CR>
 
 source ~/linuxcfg/home/dotvim/local.vimrc
 
+" all to html
+nmap <Leader>wahh :VimwikiAll2HTML <CR>
+
+let g:vimwiki_list = [{"syntax": "markdown", "auto_export": 0}]
+
