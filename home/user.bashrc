@@ -13,10 +13,14 @@ LINUXCFG_TOOLS_PATH=$LINUXCFG_PATH/home/tools
 # auto completion
 . $HOME/linuxcfg/git-completion.bash
 
-# java
-#export JAVA_HOME=/home/chenqiwei/adata_home/ch/tools/jdk1.6.0_38
-#export CLASSPATH=$JAVA_HOME/lib
-#export PATH=$JAVA_HOME/bin:$PATH
+#########
+## jdk ##
+#########
+export JAVA_HOME=$LINUXCFG_TOOLS_PATH/jdk/jdk
+if [ -n "$JAVA_HOME" ]; then
+export CLASSPATH=$JAVA_HOME/lib
+export PATH=$JAVA_HOME/bin:$PATH
+fi
 
 # arm linux gcc
 export PATH=$TOOLS_PATH/arm_tc/bin:$PATH
@@ -50,3 +54,4 @@ while [ ! -d .repo ]; do
 	cd ..
 done
 }
+

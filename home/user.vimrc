@@ -83,3 +83,5 @@ nmap <Leader>wahh :VimwikiAll2HTML <CR>
 
 let g:vimwiki_list = [{"syntax": "markdown", "auto_export": 0}]
 
+" insert date
+noremap <leader>date	:read !date "+\%Y-\%m-\%d \%H:\%M" <cr>
