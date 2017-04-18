@@ -85,3 +85,11 @@ let g:vimwiki_list = [{"syntax": "markdown", "auto_export": 0}]
 
 " insert date
 noremap <leader>date	:read !date "+\%Y-\%m-\%d \%H:\%M" <cr>
+
+" vimscript_settings {{{
+augroup vimscript_settings
+	autocmd!
+	" z code section
+	autocmd filetype vim setlocal foldmethod=marker
+augroup END
+" }}}
