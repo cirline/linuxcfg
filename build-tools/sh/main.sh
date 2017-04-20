@@ -9,6 +9,8 @@
 case $cmd in
 "simple-tools" | "simple-tools.out" )
 	simple_tools_raw_mode $* ;;
+"apush" )
+	android_adb_push $* ;;
 "msmgpio" )
 	android_msm_gpio_control $* ;;
 "mesd" )

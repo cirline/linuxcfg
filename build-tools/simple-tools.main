@@ -55,10 +55,6 @@ debug_init
 echo_dbg "command $cmd, argument $*"
 not_process=0;
 case $cmd in
-	"apm" )
-		adb_push_module $*;;
-	"apb" )
-		adb_push_bin $*;;
 	"mktags" )
 		make_tags ;;	# misc class
 	"tsm" )

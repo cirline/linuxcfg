@@ -40,6 +40,9 @@ do_link uesd		"umount jcould ecrypt sync dir"
 # android
 do_link	comment_line	" -- A N D R O I D --\n"
 do_link msmgpio		"msm gpio control"
+
+do_link	comment_line	" -- A N D R O I D (ADB) --\n"
+do_link apush		"usage: apush path mode"
 }
 
 # remove all the symlink to simple-tools

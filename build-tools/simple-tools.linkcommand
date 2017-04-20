@@ -60,8 +60,6 @@ do_link mvr	"input swipe right"
 # adb function
 do_link scap	"android screencap (scap filename)"
 do_link amstart	"adb start app, amstart package name"
-do_link apm	"adb push module and chmod to 644"
-do_link apb	"adb push bin and chmod to 755"
 
 # android
 do_link	jnih	"create jni header file: jnih com/xxx/xxx"
