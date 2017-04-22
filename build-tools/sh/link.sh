@@ -11,10 +11,10 @@
 #   else:        create the soft link
 # $2:
 #   install path
-function create_symbolic_link_all() {
+function link_create_symbolic_all() {
 if [[ $1 == "" || $1 == "help" ]]; then
 	print_help=1
-	echo " -- Usage: --"
+	echo "Bbusybox for shell(bbshell), usage:"
 elif [[ $1 == "remove" ]]; then
 	link_remove_flag=1
 	pr_warn "remove all symbolic links\n"
@@ -40,6 +40,7 @@ do_link uesd		"umount jcould ecrypt sync dir"
 # android
 do_link	comment_line	" -- A N D R O I D --\n"
 do_link msmgpio		"msm gpio control"
+do_link dumpblk		"android dump block, eg: dumpblk klog 2222"
 
 do_link	comment_line	" -- A N D R O I D (ADB) --\n"
 do_link apush		"usage: apush path mode"
@@ -47,6 +48,6 @@ do_link apush		"usage: apush path mode"
 
 # remove all the symlink to simple-tools
 function link_remove_all() {
-create_symbolic_link_all remove $2
+link_create_symbolic_all remove $2
 }
 

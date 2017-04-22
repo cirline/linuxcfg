@@ -1,4 +1,9 @@
-# 
+#######################
+## busybox for shell ##
+#######################
+
+install_bin	:= bbshell
+
 build_path	:= $(shell pwd)
 home_path	:= $(shell echo $$HOME)
 install_path	:= $(home_path)/linuxcfg/home/tools/bin
@@ -45,7 +50,7 @@ build_config_tool	:= bconfig.out
 bctool-objs	:= btools/bconfig.l
 
 
-tools_install	:= simple-tools
+tools_install	:= $(install_bin)
 tools_out	:= $(tools_install).out
 ui_install	:= $(tools_install).ui
 ui_out		:= $(ui_install).out

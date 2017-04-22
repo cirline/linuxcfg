@@ -70,3 +70,30 @@ else
 fi
 }
 
+# adb wait device
+function android_adb_wait_device() {
+	adb wait-for-device
+}
+
+# android dump a block
+# $1: block name will be cloned
+# $2: block size will be cloned, in MB
+function android_adb_dump_block() {
+	if (( $# < 2 )); then
+		pr_warn "usage: dumpblk block_name size_in_MB\n"
+		return
+	fi
+	(( size_sectors = $2 * 2048 ))
+	pr_info "cloned $1 sectors = $size_sectors\n"
+
+	test -e "$1" && rm $1
+	android_adb_wait_device
+	adb root
+	android_adb_wait_device
+	adb shell rm /sdcard/$1
+	adb shell dd if=/dev/block/bootdevice/by-name/$1 of=/sdcard/$1 count=$size_sectors
+	adb pull /sdcard/$1 .
+
+	pr_info "ok\n"
+}
+

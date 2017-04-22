@@ -3,7 +3,7 @@
 # this section link the quick command to simple-tools
 
 
-tools=simple-tools
+tools=bbshell
 print_help=0
 installpath=
 link_remove_flag=0
