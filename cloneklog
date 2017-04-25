@@ -1,9 +1,13 @@
 #!/bin/bash
 
-rm klog
+if [ -e klog ]; then
+	rm klog
+fi
+
+adb wait-for-device
 adb root
-sleep 2
+adb wait-for-device
 adb shell rm /sdcard/klog
 adb shell sync
 adb shell dd if=/dev/block/bootdevice/by-name/klog of=/sdcard/klog count=2222
-adb pull /sdcard/klog
+adb pull /sdcard/klog .

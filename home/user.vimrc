@@ -76,6 +76,7 @@ map  :w <CR> :!dot -Tpng % -O <CR> :!eog %.png & <CR>
 
 map <F5> :!./% <CR>
 
+source ~/linuxcfg/home/dotvim/vimrc
 source ~/linuxcfg/home/dotvim/local.vimrc
 
 " all to html

@@ -1,0 +1,13 @@
+if exists("b:vimrc_defined")
+	finish
+endif
+let b:vimrc_defined = 1
+
+" vim setting of template {{{
+augroup vim_setting_template
+	autocmd!
+	autocmd BufNewFile *.c 0r ~/linuxcfg/home/dotvim/template/tpl.c
+	autocmd BufNewFile *.wiki 0r ~/linuxcfg/home/dotvim/template/tpl.wiki
+augroup END
+" }}}
+
