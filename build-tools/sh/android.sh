@@ -90,9 +90,15 @@ function android_adb_dump_block() {
 	android_adb_wait_device
 	adb root
 	android_adb_wait_device
-	adb shell rm /sdcard/$1
-	adb shell dd if=/dev/block/bootdevice/by-name/$1 of=/sdcard/$1 count=$size_sectors
-	adb pull /sdcard/$1 .
+
+	if (( $size_sectors == 0 )); then
+		pr_info "erase $1 block\n"
+		adb shell dd if=/dev/zero of=/dev/block/bootdevice/by-name/$1 count=2048
+	else
+		adb shell rm /sdcard/$1
+		adb shell dd if=/dev/block/bootdevice/by-name/$1 of=/sdcard/$1 count=$size_sectors
+		adb pull /sdcard/$1 .
+	fi
 
 	pr_info "ok\n"
 }
