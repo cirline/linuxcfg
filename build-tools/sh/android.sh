@@ -25,6 +25,7 @@ if [ ! -e "$1" ]; then
 	pr_err "$1 not exist!\n"
 	return
 fi
+set -x
 
 adb wait-for-device
 adb root
@@ -33,8 +34,10 @@ adb remount
 adb wait-for-device
 
 # redirect stderr to stdout, and piped to awk
-rc=`adb push $1 /$1 2>&1 | awk -F ' ' '{print $1}'`
+# rc=`adb push $1 /$1 2>&1 | awk -F ' ' '{print $1}'`
+adb push $1 /$1
 adb shell chmod $2 /$1
+set +x
 adb shell sync
 pr_info "ok\n"
 }
