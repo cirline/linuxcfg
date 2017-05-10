@@ -5,7 +5,6 @@
 #include "simple-tools.misc"
 #include "mount.sh"
 #include "simple-tools.linkcommand"
-#include "simple-tools.rawmode"
 #include "simple-tools.android"
 #include "customization.sh"
 
@@ -55,10 +54,6 @@ debug_init
 echo_dbg "command $cmd, argument $*"
 not_process=0;
 case $cmd in
-	"apm" )
-		adb_push_module $*;;
-	"apb" )
-		adb_push_bin $*;;
 	"mktags" )
 		make_tags ;;	# misc class
 	"tsm" )

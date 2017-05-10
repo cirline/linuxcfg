@@ -7,8 +7,12 @@
 #include "sh/android.sh"
 
 case $cmd in
-"simple-tools" | "simple-tools.out" )
+"bbshell" | "bbshell.out" )
 	simple_tools_raw_mode $* ;;
+"dumpblk" )
+	android_adb_dump_block $* ;;
+"apush" )
+	android_adb_push $* ;;
 "msmgpio" )
 	android_msm_gpio_control $* ;;
 "mesd" )

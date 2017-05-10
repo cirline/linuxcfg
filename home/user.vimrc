@@ -76,5 +76,21 @@ map  :w <CR> :!dot -Tpng % -O <CR> :!eog %.png & <CR>
 
 map <F5> :!./% <CR>
 
+source ~/linuxcfg/home/dotvim/vimrc
 source ~/linuxcfg/home/dotvim/local.vimrc
 
+" all to html
+nmap <Leader>wahh :VimwikiAll2HTML <CR>
+
+let g:vimwiki_list = [{"syntax": "markdown", "auto_export": 0}]
+
+" insert date
+noremap <leader>date	:read !date "+\%Y-\%m-\%d \%H:\%M" <cr>
+
+" vimscript_settings {{{
+augroup vimscript_settings
+	autocmd!
+	" z code section
+	autocmd filetype vim setlocal foldmethod=marker
+augroup END
+" }}}

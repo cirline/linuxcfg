@@ -7,7 +7,7 @@ case $1 in
 "remove_link" )
 	link_remove_all $* ;;
 "clink" | "")
-	create_symbolic_link_all $*
+	link_create_symbolic_all $*
 	;;
 esac
 }
