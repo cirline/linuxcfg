@@ -6,6 +6,11 @@ alias ll='ls -lh'
 alias lll='ls -alh'
 alias grep='grep --exclude=tags --color=auto'
 
+##############
+## REPO URL ##
+##############
+export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'
+
 TOOLS_PATH=$HOME/tools
 LINUXCFG_PATH=$HOME/linuxcfg
 LINUXCFG_TOOLS_PATH=$LINUXCFG_PATH/home/tools
