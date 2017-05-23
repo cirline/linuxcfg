@@ -11,6 +11,8 @@ case $cmd in
 	simple_tools_raw_mode $* ;;
 "dumpblk" )
 	android_adb_dump_block $* ;;
+"ainstall" )
+	android_adb_cmdset install $*;;
 "apush" )
 	android_adb_push $* ;;
 "msmgpio" )
