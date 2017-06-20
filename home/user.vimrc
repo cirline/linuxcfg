@@ -1,3 +1,8 @@
+if exists("b:vimrc_defined_old")
+	finish
+endif
+let b:vimrc_defined_old = 1
+
 set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  
 " 自动缩进
 set autoindent
@@ -71,6 +76,7 @@ let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_Right_Window=1
 let Tlist_Auto_Open=0
+let Tlist_Auto_Highlight_Tag=1
 
 map  :w <CR> :!dot -Tpng % -O <CR> :!eog %.png & <CR>
 

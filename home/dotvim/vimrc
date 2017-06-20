@@ -3,6 +3,11 @@ if exists("b:vimrc_defined")
 endif
 let b:vimrc_defined = 1
 
+if exists("b:vimrc_defined_old")
+else
+	source ~/linuxcfg/home/user.vimrc
+endif
+
 " vim setting of template {{{
 augroup vim_setting_template
 	autocmd!
@@ -11,5 +16,7 @@ augroup vim_setting_template
 augroup END
 " }}}
 
-
+" the quick keys to edit and save the vimrc
+noremap <leader>ev :sp $MYVIMRC<cr>
+noremap <leader>sv :source $MYVIMRC<cr>
 
