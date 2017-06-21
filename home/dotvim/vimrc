@@ -1,3 +1,24 @@
+"		My Vim Configure
+" -----------------------------------------------------------
+" Author: chenqiwei
+" -----------------------------------------------------------
+
+" DynamicConfig {{-{
+augroup DynamicConfig
+autocmd!
+
+" the quick keys to edit and save the vimrc
+noremap <leader>ev :sp $MYVIMRC<cr>
+noremap <leader>sv :source $MYVIMRC<cr>
+
+noremap <leader>ss :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
+
+" mapping Enter to ctrl+]
+autocmd Filetype help nnoremap <cr> <c-]>
+
+augroup END
+""" end of DynamicConfig }}}
+
 if exists("b:vimrc_defined")
 	finish
 endif
@@ -8,15 +29,11 @@ else
 	source ~/linuxcfg/home/user.vimrc
 endif
 
-" vim setting of template {{{
+" vim setting of template {{delete this string to wrap script{
 augroup vim_setting_template
 	autocmd!
 	autocmd BufNewFile *.c 0r ~/linuxcfg/home/dotvim/template/tpl.c
 	autocmd BufNewFile *.wiki 0r ~/linuxcfg/home/dotvim/template/tpl.wiki
 augroup END
 " }}}
-
-" the quick keys to edit and save the vimrc
-noremap <leader>ev :sp $MYVIMRC<cr>
-noremap <leader>sv :source $MYVIMRC<cr>
 
