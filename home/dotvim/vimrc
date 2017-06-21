@@ -11,7 +11,7 @@ autocmd!
 noremap <leader>ev :sp $MYVIMRC<cr>
 noremap <leader>sv :source $MYVIMRC<cr>
 
-noremap <leader>ss :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
+"noremap <leader>ss :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
 
 " mapping Enter to ctrl+]
 autocmd Filetype help nnoremap <cr> <c-]>
