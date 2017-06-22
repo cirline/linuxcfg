@@ -66,11 +66,14 @@ set fencs=utf-8,gb2312
 syntax on
 :highlight Identifier ctermfg=6
 
-" Taglist
+"""""""""""
+" Taglist "
+" link the taglist.vim plugin to .vim/pulgin to enable the Taglist
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_Right_Window=1
 let Tlist_Auto_Open=0
+""""""""""
 
 map  :w <CR> :!dot -Tpng % -O <CR> :!eog %.png & <CR>
 
