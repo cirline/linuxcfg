@@ -106,3 +106,25 @@ function android_adb_dump_block() {
 	pr_info "ok\n"
 }
 
+function android_adb_install() {
+	if [ ! -e "$1" ]; then
+		pr_err "file: $1 not exist\n"
+		return
+	fi
+
+	adb install -r $1
+}
+
+# @brief android adb debug command set
+#
+# @param subcmd: the adb subcommand
+# @param list: the subcommand argument
+function android_adb_cmdset() {
+case "$1" in
+"install" )
+	android_adb_install $2 ;;
+* )
+	pr_err "unknown adb command $1" ;;
+esac
+}
+
