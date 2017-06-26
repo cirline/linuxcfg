@@ -15,6 +15,10 @@ noremap <leader>sv :source $MYVIMRC<cr>
 
 " mapping Enter to ctrl+]
 autocmd Filetype help nnoremap <cr> <c-]>
+" mapping Backspace to ctrl+t
+autocmd Filetype help nnoremap <bs> <c-t>
+" mapping Ctrl-F5 to refresh help tags
+autocmd Filetype help noremap <c-F5> :helptags .<cr>
 
 augroup END
 """ end of DynamicConfig }}}
@@ -36,4 +40,16 @@ augroup vim_setting_template
 	autocmd BufNewFile *.wiki 0r ~/linuxcfg/home/dotvim/template/tpl.wiki
 augroup END
 " }}}
+
+
+""" we use Vundel to manage the plugins
+set nocompatible
+filetype off
+set runtimepath+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+"Plugin 'file:///home/e/ct/vim/plugins'
+Plugin 'git@git.oschina.net:chss/cundle.git', {'rtp': 'vim/plugins/potion/'}
+call vundle#end()
+filetype plugin indent on
 
