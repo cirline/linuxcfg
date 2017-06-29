@@ -12,10 +12,6 @@ noremap <leader>ev :sp $MYVIMRC<cr>
 noremap <leader>sv :source $MYVIMRC<cr>
 
 "noremap <leader>ss :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
-
-" mapping Enter to ctrl+]
-autocmd Filetype help nnoremap <cr> <c-]>
-
 augroup END
 """ end of DynamicConfig }}}
 
@@ -36,4 +32,16 @@ augroup vim_setting_template
 	autocmd BufNewFile *.wiki 0r ~/linuxcfg/home/dotvim/template/tpl.wiki
 augroup END
 " }}}
+
+""" we use Vundel to manage the plugins
+set nocompatible
+filetype off
+set runtimepath+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+"Plugin 'file:///home/e/ct/vim/plugins'
+Plugin 'git@git.oschina.net:chss/cundle.git', {'rtp': 'vim/plugins/potion/'}
+Plugin 'git@git.oschina.net:chss/vundle-set.git', {'rtp': 'misc/', 'name': 'misc'}
+call vundle#end()
+filetype plugin indent on
 
