@@ -45,3 +45,9 @@ Plugin 'git@git.oschina.net:chss/vundle-set.git', {'rtp': 'misc/', 'name': 'misc
 call vundle#end()
 filetype plugin indent on
 
+""" vim control the android phone hotkey {{{
+nnoremap <leader>p :%!kp<cr>
+nnoremap <leader>a :%!mvl<cr>
+nnoremap <leader>d :%!mvr<cr>
+""" }}}
+
