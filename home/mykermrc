@@ -38,6 +38,7 @@
 ;ECHO
 ;
 ; ... and then remove the ECHO commands above.
+echo Hello \v(system)
 
 COMMENT - Settings that apply to all the systems I use:
 ;
@@ -67,7 +68,8 @@ define ON_EXIT echo Returning you to \v(system) now.
 
 ; Serial port
 define np {
-	set line \m(MYLINE)
+	if ( exist /dev/ttyUSB0 ) set line /dev/ttyUSB0
+	if ( exist /dev/ttyUSB1 ) set line /dev/ttyUSB1
 	set speed 115200
 	set carrier-watch off
 	set handshake none
@@ -100,10 +102,6 @@ forward \v(system)              ; Go execute system-dependent commands
 define MYPORT /dev/cua          ; My dialing environment
 define MYMODEM usr              ; Replace these by what you actually have
 define MYSPEED 57600
-if ( exist /dev/ttyUSB0 )
-	define MYLINE /dev/ttyUSB0
-if ( exist /dev/ttyUSB1 )
-	define MYLINE /dev/ttyUSB1
 ;
 ; If you want all your downloads to go to the same directory, no matter
 ; what your current directory is, uncomment and edit the following command:
