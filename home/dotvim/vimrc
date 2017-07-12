@@ -30,6 +30,7 @@ augroup vim_setting_template
 	autocmd!
 	autocmd BufNewFile *.c 0r ~/linuxcfg/home/dotvim/template/tpl.c
 	autocmd BufNewFile *.wiki 0r ~/linuxcfg/home/dotvim/template/tpl.wiki
+	autocmd BufNewFile *.txt	0r ~/linuxcfg/home/vim/template/tpl.txt
 augroup END
 " }}}
 
@@ -45,4 +46,10 @@ Plugin 'git@git.oschina.net:chss/cundle.git', {'rtp': 'vim/plugins/potion/'}
 Plugin 'git@git.oschina.net:chss/vundle-set.git', {'rtp': 'misc/', 'name': 'misc'}
 call vundle#end()
 filetype plugin indent on
+
+""" vim control the android phone hotkey {{{
+nnoremap <leader>p :%!kp<cr>
+nnoremap <leader>a :%!mvl<cr>
+nnoremap <leader>d :%!mvr<cr>
+""" }}}
 

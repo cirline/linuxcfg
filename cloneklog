@@ -1,5 +1,14 @@
 #!/bin/bash
 
+echo "pcount $#"
+if (( $# > 0 )); then
+	if [ "$1" == "zero" ]; then
+		echo "zero"
+		adb shell dd if=/dev/zero of=/dev/block/bootdevice/by-name/klog count=1024
+		exit
+	fi
+fi
+
 if [ -e klog ]; then
 	rm klog
 fi

@@ -95,8 +95,10 @@ case $1 in
 		vinp_key VOLUME_DOWN;;
 	"ait" )
 		if (( $# == 3 )); then
-			(( x_touch = $2 % $ST_ANDROID_SCREEN_X ))
-			(( y_touch = $3 % $ST_ANDROID_SCREEN_Y ))
+			#(( x_touch = $2 % $ST_ANDROID_SCREEN_X ))
+			#(( y_touch = $3 % $ST_ANDROID_SCREEN_Y ))
+			(( x_touch = $2 ))
+			(( y_touch = $3 ))
 		else
 			(( x_touch = $ST_ANDROID_SCREEN_X / 2 ))
 			(( y_touch = $ST_ANDROID_SCREEN_Y / 2 ))
