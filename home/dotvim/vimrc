@@ -37,7 +37,8 @@ augroup vim_setting_template
 augroup END
 " }}}
 
-""" we use Vundel to manage the plugins
+""" we use Vundle to manage the plugins
+""" download git clone https://github.com/VundleVim/Vundle.vim.git
 set nocompatible
 filetype off
 set runtimepath+=~/.vim/bundle/Vundle.vim
