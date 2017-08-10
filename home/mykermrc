@@ -38,7 +38,6 @@
 ;ECHO
 ;
 ; ... and then remove the ECHO commands above.
-echo Hello \v(system)
 
 COMMENT - Settings that apply to all the systems I use:
 ;
