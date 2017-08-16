@@ -18,13 +18,14 @@ case $1 in
 esac
 }
 
-function misc_jinguoyun_start() {
+function misc_jianguoyun_start() {
 if [ ! -e $jcloud_path ]; then
 	pr_err "jcloud dir $jcloud_path not found\n"
 	return
 fi
-pr_info "start nutstore daemon...\n"
-python $HOME/.nutstore/dist/bin/nutstore-pydaemon.py
+jc_bin=${jcloud_bin}/dist/bin/nutstore-pydaemon.py
+pr_info "start nutstore daemon ${jc_bin} ...\n"
+python ${jc_bin}
 }
 
 # symlink: lff

@@ -1,0 +1,2 @@
+HOST github.com *.github.com bitbucket.org *.bitbucket.org
+	IdentityFile /opt/je/ssh/id_rsa_hklt_2017

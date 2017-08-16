@@ -27,10 +27,10 @@ case $cmd in
 	android_screencap $* ;;
 "ff" )
 	misc_start_firfox $* ;;
+"jc_start" )
+	misc_jianguoyun_start $* ;;
 	"stvar" )
 		misc_simpletools_var $* ;;
-	"jc_start" )
-		misc_jinguoyun_start $* ;;
 	* )
 		pr_err "unknown command($cmd) !\n" ;;
 esac

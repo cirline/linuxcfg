@@ -38,7 +38,14 @@ augroup END
 " }}}
 
 """ we use Vundle to manage the plugins
-""" download git clone https://github.com/VundleVim/Vundle.vim.git
+""" setup the Vundle:
+"""	mkdir .vim/bundle
+"""	git clone https://github.com/VundleVim/Vundle.vim.git
+""" add osc ssh key
+""" sync other plugins
+"""	:BundleUpdate
+""" restart the vim
+"""
 set nocompatible
 filetype off
 set runtimepath+=~/.vim/bundle/Vundle.vim
