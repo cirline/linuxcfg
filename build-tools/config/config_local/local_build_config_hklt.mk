@@ -18,7 +18,9 @@ ct_path ?= $(efs_mnt_path)/code-test
 
 jcloud_path ?= $(efs_mnt_path)/.jcloud
 
-ecrypt_sync_dir_mount ?= /opt/je
+jcloud_bin ?= $(efs_mnt_path)/.nutstore
+
+ecrypt_sync_dir_mount ?= /opt/.j
 
 ecrypt_sync_dir_data ?= /home/chqw/vbox/.jedata
 
