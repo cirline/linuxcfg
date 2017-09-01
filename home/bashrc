@@ -18,6 +18,16 @@ LINUXCFG_TOOLS_PATH=$LINUXCFG_PATH/home/tools
 # auto completion
 . $HOME/linuxcfg/git-completion.bash
 
+# EDIT THE PATH VARIBLE
+#######################
+
+# esp cross tool
+
+ESP_CROSS_TOOL=${LINUXCFG_TOOLS_PATH}/esp/xtensa-esp32-elf
+if [ -e ${ESP_CROSS_TOOL}/bin ]; then
+	export PATH=${ESP_CROSS_TOOL}/bin:${PATH}
+fi
+
 #########
 ## jdk ##
 #########
