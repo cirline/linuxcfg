@@ -20,6 +20,7 @@ sudo umount -t ecryptfs $1
 }
 
 function mount_ecrypt_sync_dir() {
+pr_info "mounting ${ecrypt_sync_dir_data} --> ${ecrypt_sync_dir_mount}\n"
 mount_ecryptfs_v2 $ecrypt_sync_dir_mount $ecrypt_sync_dir_data
 }
 
