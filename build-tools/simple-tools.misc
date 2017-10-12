@@ -108,8 +108,3 @@ fi
 python $ct_path/lab/tushare/main.py &
 }
 
-# make_tags	- make tags
-function make_tags() {
-ctags -I __THROW --file-scope=yes --langmap=c:+.h --languages=c,c++ --links=yes --c-kinds=+p --fields=+S  -R /usr/include .
-}
-

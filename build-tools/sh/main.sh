@@ -7,6 +7,7 @@
 #include "sh/android.sh"
 
 case $cmd in
+
 "bbshell" | "bbshell.out" )
 	simple_tools_raw_mode $* ;;
 "dumpblk" )
@@ -29,9 +30,12 @@ case $cmd in
 	misc_start_firfox $* ;;
 "jc_start" )
 	misc_jianguoyun_start $* ;;
-	"stvar" )
-		misc_simpletools_var $* ;;
-	* )
-		pr_err "unknown command($cmd) !\n" ;;
+"mktags" )
+	misc_make_tags $*;;
+"stvar" )
+	misc_simpletools_var $* ;;
+* )
+	pr_err "unknown command($cmd) !\n" ;;
+
 esac
 

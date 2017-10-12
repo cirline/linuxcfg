@@ -5,6 +5,8 @@ alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias lll='ls -alh'
 alias grep='grep --exclude=tags --color=auto'
+# global adb
+alias gadb='/usr/bin/adb'
 
 ##############
 ## REPO URL ##

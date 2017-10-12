@@ -62,3 +62,16 @@ pr_info "start firefox -p $firefox_profile\n"
 firefox -p $firefox_profile
 }
 
+# make_tags	- make tags
+function misc_make_tags() {
+
+ctags -I __THROW \
+	--file-scope=yes \
+	--langmap=c:+.h \
+	--languages=c,c++ \
+	--links=yes \
+	--c-kinds=+p \
+	--fields=+S  \
+	-R /usr/include .
+}
+
