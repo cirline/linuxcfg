@@ -128,3 +128,17 @@ case "$1" in
 esac
 }
 
+# @brief adb start app
+function android_adb_am_start() {
+if [ "$1" == "" ]; then
+	echo_err "miss package name"
+	return
+fi
+cstring=$1/$1
+if [ "$2" != "" ]; then
+	cstring=$cstring.$2
+else
+	cstring=$cstring".MainActivity"
+fi
+adb shell am start -n $cstring
+}

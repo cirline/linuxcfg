@@ -59,7 +59,6 @@ do_link mvr	"input swipe right"
 
 # adb function
 do_link scap	"android screencap (scap filename)"
-do_link amstart	"adb start app, amstart package name"
 
 # android
 do_link	jnih	"create jni header file: jnih com/xxx/xxx"

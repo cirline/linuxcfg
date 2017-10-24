@@ -45,6 +45,7 @@ do_link dumpblk		"android dump block, eg: dumpblk klog 2222"
 do_link	comment_line	" -- A N D R O I D (ADB) --\n"
 do_link apush		"adb push, usage: apush path mode"
 do_link ainstall	"v01, adb install, usage: ainstall file_path"
+do_link amstart		"start app, amstart package activity(def. MainActivity)"
 }
 
 # remove all the symlink to simple-tools

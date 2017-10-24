@@ -18,6 +18,8 @@ case $cmd in
 	android_adb_push $* ;;
 "msmgpio" )
 	android_msm_gpio_control $* ;;
+"amstart" )
+	android_adb_am_start $* ;;
 "mesd" )
 	mount_ecrypt_sync_dir $* ;;
 "uesd" )

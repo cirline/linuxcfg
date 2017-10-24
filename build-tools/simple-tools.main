@@ -78,8 +78,6 @@ case $cmd in
 		vinp $cmd $*;;
 	"hw" )
 		huawei_phone_command $*;;
-	"amstart" )
-		adb_am_start $*;;
     "ds" )
         quick_dot $@
         ;;
