@@ -61,12 +61,6 @@ else
 fi
 }
 
-# virtual keyevent
-function vinp_key() {
-echo_inf "send key $1"
-adb shell input keyevent $1
-}
-
 # virtual swipe x_start y_start x_end y_end
 function vinp_swipe() {
 echo_inf "swipe ($1, $2) --> ($3, $4)"
@@ -83,16 +77,6 @@ function vinp() {
 echo_dbg "vinp argument: $#($*)"
 android_phone_setting
 case $1 in
-	"kp" )
-		vinp_key POWER;;
-	"kb" )
-		vinp_key BACK;;
-	"kh" )
-		vinp_key HOME;;
-	"ku" )
-		vinp_key VOLUME_UP;;
-	"kd" )
-		vinp_key VOLUME_DOWN;;
 	"ait" )
 		if (( $# == 3 )); then
 			#(( x_touch = $2 % $ST_ANDROID_SCREEN_X ))

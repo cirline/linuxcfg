@@ -10,10 +10,10 @@ case $cmd in
 
 "bbshell" | "bbshell.out" )
 	simple_tools_raw_mode $* ;;
+"kl" | "kr" | "ku" | "kd" | "ke" | "ainstall" | "kh" | "kb" | "kp" | "kvu" | "kvd" )
+	android_adb_cmdset $cmd $* ;;
 "dumpblk" )
 	android_adb_dump_block $* ;;
-"ainstall" )
-	android_adb_cmdset install $*;;
 "apush" )
 	android_adb_push $* ;;
 "msmgpio" )

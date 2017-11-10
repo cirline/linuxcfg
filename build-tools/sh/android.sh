@@ -115,17 +115,44 @@ function android_adb_install() {
 	adb install -r $1
 }
 
+# @brief send android keyevent
+# @param 1:keyname, the key name
+function android_adb_input_keyevent() {
+	pr_info "keyevent $1\n"
+	adb shell input keyevent $1
+}
+
 # @brief android adb debug command set
 #
 # @param subcmd: the adb subcommand
 # @param list: the subcommand argument
 function android_adb_cmdset() {
-case "$1" in
-"install" )
-	android_adb_install $2 ;;
-* )
-	pr_err "unknown adb command $1" ;;
-esac
+	case "$1" in
+	"ainstall" )
+		android_adb_install $2 ;;
+	"kl" )
+		android_adb_input_keyevent DPAD_LEFT ;;
+	"kr" )
+		android_adb_input_keyevent DPAD_RIGHT ;;
+	"ku" )
+		android_adb_input_keyevent DPAD_UP ;;
+	"kd" )
+		android_adb_input_keyevent DPAD_DOWN ;;
+	"ke" )
+		android_adb_input_keyevent ENTER;;
+	"kp" )
+		android_adb_input_keyevent POWER ;;
+	"kb" )
+		android_adb_input_keyevent BACK ;;
+	"kh" )
+		android_adb_input_keyevent HOME ;;
+	"kvu" )
+		android_adb_input_keyevent VOLUME_UP ;;
+	"kvd" )
+		android_adb_input_keyevent VOLUME_DOWN ;;
+	* )
+		pr_err "unknown adb command $1\n" ;;
+	esac
 }
 
 # @brief adb start app

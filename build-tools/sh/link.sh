@@ -46,6 +46,16 @@ do_link	comment_line	" -- A N D R O I D (ADB) --\n"
 do_link apush		"adb push, usage: apush path mode"
 do_link ainstall	"v01, adb install, usage: ainstall file_path"
 do_link amstart		"start app, amstart package activity(def. MainActivity)"
+do_link kr		"input event RIGHT"
+do_link kl		"input event LEFT"
+do_link ku		"input event UP"
+do_link kd		"input event DOWN"
+do_link ke		"input event ENTER"
+do_link kp		"input keyevent POWER"
+do_link kb		"input keyevent BACK"
+do_link kh		"input keyevent HOME"
+do_link kvu		"input keyevent VOL+"
+do_link kvd		"input keyevent VOL-"
 }
 
 # remove all the symlink to simple-tools
