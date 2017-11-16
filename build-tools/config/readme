@@ -1,5 +1,7 @@
 HOWTO
 
+Is the local_build_config_autocreate.mk auto generated? If not, copy a demo from config_local
+
 1. fill the local_build_config_autocreate.mk value
 
 2. backup this file to the config_local directory
