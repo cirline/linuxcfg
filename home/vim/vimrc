@@ -6,7 +6,7 @@
 " textwidth
 set textwidth=78
 " we draw a vertical line to prompt user the textwidth
-set colorcolumn=+2
+set colorcolumn=+3
 highlight ColorColumn ctermbg=0
 
 " DynamicConfig {{-{
