@@ -8,10 +8,11 @@ alias grep='grep --exclude=tags --color=auto'
 # global adb
 alias gadb='/usr/bin/adb'
 
-##############
-## REPO URL ##
-##############
+# REPO
+# some repo cannot import REPO_URL, so we transfer it by argument
+#############################################################################
 export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'
+alias repo='repo --repo-url=${REPO_URL}'
 
 TOOLS_PATH=$HOME/tools
 LINUXCFG_PATH=$HOME/linuxcfg
