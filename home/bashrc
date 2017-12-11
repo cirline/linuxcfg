@@ -10,9 +10,11 @@ alias gadb='/usr/bin/adb'
 
 # REPO
 # some repo cannot import REPO_URL, so we transfer it by argument
+# eg:
+#	repo [option-list] --repo-url=${REPO_URL}
 #############################################################################
 export REPO_URL='https://mirrors.tuna.tsinghua.edu.cn/git/git-repo/'
-alias repo='repo --repo-url=${REPO_URL}'
+#alias repo='repo --repo-url=${REPO_URL}'
 
 TOOLS_PATH=$HOME/tools
 LINUXCFG_PATH=$HOME/linuxcfg
