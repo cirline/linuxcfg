@@ -58,6 +58,7 @@ Plugin 'VundleVim/Vundle.vim'
 "Plugin 'file:///home/e/ct/vim/plugins'
 Plugin 'git@git.oschina.net:chss/cundle.git', {'rtp': 'vim/plugins/potion/'}
 Plugin 'git@git.oschina.net:chss/vundle-set.git', {'rtp': 'misc/', 'name': 'misc'}
+"Plugin 'git@github.com:vim-scripts/matchit.zip.git', {'rtp': 'plugin/', 'name': 'matchit'}
 call vundle#end()
 filetype plugin indent on
 
