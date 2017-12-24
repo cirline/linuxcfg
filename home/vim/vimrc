@@ -31,6 +31,8 @@ else
 	source ~/linuxcfg/home/vimrc
 endif
 
+source ~/linuxcfg/home/vim/local.vimrc
+
 " vim setting of template {{delete this string to wrap script{
 augroup vim_setting_template
 	autocmd!
