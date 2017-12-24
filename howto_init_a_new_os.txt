@@ -1,8 +1,8 @@
 1. append .bashrc to load the bash settings >
-	. /home/chqw/linuxcfg/home/bashrc
+	. /home/chqw/linuxcfg/home/bash/bashrc
 
 2. link .vimrc to load the vim settings >
-	ln -s /home/chqw/linuxcfg/home/vimrc .vimrc
+	ln -s /home/chqw/linuxcfg/home/vim/vimrc .vimrc
 
 ==============================================================================
 vim: tw=78:ft=help
