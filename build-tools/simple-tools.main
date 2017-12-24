@@ -1,11 +1,10 @@
 #!/bin/bash
 
-#include "simple-tools.config"
+#include "config/stools_local_config_autocreate.sh"
 #include "simple-tools.common"
 #include "simple-tools.misc"
 #include "mount.sh"
 #include "simple-tools.linkcommand"
-#include "simple-tools.rawmode"
 #include "simple-tools.android"
 #include "customization.sh"
 
@@ -55,12 +54,6 @@ debug_init
 echo_dbg "command $cmd, argument $*"
 not_process=0;
 case $cmd in
-	"apm" )
-		adb_push_module $*;;
-	"apb" )
-		adb_push_bin $*;;
-	"mktags" )
-		make_tags ;;	# misc class
 	"tsm" )
 		tushare_monitor ;;
 	"hk" )
@@ -75,20 +68,16 @@ case $cmd in
 		fastboot_flash $cmd $* ;;
 	"dobeforeleaving" )
 		doing_before_leaving ;;
-	"msmgpio" )
-		msm_gpio_control $* ;;
 	"tvar" )
 		tools_var $*;;
 	"jnih" )
 		create_jni_header_file $*;;
 	"sui" )
 		tools_ui;;
-	"kh" | "kb" | "kp" | "ku" | "kd" | "mvu" | "mvd" | "mvl" | "mvr" | "ait" )
+	"mvu" | "mvd" | "mvl" | "mvr" | "ait" )
 		vinp $cmd $*;;
 	"hw" )
 		huawei_phone_command $*;;
-	"amstart" )
-		adb_am_start $*;;
     "ds" )
         quick_dot $@
         ;;

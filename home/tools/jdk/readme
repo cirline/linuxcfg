@@ -1,0 +1,9 @@
+install jdk
+
+1. jdk install:
+  ~ download jdk and extract it
+
+2. create a symlink ./jdk to jdk directory
+
+3. JAVA_HOME, CLASSPATH and PATH will export by user.bashrc
+

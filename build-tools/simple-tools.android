@@ -61,12 +61,6 @@ else
 fi
 }
 
-# virtual keyevent
-function vinp_key() {
-echo_inf "send key $1"
-adb shell input keyevent $1
-}
-
 # virtual swipe x_start y_start x_end y_end
 function vinp_swipe() {
 echo_inf "swipe ($1, $2) --> ($3, $4)"
@@ -83,20 +77,12 @@ function vinp() {
 echo_dbg "vinp argument: $#($*)"
 android_phone_setting
 case $1 in
-	"kp" )
-		vinp_key POWER;;
-	"kb" )
-		vinp_key BACK;;
-	"kh" )
-		vinp_key HOME;;
-	"ku" )
-		vinp_key VOLUME_UP;;
-	"kd" )
-		vinp_key VOLUME_DOWN;;
 	"ait" )
 		if (( $# == 3 )); then
-			(( x_touch = $2 % $ST_ANDROID_SCREEN_X ))
-			(( y_touch = $3 % $ST_ANDROID_SCREEN_Y ))
+			#(( x_touch = $2 % $ST_ANDROID_SCREEN_X ))
+			#(( y_touch = $3 % $ST_ANDROID_SCREEN_Y ))
+			(( x_touch = $2 ))
+			(( y_touch = $3 ))
 		else
 			(( x_touch = $ST_ANDROID_SCREEN_X / 2 ))
 			(( y_touch = $ST_ANDROID_SCREEN_Y / 2 ))
@@ -157,52 +143,6 @@ case $1 in
 esac
 }
 
-# adb start app
-function adb_am_start() {
-if [ "$1" == "" ]; then
-	echo_err "miss package name"
-	return
-fi
-cstring=$1/$1
-if [ "$2" != "" ]; then
-	cstring=$cstring.$2
-else
-	cstring=$cstring".MainActivity"
-fi
-adb shell am start -n $cstring
-}
-
-# adb push $1 -> $2, and chmod $2 to $3
-function adb_push() {
-pr_info "test $1\n"
-if [ ! -e "$1" ]; then
-	pr_err "$1 not found\n"
-	return
-fi
-
-rc=`adb push $1 $2 2>&1 | awk -F ' ' '{print $1}'`
-if [ "$rc" = "failed" ]; then
-	pr_info "get root adb\n"
-	adb root
-	sleep 2
-	adb remount
-	adb push $1 $2
-fi
-adb shell chmod $3 $2
-}
-
-function adb_push_module() {
-adb_push $1 $1 0644
-}
-
-function adb_push_bin() {
-if [ "$2" = "x" ]; then
-	adb_push $1 $1 0755
-else
-	adb push $1 /system/bin/$1 0755
-fi
-}
-
 # create jni header file
 function create_jni_header_file() {
 if [ "$1" = "" ] || [ "$1" = "-h" ]; then
@@ -221,29 +161,5 @@ class=${1/\.class/}
 class=${class//\//\.}
 echo_inf "class: $class"
 javah -classpath $current_path -jni $class
-}
-
-# msm8909 control
-# set gpio register, msmgpio gpio_n reg_n value
-function msm_gpio_control() {
-if (( $# < 2 )); then
-	pr_err "request argument\n"
-	return
-fi
-if (( $1 < 0 || $1 > 112)); then
-	echo_err "invalid gpio number: $1"
-	return
-fi
-if (( $2 != 0 && $2 != 4)); then
-	echo_err "invalid register: %2"
-fi
-(( register = 0x01000000 + 0x1000 * $1 + $2 ))
-if [ "$3" == "" ]; then
-	printf "show 0x%x = " $register 
-	adb shell busybox devmem $register 32
-else
-	printf "set 0x%x = 0x%x\n" $register $3
-	adb shell busybox devmem $register 32 $3
-fi
 }
 

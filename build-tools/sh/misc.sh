@@ -18,18 +18,22 @@ case $1 in
 esac
 }
 
-function misc_jinguoyun_start() {
+function misc_jianguoyun_start() {
 if [ ! -e $jcloud_path ]; then
-	pr_err "jcloud dir not found\n"
+	pr_err "jcloud dir $jcloud_path not found\n"
 	return
 fi
-pr_info "start nutstore daemon...\n"
-python $HOME/.nutstore/dist/bin/nutstore-pydaemon.py
+jc_bin=${jcloud_bin}/dist/bin/nutstore-pydaemon.py
+pr_info "start nutstore daemon ${jc_bin} ...\n"
+python ${jc_bin}
 }
 
+# symlink: lff
 function misc_linkfiles() {
 if (( $# < 1 )); then
+	pr_err "link source file to ./fsave/ directory - \n"
 	pr_err "missing argument\n"
+	pr_err "arg1: source file\n"
 	return;
 fi
 path=$1
@@ -50,5 +54,24 @@ set -x
 ln -s $prefix/$path .
 set +x
 #cd -
+}
+
+# start firefox
+function misc_start_firfox() {
+pr_info "start firefox -p $firefox_profile\n"
+firefox -p $firefox_profile
+}
+
+# make_tags	- make tags
+function misc_make_tags() {
+
+ctags -I __THROW \
+	--file-scope=yes \
+	--langmap=c:+.h \
+	--languages=c,c++ \
+	--links=yes \
+	--c-kinds=+p \
+	--fields=+S  \
+	-R /usr/include .
 }
 

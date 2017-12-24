@@ -7,8 +7,19 @@
 #include "sh/android.sh"
 
 case $cmd in
-"simple-tools" | "simple-tools.out" )
+
+"bbshell" | "bbshell.out" )
 	simple_tools_raw_mode $* ;;
+"kl" | "kr" | "ku" | "kd" | "ke" | "ainstall" | "kh" | "kb" | "kp" | "kvu" | "kvd" )
+	android_adb_cmdset $cmd $* ;;
+"dumpblk" )
+	android_adb_dump_block $* ;;
+"apush" )
+	android_adb_push $* ;;
+"msmgpio" )
+	android_msm_gpio_control $* ;;
+"amstart" )
+	android_adb_am_start $* ;;
 "mesd" )
 	mount_ecrypt_sync_dir $* ;;
 "uesd" )
@@ -17,11 +28,16 @@ case $cmd in
 	misc_linkfiles $* ;;
 "scap" )
 	android_screencap $* ;;
-	"stvar" )
-		misc_simpletools_var $* ;;
-	"jc_start" )
-		misc_jinguoyun_start $* ;;
-	* )
-		pr_err "unknown command($cmd) !\n" ;;
+"ff" )
+	misc_start_firfox $* ;;
+"jc_start" )
+	misc_jianguoyun_start $* ;;
+"mktags" )
+	misc_make_tags $*;;
+"stvar" )
+	misc_simpletools_var $* ;;
+* )
+	pr_err "unknown command($cmd) !\n" ;;
+
 esac
 

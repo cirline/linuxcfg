@@ -3,9 +3,10 @@
 # this section link the quick command to simple-tools
 
 
-tools=simple-tools
+tools=bbshell
 print_help=0
 installpath=
+link_remove_flag=0
 
 function do_link() {
 if [ "$1" == "comment_line" ]; then
@@ -20,24 +21,21 @@ else
         exit
     fi
     dest=$installpath/$1
-    echo "do link: $dest"
     if [ -L $dest ]; then
         rm $dest
     fi
-    ln -s $installpath/$tools $dest
+
+	if (( $link_remove_flag == 1 )); then
+		pr_info "remove link: $dest\n"
+	else
+		pr_info "create link: $dest\n"
+		ln -s $installpath/$tools $dest
+	fi
 fi
 }
 
 # create all command soft link
 function do_link_all() {
-
-if [[ $1 == "" || $1 == "help" ]]; then
-    print_help=1
-    echo " -- Usage: --"
-else
-    installpath=$2
-fi
-
 # mount
 do_link	comment_line	"\nmount\n"
 do_link m241 "mount 241 server workspace2"
@@ -48,11 +46,6 @@ do_link flashboot	"fastboot flash boot"
 do_link flashrecovery	"fastboot flash recovery"
 
 # android virtual input
-do_link kp	"input keyevent POWER"
-do_link kb	"android input keyevent BACK"
-do_link kh	"android input keyevent HOME"
-do_link ku	"android input keyevent VOL+"
-do_link kd	"android input keyevent VOL-"
 do_link ait	"android input tap (ait [x y])"
 do_link mvu	"input swipe up"
 do_link mvd	"input swipe down"
@@ -61,9 +54,6 @@ do_link mvr	"input swipe right"
 
 # adb function
 do_link scap	"android screencap (scap filename)"
-do_link amstart	"adb start app, amstart package name"
-do_link apm	"adb push module and chmod to 644"
-do_link apb	"adb push bin and chmod to 755"
 
 # android
 do_link	jnih	"create jni header file: jnih com/xxx/xxx"
@@ -72,10 +62,6 @@ do_link	jnih	"create jni header file: jnih com/xxx/xxx"
 do_link	comment_line	"\nCustomization\n"
 do_link hk	"szhklt custom cases (`hk help`)"
 do_link hw	"huawei phone command (usage: hw `hw help_tail`)"
-
-# msm command
-do_link	comment_line	"\nmsm command:\n"
-do_link msmgpio		"msm gpio control: msmgpio gpio_n reg_n [value]"
 
 # misc
 do_link ues "umount efs"

@@ -1,7 +1,15 @@
+if exists("b:vimrc_defined_old")
+	finish
+endif
+let b:vimrc_defined_old = 1
+
 set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  
 " 自动缩进
 set autoindent
-"set cindent
+set cindent
+
+set smartindent		" for c to auto indent
+
 " Tab键的宽度
 set tabstop=8
 " 统一缩进为4
@@ -54,8 +62,6 @@ set showmatch
 set matchtime=1
 " 光标移动到buffer的顶部和底部时保持3行距离
 set scrolloff=3
-" 为C程序提供自动缩进
-"set smartindent
 " no z a long line
 set nowrap
 
@@ -65,13 +71,34 @@ set fencs=utf-8,gb2312
 syntax on
 :highlight Identifier ctermfg=6
 
-" Taglist
+"""""""""""
+" Taglist "
+" link the taglist.vim plugin to .vim/pulgin to enable the Taglist
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_Use_Right_Window=1
 let Tlist_Auto_Open=0
+let Tlist_Auto_Highlight_Tag=1
 
 map  :w <CR> :!dot -Tpng % -O <CR> :!eog %.png & <CR>
 
 map <F5> :!./% <CR>
 
+source ~/linuxcfg/home/vim/vimrc
+source ~/linuxcfg/home/dotvim/local.vimrc
+
+" all to html
+nmap <Leader>wahh :VimwikiAll2HTML <CR>
+
+let g:vimwiki_list = [{"syntax": "markdown", "auto_export": 0}]
+
+" insert date
+noremap <leader>date	:read !date "+\%Y-\%m-\%d \%H:\%M" <cr>
+
+" vimscript_settings {{{
+augroup vimscript_settings
+	autocmd!
+	" z code section
+	autocmd filetype vim setlocal foldmethod=marker
+augroup END
+" }}}

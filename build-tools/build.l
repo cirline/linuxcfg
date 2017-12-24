@@ -22,6 +22,8 @@ struct ifile_desc {
 
 struct ifile_desc *cur;
 void yyerror(char *msg, ...);
+int popfile(void);
+int newfile(char *fn);
 %}
 
 %%
