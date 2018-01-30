@@ -28,8 +28,10 @@ let b:vimrc_defined = 1
 
 if exists("b:vimrc_defined_old")
 else
-	source ~/linuxcfg/home/user.vimrc
+	source ~/linuxcfg/home/vimrc
 endif
+
+source ~/linuxcfg/home/vim/local.vimrc
 
 " vim setting of template {{delete this string to wrap script{
 augroup vim_setting_template

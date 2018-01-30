@@ -85,7 +85,6 @@ map  :w <CR> :!dot -Tpng % -O <CR> :!eog %.png & <CR>
 map <F5> :!./% <CR>
 
 source ~/linuxcfg/home/vim/vimrc
-source ~/linuxcfg/home/dotvim/local.vimrc
 
 " vimscript_settings {{{
 augroup vimscript_settings

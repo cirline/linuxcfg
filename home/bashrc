@@ -79,3 +79,5 @@ while [ ! -d .repo ]; do
 done
 }
 
+. ${LINUXCFG_PATH}/home/bash/bashrc
+

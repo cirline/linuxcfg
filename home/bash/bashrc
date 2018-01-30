@@ -1,0 +1,11 @@
+#!/bin/bash
+
+os=`uname -o`
+dir_root=${HOME}/linuxcfg/home/bash
+
+echo "hello ${os}, ${dir_root}"
+
+if [ "${os}" = "Cygwin" ]; then
+	echo "source Cygwin configure"
+	source ${dir_root}/cygwin.bashrc
+fi
