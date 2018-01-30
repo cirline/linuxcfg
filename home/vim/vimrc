@@ -41,15 +41,18 @@ augroup vim_setting_template
 augroup END
 " }}}
 
-""" we use Vundle to manage the plugins
-""" setup the Vundle:
-"""	mkdir .vim/bundle
-"""	git clone https://github.com/VundleVim/Vundle.vim.git
-""" add osc ssh key
-""" sync other plugins
-"""	:BundleUpdate
-""" restart the vim
-"""
+"-------------------------------------------------------------------------------
+" --- Vundle {{{
+"-------------------------------------------------------------------------------
+" we use Vundle to manage the plugins
+" setup the Vundle:
+"	mkdir .vim/bundle
+"	git clone https://github.com/VundleVim/Vundle.vim.git
+" add osc ssh key
+" sync other plugins
+"	:BundleUpdate
+" restart the vim
+"
 set nocompatible
 filetype off
 set runtimepath+=~/.vim/bundle/Vundle.vim
@@ -62,11 +65,26 @@ Plugin 'git@git.oschina.net:chss/vundle-set.git', {'rtp': 'misc/', 'name': 'misc
 call vundle#end()
 filetype plugin indent on
 
-""" vim special hotkey {{{
-nnoremap <leader>p :%!kp<cr>
-nnoremap <leader>a :%!mvl<cr>
-nnoremap <leader>d :%!mvr<cr>
+" }}}
+
+"-------------------------------------------------------------------------------
+" --- VIM HOTKEY {{{
+"-------------------------------------------------------------------------------
+
+" insert date and time
+nnoremap <leader>date	:read !date "+\%Y\%m\%d" <cr>
+nnoremap <leader>time	:read !date "+\%H\%M\%S" <cr>
+" long date
+nnoremap <leader>ldate	:read !date "+\%Y\%m\%d_\%H\%M\%S" <cr>
+
+nnoremap <leader>p	:%!kp<cr>
+nnoremap <leader>a	:%!mvl<cr>
+nnoremap <leader>d	:%!mvr<cr>
 " split qc DDRCS log by symbol z]
 nnoremap <leader>fz	:s/z]/z]\r/g<cr>
-""" }}}
 
+" }}}
+
+""" VIMWIKI, but useless now
+" nmap <Leader>wahh :VimwikiAll2HTML <CR>
+" let g:vimwiki_list = [{"syntax": "markdown", "auto_export": 0}]
