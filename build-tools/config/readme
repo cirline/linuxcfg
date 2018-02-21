@@ -2,6 +2,11 @@ HOWTO
 
 Is the local_build_config_autocreate.mk auto generated? If not, copy a demo from config_local
 
+`local_build_config_autocreate.mk` default from `build_defconfig.mk`
+
 1. fill the local_build_config_autocreate.mk value
 
 2. backup this file to the config_local directory
+
+================================================================================
+vim: ft=help

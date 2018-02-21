@@ -2,8 +2,10 @@
 # default configure file
 #
 # build 
-install_path		?= $(home_path)/tools
-out_path			?= $(build_path)/out
+# install_path was be fixed and don't change it
+# install_path		?= $(home_path)/tools
+
+out_path		?= $(build_path)/out
 
 # tools set
 # tools debug

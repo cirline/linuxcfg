@@ -24,7 +24,7 @@ export pr_info
 make_config		:= local_build_config_autocreate.mk
 stools_config_makefile	:= shconfig_create_autocreate.mk
 stools_config		:= stools_local_config_autocreate.sh
-defconfig_file		:= user/build_defconfig.mk
+defconfig_file		:= config/build_defconfig.mk
 make_config_exist	:= $(shell if [ -f $(config_file) ]; then echo 1; fi)
 
 export make_config
