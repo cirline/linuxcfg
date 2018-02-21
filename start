@@ -1,0 +1,29 @@
+#!/bin/bash
+
+home_path=${HOME}
+lcfg_path=${home_path}/linuxcfg
+
+# destination path
+vimrc_path=${home_path}/.vimrc
+bundle_path=${home_path}/.vim/bundle
+
+echo "home path: ${home_path}"
+
+# link vimrc
+if [ ! -e ${vimrc_path} ]; then
+	ln -s ${lcfg_path}/home/vim/vimrc ${vimrc_path}
+	touch ${lcfg_path}/home/vim/local_git_not_trace.vimrc
+	echo ".vimrc created"
+else
+	echo ".vimrc already exist"
+fi
+
+if [ ! -e ${bundle_path} ]; then
+	mkdir -p ${bundle_path}
+	cd ${bundle_path}
+	git clone https://github.com/VundleVim/Vundle.vim.git
+fi
+
+echo "source ${lcfg_path}/home/bashrc" >> ${home_path}/.bashrc
+
+
