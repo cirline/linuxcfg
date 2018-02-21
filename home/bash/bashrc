@@ -10,3 +10,6 @@ if [ "${os}" = "Cygwin" ]; then
 	source ${dir_root}/cygwin.bashrc
 fi
 
+# auto completion
+source ${dir_root}/git-completion.bash
+
