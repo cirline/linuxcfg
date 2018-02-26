@@ -1,9 +1,12 @@
+
+set -x
+
 adb wait-for-device
 adb shell input keyevent HOME
 adb remount;
 adb wait-for-device;
 
-#adb push ov5640.ko /vendor/modules/; adb shell chmod 644 /vendor/modules/ov5640.ko
+adb push ov5640.ko /vendor/modules/; adb shell chmod 644 /vendor/modules/ov5640.ko
 
 #adb push ar0543_xc6131.ko /vendor/modules/; adb shell chmod 644 /vendor/modules/ar0543_xc6131.ko
 

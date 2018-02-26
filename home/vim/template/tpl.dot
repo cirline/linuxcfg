@@ -1,0 +1,11 @@
+digraph A {
+	rankdir = LR;
+	labeljust = "l";
+	compound = true;
+
+	subgraph SA {
+		node [shape = record];
+		label = "sa";
+	}
+}
+
