@@ -33,13 +33,14 @@ endif
 
 source ~/linuxcfg/home/vim/local.vimrc
 
-" vim setting of template {{delete this string to wrap script{
+" File templates {{{
 augroup vim_setting_template
 	autocmd!
-	autocmd BufNewFile *.c		0r ~/linuxcfg/home/dotvim/template/tpl.c
-	autocmd BufNewFile *.wiki	0r ~/linuxcfg/home/dotvim/template/tpl.wiki
+	autocmd BufNewFile *.c		0r ~/linuxcfg/home/vim/template/tpl.c
+	autocmd BufNewFile *.wiki	0r ~/linuxcfg/home/vim/template/tpl.wiki
 	autocmd BufNewFile *.txt	0r ~/linuxcfg/home/vim/template/tpl.txt
 	autocmd BufNewFile *.h		0r ~/linuxcfg/home/vim/template/tpl.h
+	autocmd BufNewFile *.dot	0r ~/linuxcfg/home/vim/template/tpl.dot
 augroup END
 " }}}
 
@@ -64,6 +65,9 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'git@git.oschina.net:chss/cundle.git', {'rtp': 'vim/plugins/potion/'}
 Plugin 'git@git.oschina.net:chss/vundle-set.git', {'rtp': 'misc/', 'name': 'misc'}
 "Plugin 'git@github.com:vim-scripts/matchit.zip.git', {'rtp': 'plugin/', 'name': 'matchit'}
+
+" Markdown auto preview in browser plugin
+"Plugin 'suan/vim-instant-markdown'
 call vundle#end()
 filetype plugin indent on
 
