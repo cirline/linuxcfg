@@ -14,10 +14,10 @@ export home_path
 config_path	:= config
 
 # function
-echo_info	= @echo "\033[34m $(1) \033[0m"
-echo_err	= @echo "\033[31m $(1) \033[0m"
-echo_success	= @echo "\033[32m $(1) \033[0m"
-pr_info		= @echo "\033[34m $(1) \033[0m"
+echo_info	= @echo -e "\033[34m $(1) \033[0m"
+echo_err	= @echo -e "\033[31m $(1) \033[0m"
+echo_success	= @echo -e "\033[32m $(1) \033[0m"
+pr_info		= @echo -e "\033[34m $(1) \033[0m"
 export pr_info
 
 # config file

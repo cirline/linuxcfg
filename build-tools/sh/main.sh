@@ -7,7 +7,8 @@
 #include "sh/android.sh"
 
 case $cmd in
-
+"mtmx" )
+	mount_sshfs $cmd $* ;;
 "bbshell" | "bbshell.out" )
 	simple_tools_raw_mode $* ;;
 "kl" | "kr" | "ku" | "kd" | "ke" | "ainstall" | "kh" | "kb" | "kp" | "kvu" | "kvd" )
