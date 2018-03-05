@@ -3,11 +3,17 @@
 " Author: chenqiwei
 " -----------------------------------------------------------
 
+"-------------------------------------------------------------------------------
+" --- Common Settings {{{
+"-------------------------------------------------------------------------------
 " textwidth
 set textwidth=78
 " we draw a vertical line to prompt user the textwidth
 set colorcolumn=+3
 highlight ColorColumn ctermbg=0
+" use utf-8 default to show the Chinese
+set encoding=utf-8
+" }}}
 
 " DynamicConfig {{-{
 augroup DynamicConfig
@@ -62,8 +68,8 @@ set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 "Plugin 'file:///home/e/ct/vim/plugins'
-Plugin 'git@git.oschina.net:chss/cundle.git', {'rtp': 'vim/plugins/potion/'}
-Plugin 'git@git.oschina.net:chss/vundle-set.git', {'rtp': 'misc/', 'name': 'misc'}
+Plugin 'git@gitee.com:chss/cundle.git', {'rtp': 'vim/plugins/potion/'}
+Plugin 'git@gitee.com:chss/vundle-set.git', {'rtp': 'misc/', 'name': 'misc'}
 "Plugin 'git@github.com:vim-scripts/matchit.zip.git', {'rtp': 'plugin/', 'name': 'matchit'}
 
 " Markdown auto preview in browser plugin
