@@ -1,15 +1,17 @@
 #!/bin/bash
 
 os=`uname -o`
-dir_root=${HOME}/linuxcfg/home/bash
+dir_bashroot=${HOME}/linuxcfg/home/bash
 
 #echo "hello ${os}, ${dir_root}"
 
 if [ "${os}" = "Cygwin" ]; then
 	echo "source Cygwin configure"
-	source ${dir_root}/cygwin.bashrc
+	source ${dir_bashroot}/cygwin.bashrc
+elif [ "${os}" = "Android" ]; then
+	source ${dir_bashroot}/android.bashrc
 fi
 
 # auto completion
-source ${dir_root}/git-completion.bash
+source ${dir_bashroot}/git-completion.bash
 
