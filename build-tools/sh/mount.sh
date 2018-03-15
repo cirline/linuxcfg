@@ -14,7 +14,7 @@ dir_content=`ls $1`
 if [ -z "$dir_content" ]; then
 	sudo mount -t ecryptfs $2 $1 -o ecryptfs_cipher=aes -o ecryptfs_key_bytes=16 -o ecryptfs_passthrough=n -o ecryptfs_enable_filename_crypto=n
 	sudo chown ${USER} ${path_mount}
-	chmod 600 ${path_mount}
+	chmod 700 ${path_mount}
 else
 	pr_err "$1 not empty\n"
 fi
