@@ -15,7 +15,7 @@ highlight ColorColumn ctermbg=0
 set encoding=utf-8
 " }}}
 
-" DynamicConfig {{-{
+" DynamicConfig {{{
 augroup DynamicConfig
 autocmd!
 
@@ -26,6 +26,17 @@ noremap <leader>sv :source $MYVIMRC<cr>
 "noremap <leader>ss :silent execute "grep! -R " . shellescape(expand("<cWORD>")) . " ."<cr>:copen<cr>
 augroup END
 """ end of DynamicConfig }}}
+
+
+
+" FoldSettings {{{
+"
+augroup fold_settings
+	autocmd!
+	" z code section, marker default is "{ { {" and "} } }"
+	autocmd filetype vim setlocal foldmethod=marker
+augroup END
+" }}} end of FoldSettings
 
 if exists("b:vimrc_defined")
 	finish
@@ -50,9 +61,11 @@ augroup vim_setting_template
 augroup END
 " }}}
 
-"-------------------------------------------------------------------------------
-" --- Vundle {{{
-"-------------------------------------------------------------------------------
+
+" Vundle {{{
+"
+" usage:
+"
 " we use Vundle to manage the plugins
 " setup the Vundle:
 "	mkdir .vim/bundle
@@ -62,15 +75,19 @@ augroup END
 "	:BundleUpdate
 " restart the vim
 "
+" @param rtp	: runtime path, which will be add to runtimepath
+"
 set nocompatible
 filetype off
 set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 "Plugin 'file:///home/e/ct/vim/plugins'
-Plugin 'git@gitee.com:chss/cundle.git', {'rtp': 'vim/plugins/potion/'}
-Plugin 'git@gitee.com:chss/vundle-set.git', {'rtp': 'misc/', 'name': 'misc'}
+Plugin 'git@gitee.com:chss/cundle.git', {'rtp': 'vim/plugins/potion'}
+"Plugin 'git@gitee.com:chss/vundle-set.git', {'rtp': 'misc/', 'name': 'misc'}
+Plugin 'git@gitee.com:chss/vundle-set.git', {'rtp': '', 'name': 'vset'}
 "Plugin 'git@github.com:vim-scripts/matchit.zip.git', {'rtp': 'plugin/', 'name': 'matchit'}
+"Plugin 'git@github.com:vim-scripts/taglist.vim.git', {'rtp': 'plugin', 'name': 'taglist'}
 
 " Markdown auto preview in browser plugin
 "Plugin 'suan/vim-instant-markdown'
@@ -79,7 +96,7 @@ filetype plugin indent on
 
 " }}}
 
-"-------------------------------------------------------------------------------
+
 " --- VIM HOTKEY {{{
 "-------------------------------------------------------------------------------
 
@@ -97,6 +114,13 @@ nnoremap <leader>fz	:s/z]/z]\r/g<cr>
 
 " }}}
 
-""" VIMWIKI, but useless now
-" nmap <Leader>wahh :VimwikiAll2HTML <CR>
-" let g:vimwiki_list = [{"syntax": "markdown", "auto_export": 0}]
+
+" TaglistSettings {{{
+"
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+let Tlist_Use_Right_Window=1
+let Tlist_Auto_Open=0
+let Tlist_Auto_Highlight_Tag=1
+
+" }}} end of TaglistSettings
