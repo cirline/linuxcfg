@@ -75,3 +75,12 @@ ctags -I __THROW \
 	-R /usr/include .
 }
 
+function misc_write_wiki() {
+	if [ "$1" = "ww" ]; then
+		cd /home/new/wiki
+	else
+		cd /home/new/wiki/diary
+	fi
+	vim index.txt
+}
+

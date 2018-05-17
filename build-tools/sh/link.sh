@@ -30,6 +30,8 @@ do_link stvar		"echo simple-tools variable"
 do_link jc_start	"start nutstore daemon"
 do_link lff		"link file to fsave directory"
 do_link ff		"start firefox -p $firefox_profile"
+do_link ww		"write wiki"
+do_link wd		"write diary wiki"
 do_link comment_line	"\n"
 
 # mount Commands
@@ -38,6 +40,7 @@ do_link mesd		"mount jcould ecrypt sync dir"
 do_link uesd		"umount jcould ecrypt sync dir"
 do_link mtmx		"mount tmx"
 do_link mljf		"mount ljf"
+do_link myzp		"mount yzp"
 
 # android
 do_link	comment_line	" -- A N D R O I D --\n"

@@ -3,14 +3,17 @@
 # adb screencap
 function android_screencap() {
 if [ "$1" == "" ]; then
-	image="screen.png"
+	sd_image="screen.png"
+	host_image="/tmp/screen.png"
 else
-	image=$1
+	sd_image=$1
+	host_image=$1
 fi
 
-pr_info "capture screen --> $image\n"
-adb shell screencap -p /sdcard/$image
-adb pull /sdcard/$image .
+pr_info "capture screen --> ${host_image}\n"
+adb shell screencap -p /sdcard/${sd_image}
+adb pull /sdcard/${sd_image} ${host_image}
+eog ${host_image}
 }
 
 # android adb push

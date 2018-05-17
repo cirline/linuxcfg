@@ -73,6 +73,9 @@ case ${cmd} in
 	"mljf" )
 		mount_sshfs_do lijiafeng 192.168.0.241 22 "/media/workspace2/lijiafeng" "${HOME}/mnt/mljf"
 		;;
+	"myzp" )
+		mount_sshfs_do yaozhipeng 192.168.0.241 22 "/media/workspace1/yaozhipeng" "${HOME}/mnt/myzp"
+		;;
 	* )
 		pr_err "sshfs mount fail, ${cmd}\n" ;;
 esac

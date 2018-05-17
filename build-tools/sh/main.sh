@@ -7,7 +7,7 @@
 #include "sh/android.sh"
 
 case $cmd in
-"mtmx" | "mljf" )
+"mtmx" | "mljf" | "myzp" )
 	mount_sshfs $cmd $* ;;
 "bbshell" | "bbshell.out" )
 	simple_tools_raw_mode $* ;;
@@ -37,6 +37,8 @@ case $cmd in
 	misc_make_tags $*;;
 "stvar" )
 	misc_simpletools_var $* ;;
+"ww" | "wd" )
+	misc_write_wiki $cmd $* ;;
 * )
 	pr_err "unknown command($cmd) !\n" ;;
 

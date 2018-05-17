@@ -15,3 +15,5 @@ fi
 # auto completion
 source ${dir_bashroot}/git-completion.bash
 
+# android gradle plugin version is too old, we delay it out-of-work
+export ANDROID_DAILY_OVERRIDE=9c8410644eef0398a2466c6c26b401bf3bfdce34
